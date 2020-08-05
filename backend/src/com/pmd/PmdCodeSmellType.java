@@ -1,4 +1,6 @@
-package com;
+package com.pmd;
+
+import com.CodeSmellType;
 
 enum PmdCodeSmellType implements CodeSmellType {
 

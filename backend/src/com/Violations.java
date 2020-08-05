@@ -1,16 +1,14 @@
 package com;
 
-import com.google.gson.JsonObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
-class Violations {
+public class Violations {
 
-    private List<JsonObject> violations = new ArrayList<>();
+    private List<Violation> violations = new ArrayList<>();
 
-    void add(JsonObject jsonObject) {
-        violations.add(jsonObject);
+    void add(Violation violation) {
+        violations.add(violation);
     }
 
 }

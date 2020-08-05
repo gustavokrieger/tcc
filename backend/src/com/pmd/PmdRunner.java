@@ -1,11 +1,14 @@
-package com;
+package com.pmd;
+
+import com.CodeAnalysis;
+import com.CodeAnalysisParser;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-final class PmdRunner {
+class PmdRunner {
 
     CodeAnalysis run(String inputPaths) throws IOException {
         // todo passar para métodos

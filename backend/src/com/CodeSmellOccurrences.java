@@ -1,7 +1,7 @@
 package com;
 
 
-interface CodeSmellOccurrences {
+public interface CodeSmellOccurrences {
 
     Violations getAllOfType(CodeSmellType codeSmellType);
 

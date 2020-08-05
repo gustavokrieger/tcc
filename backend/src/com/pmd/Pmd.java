@@ -1,9 +1,9 @@
-package com;
+package com.pmd;
 
 import net.sourceforge.pmd.PMD;
 import net.sourceforge.pmd.PMDConfiguration;
 
-final class Pmd {
+class Pmd {
 
     private final PMDConfiguration pmdConfiguration = new PMDConfiguration();
 

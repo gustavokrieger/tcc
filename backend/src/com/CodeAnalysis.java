@@ -3,7 +3,7 @@ package com;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-final class CodeAnalysis {
+public class CodeAnalysis {
 
     private final JsonObject jsonObject;
 

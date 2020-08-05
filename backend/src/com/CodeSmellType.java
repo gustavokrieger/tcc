@@ -1,6 +1,6 @@
 package com;
 
-interface CodeSmellType {
+public interface CodeSmellType {
 
     String value();
 

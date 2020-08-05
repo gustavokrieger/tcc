@@ -1,5 +1,9 @@
-package com;
+package com.pmd;
 
+import com.CodeAnalysis;
+import com.CodeSmellOccurrences;
+import com.CodeSmellType;
+import com.Violations;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
@@ -21,7 +25,7 @@ class PmdCodeSmellOccurrences implements CodeSmellOccurrences {
             for (JsonElement violation : violations) {
                 String rule = violation.getAsJsonObject().getAsJsonPrimitive("rule").getAsString();
                 if (rule.equals(codeSmellType.value())) {
-                    matches.add(violation.getAsJsonObject());
+                    // todo fazer conversão para objeto Violation
                 }
             }
         }
