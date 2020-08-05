@@ -1,7 +1,7 @@
 package com;
 
-enum CodeSmellType {
+interface CodeSmellType {
 
-    LONG_METHOD
+    String value();
 
 }

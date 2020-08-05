@@ -1,6 +1,5 @@
 package com;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -13,8 +12,7 @@ final class CodeAnalysisParser {
 
     static CodeAnalysis parseJson(Reader json) {
         JsonParser jsonParser = new JsonParser();
-        JsonElement jsonElement = jsonParser.parse(json);
-        JsonObject jsonObject = jsonElement.getAsJsonObject();
+        JsonObject jsonObject = jsonParser.parse(json).getAsJsonObject();
         return new CodeAnalysis(jsonObject);
     }
 

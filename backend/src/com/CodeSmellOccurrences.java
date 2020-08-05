@@ -3,6 +3,6 @@ package com;
 
 interface CodeSmellOccurrences {
 
-    public void getAllFromType(CodeSmellType codeSmellType);
+    Violations getAllOfType(CodeSmellType codeSmellType);
 
 }
