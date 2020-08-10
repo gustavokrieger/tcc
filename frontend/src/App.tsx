@@ -1,4 +1,6 @@
 import React from 'react';
+import {Button} from '@material-ui/core';
+import {UploadButton} from './UploadButton';
 
 export class App extends React.Component {
 
@@ -9,12 +11,12 @@ export class App extends React.Component {
     render() {
         return (
             <div className="app">
+                <UploadButton/>
                 <FileUpload
                     value={1}
                     onClick={() => this.handleClick()}
                 />
             </div>
-
         );
     }
 }
@@ -26,12 +28,8 @@ type FileUploadProps = {
 
 function FileUpload(props: FileUploadProps) {
     return (
-        <button
-            className="file-upload"
-            onClick={props.onClick}>
-
+        <Button className="file-upload" variant="contained" onClick={props.onClick}>
             {props.value}
-
-        </button>
+        </Button>
     );
 }
