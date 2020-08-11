@@ -27,7 +27,7 @@ export function UploadButton(props: UploadButtonProps) {
             <input
                 className={classes.input}
                 id="contained-button-file"
-                accept="image/*"
+                accept=".java"
                 multiple
                 type="file"
                 onChange={props.onChange}
