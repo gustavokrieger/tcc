@@ -1,20 +1,11 @@
 import React from "react";
-import {UploadButton} from "./UploadButton";
 import assert from "assert";
+import DropzoneArea from "./DropzoneArea";
 
 export class App extends React.Component {
 
-    // todo tentar remover construtor
-    constructor(props: Readonly<{}>) {
-        super(props);
-
-        this.handleUploadButtonChange = this.handleUploadButtonChange.bind(this);
-    }
-
-    async handleUploadButtonChange(event: React.ChangeEvent<HTMLInputElement>) {
-        assert(event.target.files !== null)
-
-        const file = event.target.files[0];
+    async handleDrop(files: File[]) {
+        const file = files[0];
 
         const formData = new FormData();
 
@@ -45,14 +36,14 @@ export class App extends React.Component {
         //     // and further:
         //     const asJSON = JSON.parse(asString);  // implicitly 'any', make sure to verify type on runtime.
         // }
-
     }
 
     render() {
         return (
             <div className="app">
-                <UploadButton
-                    onChange={this.handleUploadButtonChange}
+                <DropzoneArea
+                    onDrop={this.handleDrop}
+                    acceptedFiles={['.java']}
                 />
             </div>
         );
