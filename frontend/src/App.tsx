@@ -2,9 +2,9 @@ import React from "react";
 import assert from "assert";
 import DropzoneArea from "./DropzoneArea";
 
-export class App extends React.Component {
+export default function App() {
 
-    async handleDrop(files: File[]) {
+    const handleDrop = async (files: File[]) => {
         const file = files[0];
 
         const formData = new FormData();
@@ -38,14 +38,12 @@ export class App extends React.Component {
         // }
     }
 
-    render() {
-        return (
-            <div className="app">
-                <DropzoneArea
-                    onDrop={this.handleDrop}
-                    acceptedFiles={['.java']}
-                />
-            </div>
-        );
-    }
+    return (
+        <div className="app">
+            <DropzoneArea
+                onDrop={handleDrop}
+                acceptedFiles={['.java']}
+            />
+        </div>
+    );
 }
