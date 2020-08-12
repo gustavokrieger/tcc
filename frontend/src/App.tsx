@@ -5,26 +5,22 @@ import DropzoneArea from "./DropzoneArea";
 export default function App() {
 
     const handleDrop = async (files: File[]) => {
-        const file = files[0];
-
         const formData = new FormData();
 
-        formData.append(
-            "myFile",
-            file,
-            file.name
-        );
+        for (const file of files) {
+            formData.append('files', file, file.name);
+        }
 
         const input = "http://localhost:8080/tcc_backend_war_exploded/TestServlet";
 
         const init = {
             method: "POST",
             body: formData,
-            // todo ver ser precisa de header
-            // headers: {"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"}
         }
 
-        const response = await fetch(input, init);
+        const request = new Request(input, init);
+
+        const response = await fetch(request);
 
         assert(response.ok)
 
@@ -46,4 +42,5 @@ export default function App() {
             />
         </div>
     );
+
 }
