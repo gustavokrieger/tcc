@@ -8,10 +8,10 @@ export default function App() {
         const formData = new FormData();
 
         for (const file of files) {
-            formData.append('files', file, file.name);
+            formData.append("file", file, file.name);
         }
 
-        const input = "http://localhost:8080/tcc_backend_war_exploded/TestServlet";
+        const input = "http://localhost:8080/tcc_backend_war_exploded/code-files";
 
         const init = {
             method: "POST",
