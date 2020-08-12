@@ -35,11 +35,10 @@ public class CodeFilesServlet extends HttpServlet {
 
             Path filePath;
             filePath = tempDirectoryPath.resolve("test.java");
-
-            part.write(filePath.toString());
-
             File file = filePath.toFile();
             file.deleteOnExit();
+
+            part.write(filePath.toString());
         }
 
         return;
