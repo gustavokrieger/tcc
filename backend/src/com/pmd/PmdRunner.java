@@ -1,7 +1,7 @@
 package com.pmd;
 
-import com.CodeAnalysis;
 import com.CodeAnalysisParser;
+import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,7 +10,7 @@ import java.io.IOException;
 
 class PmdRunner {
 
-    CodeAnalysis run(String inputPaths) throws IOException {
+    JsonObject run(String inputPaths) throws IOException {
         // todo passar para métodos
         File file = File.createTempFile("pmd-report", null);
         file.deleteOnExit();
