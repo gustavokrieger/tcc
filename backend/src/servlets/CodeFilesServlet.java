@@ -1,5 +1,8 @@
 package servlets;
 
+import com.google.gson.JsonObject;
+import com.pmd.PmdRunner;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -7,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
@@ -19,12 +22,10 @@ public class CodeFilesServlet extends HttpServlet {
 
     // todo confirmar se deve ser post
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
 
         Path tempDirectoryPath = Files.createTempDirectory("");
-        File tempDirectory = tempDirectoryPath.toFile();
-        tempDirectory.deleteOnExit();
 
         Collection<Part> parts = request.getParts();
         for (Part part : parts) {
@@ -33,15 +34,18 @@ public class CodeFilesServlet extends HttpServlet {
                 continue;
             }
 
-            Path filePath;
-            filePath = tempDirectoryPath.resolve("test.java");
-            File file = filePath.toFile();
-            file.deleteOnExit();
+            String fileName = part.getSubmittedFileName();
+            Path filePath = tempDirectoryPath.resolve(fileName);
 
             part.write(filePath.toString());
         }
 
-        return;
+        PmdRunner pmdRunner = new PmdRunner();
+        JsonObject jsonObject = pmdRunner.run(tempDirectoryPath.toString());
+
+        PrintWriter printWriter = response.getWriter();
+        printWriter.print(jsonObject.toString());
+        printWriter.flush();
     }
 
     @Override

@@ -22,16 +22,9 @@ export default function App() {
 
         const response = await fetch(request);
 
-        assert(response.ok)
+        assert(response.ok);
 
-        // todo continuar
-        // if (response.body !== null) {
-        //     // body is ReadableStream<Uint8Array>
-        //     // parse as needed, e.g. reading directly, or
-        //     const asString = new TextDecoder("utf-8").decode(response.body);
-        //     // and further:
-        //     const asJSON = JSON.parse(asString);  // implicitly 'any', make sure to verify type on runtime.
-        // }
+        const result = await response.json();
     }
 
     return (

@@ -8,9 +8,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-class PmdRunner {
+public class PmdRunner {
 
-    JsonObject run(String inputPaths) throws IOException {
+    public JsonObject run(String inputPaths) throws IOException {
         // todo passar para métodos
         File file = File.createTempFile("pmd-report", null);
         file.deleteOnExit();
