@@ -4,24 +4,26 @@ import com.CodeAnalysisParser;
 import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class PmdRunner {
 
     public JsonObject run(String inputPaths) throws IOException {
         // todo passar para métodos
-        File file = File.createTempFile("pmd-report", null);
-        file.deleteOnExit();
-        String reportFile = file.getPath();
+        Path reportFile = Files.createTempFile("pmd-report", null);
 
-        Pmd pmd = new Pmd();
-        pmd.configure(inputPaths, reportFile);
-        pmd.analyze();
+        try {
+            Pmd pmd = new Pmd();
+            pmd.configure(inputPaths, reportFile.toString());
+            pmd.analyze();
 
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(reportFile))) {
-            return CodeAnalysisParser.parseJson(bufferedReader);
+            try (BufferedReader bufferedReader = Files.newBufferedReader(reportFile)) {
+                return CodeAnalysisParser.parseJson(bufferedReader);
+            }
+        } finally {
+            Files.delete(reportFile);
         }
     }
 

@@ -14,7 +14,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @MultipartConfig
 @WebServlet(name = "CodeFiles", displayName = "CodeFilesServlet", urlPatterns = "/code-files")
@@ -25,27 +27,35 @@ public class CodeFilesServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
 
-        Path tempDirectoryPath = Files.createTempDirectory("");
+        List<Path> files = new ArrayList<>();
+        Path tempDirectory = Files.createTempDirectory("");
+        try {
+            Collection<Part> parts = request.getParts();
+            for (Part part : parts) {
+                String name = part.getName();
+                if (!name.equals("file")) {
+                    continue;
+                }
 
-        Collection<Part> parts = request.getParts();
-        for (Part part : parts) {
-            String name = part.getName();
-            if (!name.equals("file")) {
-                continue;
+                String fileName = part.getSubmittedFileName();
+                Path file = tempDirectory.resolve(fileName);
+                files.add(file);
+
+                part.write(file.toString());
             }
 
-            String fileName = part.getSubmittedFileName();
-            Path filePath = tempDirectoryPath.resolve(fileName);
+            PmdRunner pmdRunner = new PmdRunner();
+            JsonObject jsonObject = pmdRunner.run(tempDirectory.toString());
 
-            part.write(filePath.toString());
+            PrintWriter printWriter = response.getWriter();
+            printWriter.print(jsonObject.toString());
+            printWriter.flush();
+        } finally {
+            for (Path file : files) {
+                Files.delete(file);
+            }
+            Files.delete(tempDirectory);
         }
-
-        PmdRunner pmdRunner = new PmdRunner();
-        JsonObject jsonObject = pmdRunner.run(tempDirectoryPath.toString());
-
-        PrintWriter printWriter = response.getWriter();
-        printWriter.print(jsonObject.toString());
-        printWriter.flush();
     }
 
     @Override
