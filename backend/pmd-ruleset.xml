@@ -2,8 +2,7 @@
 
 <ruleset name="pmd-ruleset">
 
-    <description/>
-
-    <rule ref="category/java/design.xml/ExcessiveMethodLength"/>
+  <description/>
+  <rule ref="category/java/design.xml/ExcessiveMethodLength"/>
 
 </ruleset>
