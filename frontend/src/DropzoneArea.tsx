@@ -1,5 +1,5 @@
 import React from "react";
-import {DropzoneArea as InnerDropzoneArea} from "material-ui-dropzone";
+import {DropzoneArea as WrappedComponent} from "material-ui-dropzone";
 
 type Props = {
     onDrop: (files: File[]) => void,
@@ -9,9 +9,8 @@ type Props = {
 export default function DropzoneArea(props: Props) {
 
     return (
-        <InnerDropzoneArea
-            onDrop={props.onDrop}
-            acceptedFiles={props.acceptedFiles}
+        <WrappedComponent
+            {...props}
         />
     )
 
