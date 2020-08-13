@@ -1,30 +1,12 @@
 import React from "react";
-import assert from "assert";
 import DropzoneArea from "./DropzoneArea";
+import CodeAnalysis from "./CodeAnalysis";
 
 export default function App() {
 
     async function handleDrop(files: File[]) {
-        const formData = new FormData();
-
-        for (const file of files) {
-            formData.append("file", file, file.name);
-        }
-
-        const input = "http://localhost:8080/tcc_backend_war_exploded/code-files";
-
-        const init = {
-            method: "POST",
-            body: formData,
-        }
-
-        const request = new Request(input, init);
-
-        const response = await fetch(request);
-
-        assert(response.ok);
-
-        const result = await response.json();
+        const codeAnalysis = new CodeAnalysis();
+        await codeAnalysis.run(files);
     }
 
     return (
