@@ -4,7 +4,7 @@ import DropzoneArea from "./DropzoneArea";
 
 export default function App() {
 
-    const handleDrop = async (files: File[]) => {
+    async function handleDrop(files: File[]) {
         const formData = new FormData();
 
         for (const file of files) {

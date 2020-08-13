@@ -27,6 +27,7 @@ public class CodeFilesServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
 
+        // todo passar para métodos
         List<Path> files = new ArrayList<>();
         Path tempDirectory = Files.createTempDirectory("");
         try {
