@@ -1,3 +1,3 @@
 export enum PmdCodeSmellType {
-    LONG_METHOD = "ExcessiveMethodLength",
+  LONG_METHOD = 'ExcessiveMethodLength',
 }
