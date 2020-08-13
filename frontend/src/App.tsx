@@ -9,8 +9,8 @@ export default function App() {
   }
 
   return (
-      <div className="app">
-        <DropzoneArea onDrop={handleDrop} acceptedFiles={['.java']}/>
-      </div>
+    <div className="app">
+      <DropzoneArea onDrop={handleDrop} acceptedFiles={['.java']} />
+    </div>
   );
 }

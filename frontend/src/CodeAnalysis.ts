@@ -29,5 +29,4 @@ export default class CodeAnalysis {
     assert(response.ok);
     return response;
   }
-
 }
