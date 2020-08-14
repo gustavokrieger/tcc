@@ -5,12 +5,12 @@ import CodeAnalysisResult from './CodeAnalysisResult';
 export default function App() {
   const [isCodeUploaded] = useState(false);
 
-  let page;
+  let component: object;
   if (!isCodeUploaded) {
-    page = <CodeFilesUpload />;
+    component = <CodeFilesUpload />;
   } else {
-    page = <CodeAnalysisResult />;
+    component = <CodeAnalysisResult />;
   }
 
-  return <div className="app"> {page} </div>;
+  return <div className="app"> {component} </div>;
 }
