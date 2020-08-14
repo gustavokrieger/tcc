@@ -2,8 +2,13 @@ import React from 'react';
 import DropzoneArea from './DropzoneArea';
 import CodeAnalysis from '../CodeAnalysis';
 
-export default function CodeFilesUpload() {
+type Props = {
+  onDrop: () => void;
+};
+
+export default function CodeFilesUpload(props: Props) {
   async function handleDrop(files: File[]) {
+    props.onDrop(); // todo descobrir melhor local para isso.
     const codeAnalysis = new CodeAnalysis();
     await codeAnalysis.run(files);
   }
