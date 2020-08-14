@@ -3,14 +3,9 @@ import CodeFilesUpload from './CodeFilesUpload';
 import CodeAnalysisResult from './CodeAnalysisResult';
 
 export default function App() {
-  const [isCodeUploaded] = useState(false);
+  const [isCodeUploaded, setIsCodeUploaded] = useState(false);
 
-  let component: object;
-  if (!isCodeUploaded) {
-    component = <CodeFilesUpload />;
-  } else {
-    component = <CodeAnalysisResult />;
-  }
+  const page = isCodeUploaded ? <CodeAnalysisResult /> : <CodeFilesUpload />;
 
-  return <div className="app"> {component} </div>;
+  return <div className="app"> {page} </div>;
 }
