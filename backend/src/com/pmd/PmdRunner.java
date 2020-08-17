@@ -11,12 +11,12 @@ public class PmdRunner {
 
   private final String directoryWithFilesToAnalyze;
 
-  public PmdRunner(Path directoryWithFilesToAnalyze) {
-    this(directoryWithFilesToAnalyze.toString());
-  }
-
   PmdRunner(String directoryWithFilesToAnalyze) {
     this.directoryWithFilesToAnalyze = directoryWithFilesToAnalyze;
+  }
+
+  public PmdRunner(Path directoryWithFilesToAnalyze) {
+    this(directoryWithFilesToAnalyze.toString());
   }
 
   public JsonObject run() throws IOException {
