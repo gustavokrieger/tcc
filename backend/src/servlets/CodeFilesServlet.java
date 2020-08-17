@@ -45,8 +45,8 @@ public class CodeFilesServlet extends HttpServlet {
         part.write(file.toString());
       }
 
-      PmdRunner pmdRunner = new PmdRunner();
-      JsonObject jsonObject = pmdRunner.run(tempDirectory.toString());
+      PmdRunner pmdRunner = new PmdRunner(tempDirectory);
+      JsonObject jsonObject = pmdRunner.run();
 
       PrintWriter printWriter = response.getWriter();
       printWriter.print(jsonObject.toString());
@@ -57,13 +57,6 @@ public class CodeFilesServlet extends HttpServlet {
       }
       Files.delete(tempDirectory);
     }
-  }
-
-  @Override
-  protected void doOptions(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-    //todo implementar
-    super.doOptions(request, response);
   }
 
 }

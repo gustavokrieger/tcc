@@ -9,6 +9,7 @@ class Pmd {
 
   void configure(String inputPaths, String reportFile) {
     pmdConfiguration.setInputPaths(inputPaths);
+    // todo passar caminho para variavel
     pmdConfiguration
         .setRuleSets("C:\\Users\\gusta\\JetbrainsProjects\\tcc\\backend\\pmd-ruleset.xml");
     pmdConfiguration.setReportFormat("json");
