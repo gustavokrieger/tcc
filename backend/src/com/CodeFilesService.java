@@ -1,6 +1,6 @@
 package com;
 
-import com.google.gson.JsonObject;
+import com.pmd.PmdAnalysisResult;
 import com.pmd.PmdRunner;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,7 +16,7 @@ public class CodeFilesService {
     this.requestParts = requestParts;
   }
 
-  public JsonObject runPmdAnalysis() throws IOException {
+  public PmdAnalysisResult runPmdAnalysis() throws IOException {
     // m todo trocar essa parte por decorator pattern ou AOP
     Path directoryToHoldCodeFiles = Files.createTempDirectory("");
     try {
@@ -35,7 +35,7 @@ public class CodeFilesService {
     }
   }
 
-  private JsonObject runPmdAnalysisOnDirectory(Path directory) throws IOException {
+  private PmdAnalysisResult runPmdAnalysisOnDirectory(Path directory) throws IOException {
     PmdRunner pmdRunner = new PmdRunner(directory);
     return pmdRunner.run();
   }

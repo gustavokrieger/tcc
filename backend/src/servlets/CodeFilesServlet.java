@@ -1,7 +1,7 @@
 package servlets;
 
 import com.CodeFilesService;
-import com.google.gson.JsonObject;
+import com.pmd.PmdAnalysisResult;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
@@ -23,11 +23,11 @@ public class CodeFilesServlet extends HttpServlet {
       throws ServletException, IOException {
     // todo passar segundo parametro para variavel
     response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-    JsonObject pmdAnalysisResult = runPmdAnalysis(request);
+    PmdAnalysisResult pmdAnalysisResult = runPmdAnalysis(request);
     sendResponseWithPmdAnalysisResult(response, pmdAnalysisResult);
   }
 
-  private JsonObject runPmdAnalysis(HttpServletRequest request)
+  private PmdAnalysisResult runPmdAnalysis(HttpServletRequest request)
       throws IOException, ServletException {
     Collection<Part> requestParts = request.getParts();
     CodeFilesService codeFilesService = new CodeFilesService(requestParts);
@@ -35,7 +35,7 @@ public class CodeFilesServlet extends HttpServlet {
   }
 
   private void sendResponseWithPmdAnalysisResult(HttpServletResponse response,
-      JsonObject pmdAnalysisResult) throws IOException {
+      PmdAnalysisResult pmdAnalysisResult) throws IOException {
     PrintWriter printWriter = response.getWriter();
     printWriter.print(pmdAnalysisResult.toString());
     printWriter.flush();

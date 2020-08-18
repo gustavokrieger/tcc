@@ -19,7 +19,7 @@ public class PmdRunner {
     this(directoryWithFilesToAnalyze.toString());
   }
 
-  public JsonObject run() throws IOException {
+  public PmdAnalysisResult run() throws IOException {
     // m todo trocar essa parte por decorator pattern ou AOP
     Path pmdResultFile = Files.createTempFile("pmd-report", "");
     try {
@@ -29,7 +29,7 @@ public class PmdRunner {
     }
   }
 
-  private JsonObject runPmd(Path fileToWriteTheResult) throws IOException {
+  private PmdAnalysisResult runPmd(Path fileToWriteTheResult) throws IOException {
     getPmdResult(fileToWriteTheResult);
     return convertPmdResult(fileToWriteTheResult);
   }
@@ -40,10 +40,12 @@ public class PmdRunner {
     pmd.analyze();
   }
 
-  private JsonObject convertPmdResult(Path pmdResultFile) throws IOException {
+  private PmdAnalysisResult convertPmdResult(Path pmdResultFile) throws IOException {
+    JsonObject pmdAnalysisResult;
     try (BufferedReader bufferedReader = Files.newBufferedReader(pmdResultFile)) {
-      return CodeAnalysisParser.parseJson(bufferedReader);
+      pmdAnalysisResult = CodeAnalysisParser.parseJson(bufferedReader);
     }
+    return new PmdAnalysisResult(pmdAnalysisResult);
   }
 
 }
