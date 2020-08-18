@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 
 public class PmdAnalysisResult {
 
-  private JsonObject pmdAnalysisResult;
+  private final JsonObject pmdAnalysisResult;
 
   PmdAnalysisResult(JsonObject pmdAnalysisResult) {
     this.pmdAnalysisResult = pmdAnalysisResult;
