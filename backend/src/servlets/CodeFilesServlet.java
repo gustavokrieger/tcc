@@ -1,14 +1,10 @@
 package servlets;
 
+import com.CodeFilesService;
 import com.google.gson.JsonObject;
-import com.pmd.PmdRunner;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -21,42 +17,28 @@ import javax.servlet.http.Part;
 @WebServlet(name = "CodeFiles", displayName = "CodeFilesServlet", urlPatterns = "/code-files")
 public class CodeFilesServlet extends HttpServlet {
 
-  // todo confirmar se deve ser post
+  // m todo confirmar se deve ser post
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
+    // todo passar segundo parametro para variavel
     response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+    JsonObject pmdAnalysisResult = runPmdAnalysis(request);
+    sendResponseWithPmdAnalysisResult(response, pmdAnalysisResult);
+  }
 
-    // todo passar para métodos
-    List<Path> files = new ArrayList<>();
-    Path tempDirectory = Files.createTempDirectory("");
-    try {
-      Collection<Part> parts = request.getParts();
-      for (Part part : parts) {
-        String name = part.getName();
-        if (!name.equals("file")) {
-          continue;
-        }
+  private JsonObject runPmdAnalysis(HttpServletRequest request)
+      throws IOException, ServletException {
+    Collection<Part> requestParts = request.getParts();
+    CodeFilesService codeFilesService = new CodeFilesService(requestParts);
+    return codeFilesService.runPmdAnalysis();
+  }
 
-        String fileName = part.getSubmittedFileName();
-        Path file = tempDirectory.resolve(fileName);
-        files.add(file);
-
-        part.write(file.toString());
-      }
-
-      PmdRunner pmdRunner = new PmdRunner(tempDirectory);
-      JsonObject jsonObject = pmdRunner.run();
-
-      PrintWriter printWriter = response.getWriter();
-      printWriter.print(jsonObject.toString());
-      printWriter.flush();
-    } finally {
-      for (Path file : files) {
-        Files.delete(file);
-      }
-      Files.delete(tempDirectory);
-    }
+  private void sendResponseWithPmdAnalysisResult(HttpServletResponse response,
+      JsonObject pmdAnalysisResult) throws IOException {
+    PrintWriter printWriter = response.getWriter();
+    printWriter.print(pmdAnalysisResult.toString());
+    printWriter.flush();
   }
 
 }

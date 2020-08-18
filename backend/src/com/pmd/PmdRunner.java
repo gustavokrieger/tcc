@@ -20,8 +20,8 @@ public class PmdRunner {
   }
 
   public JsonObject run() throws IOException {
-    // todo trocar essa parte por decorator pattern ou AOP
-    Path pmdResultFile = Files.createTempFile("pmd-report", null);
+    // m todo trocar essa parte por decorator pattern ou AOP
+    Path pmdResultFile = Files.createTempFile("pmd-report", "");
     try {
       return runPmd(pmdResultFile);
     } finally {
