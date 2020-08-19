@@ -1,13 +1,13 @@
 type Result = {
-  files: Files[];
+  files: File[];
 };
 
-type Files = {
+type File = {
   filename: string;
-  violations: Violations[];
+  violations: Violation[];
 };
 
-type Violations = {
+type Violation = {
   beginline: number;
   begincolumn: number;
   endline: number;
@@ -16,50 +16,57 @@ type Violations = {
   rule: string;
 };
 
-export default class PmdAnalysisResult implements IterableIterator<number> {
+type CompleteViolation = Violation & {
+  filename: string;
+};
+
+export default class PmdAnalysisResult
+  implements IterableIterator<CompleteViolation> {
   private readonly pmdAnalysisResult: Result = temp;
   private readonly files = this.pmdAnalysisResult.files;
-  private t: Generator<any>;
+  private t = this.counter();
 
   // constructor(pmdAnalysisResult: object) {
   //   this.pmdAnalysisResult = pmdAnalysisResult;
   // }
 
-  constructor() {
-    this.t = this.counter();
-  }
-
-  *counter() {
-    for (const oneCase of this.files) {
-      const filename = oneCase.filename;
-      yield oneCase;
+  *counter(): Generator<CompleteViolation> {
+    for (const file of this.files) {
+      const filename = file.filename;
+      const violations = file.violations;
+      for (const violation of violations) {
+        yield {filename: filename, ...violation};
+      }
     }
   }
 
-  public next(): IteratorResult<number> {
+  public next(): IteratorResult<CompleteViolation> {
     const current = this.t.next();
     if (current.done) {
       return this.endReturn();
     } else {
-      return this.normalReturn();
+      return this.normalReturn(current.value);
     }
   }
 
-  private endReturn(): IteratorResult<number> {
+  private endReturn(): IteratorResult<CompleteViolation> {
     return {
       value: null,
       done: true,
     };
   }
 
-  private normalReturn(): IteratorResult<number> {
+  private normalReturn(
+    completeViolation: CompleteViolation
+  ): IteratorResult<CompleteViolation> {
+    // todo fazer retornar apenas os que estão no type
     return {
-      value: 1,
+      value: completeViolation,
       done: false,
     };
   }
 
-  [Symbol.iterator](): IterableIterator<number> {
+  [Symbol.iterator](): IterableIterator<CompleteViolation> {
     return this;
   }
 }
