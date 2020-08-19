@@ -79,6 +79,7 @@ export default function VerticalTabs() {
 
   const tabPanelValues = [];
 
+  // todo fazer esses elementos se alinharem horizontalmente
   for (let i = 0; i < elements.length; i++) {
     const values = elements[i].values;
     for (const entry of values) {
