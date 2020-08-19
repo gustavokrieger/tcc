@@ -7,6 +7,7 @@ export default class CodeAnalysis {
     return await response.json();
   }
 
+  // todo organizar em métodos
   private createCodeFilesRequest(files: File[]): Request {
     const input = 'http://localhost:8080/tcc_backend_war_exploded/code-files';
     const formData = new FormData();

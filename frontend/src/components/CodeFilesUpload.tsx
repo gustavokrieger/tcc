@@ -8,7 +8,7 @@ type Props = {
 
 export default function CodeFilesUpload(props: Props) {
   async function handleDrop(files: File[]) {
-    props.onDrop(); // todo descobrir melhor local para isso.
+    props.onDrop();
     const codeAnalysis = new CodeAnalysis();
     await codeAnalysis.run(files);
   }

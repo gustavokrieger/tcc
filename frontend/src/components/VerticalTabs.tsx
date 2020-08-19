@@ -50,7 +50,16 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default function VerticalTabs() {
+type VerticalTabsProps = {
+  elements: Element[];
+};
+
+type Element = {
+  label: string;
+  values: string[];
+};
+
+export default function VerticalTabs(props: VerticalTabsProps) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -58,37 +67,33 @@ export default function VerticalTabs() {
     setValue(newValue);
   };
 
-  // todo trocar para ser por props
-  const elements = [
-    {
-      label: 'zero',
-      values: ['zero_value', 'one_value'],
-    },
-    {
-      label: 'one',
-      values: ['two_value', 'three_value'],
-    },
-  ];
+  function getLabels() {
+    const labels = [];
 
-  const labels = [];
+    for (let i = 0; i < props.elements.length; i++) {
+      const label = props.elements[i].label;
+      labels.push(<Tab label={label} {...a11yProps(i)} />);
+    }
 
-  for (let i = 0; i < elements.length; i++) {
-    const label = elements[i].label;
-    labels.push(<Tab label={label} {...a11yProps(i)} />);
+    return labels;
   }
 
-  const tabPanelValues = [];
+  function getTabPanelValues() {
+    const tabPanelValues = [];
 
-  // todo fazer esses elementos se alinharem horizontalmente
-  for (let i = 0; i < elements.length; i++) {
-    const values = elements[i].values;
-    for (const entry of values) {
-      tabPanelValues.push(
-        <TabPanel value={value} index={i}>
-          {entry}
-        </TabPanel>
-      );
+    // todo fazer esses elementos se alinharem horizontalmente
+    for (let i = 0; i < props.elements.length; i++) {
+      const values = props.elements[i].values;
+      for (const entry of values) {
+        tabPanelValues.push(
+          <TabPanel value={value} index={i}>
+            {entry}
+          </TabPanel>
+        );
+      }
     }
+
+    return tabPanelValues;
   }
 
   return (
@@ -101,9 +106,9 @@ export default function VerticalTabs() {
         aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-        {labels}
+        {getLabels()}
       </Tabs>
-      {tabPanelValues}
+      {getTabPanelValues()}
     </div>
   );
 }

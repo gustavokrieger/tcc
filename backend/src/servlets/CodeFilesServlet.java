@@ -17,7 +17,6 @@ import javax.servlet.http.Part;
 @WebServlet(name = "CodeFiles", displayName = "CodeFilesServlet", urlPatterns = "/code-files")
 public class CodeFilesServlet extends HttpServlet {
 
-  // m todo confirmar se deve ser post
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {

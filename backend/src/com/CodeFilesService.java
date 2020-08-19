@@ -17,7 +17,7 @@ public class CodeFilesService {
   }
 
   public PmdAnalysisResult runPmdAnalysis() throws IOException {
-    // m todo trocar essa parte por decorator pattern ou AOP
+    // m todo trocar essa parte por decorator pattern ou AOP (olhar anotação)
     Path directoryToHoldCodeFiles = Files.createTempDirectory("");
     try {
       writeRequestFilesIntoDirectory(directoryToHoldCodeFiles);
