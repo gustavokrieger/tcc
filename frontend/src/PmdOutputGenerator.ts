@@ -5,11 +5,11 @@ export function* PmdOutputGenerator(
   report: pmdOutput.Report
 ): Generator<PmdViolation> {
   for (const file of report.files) {
-    yield* yieldReportViolationsWithFilename(file);
+    yield* yieldReportViolationWithFilename(file);
   }
 }
 
-function* yieldReportViolationsWithFilename(
+function* yieldReportViolationWithFilename(
   file: pmdOutput.File
 ): Generator<PmdViolation> {
   for (const violation of file.violations) {
