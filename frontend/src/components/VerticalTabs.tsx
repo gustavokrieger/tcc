@@ -56,7 +56,7 @@ type VerticalTabsProps = {
 
 type Element = {
   label: string;
-  values: string[];
+  values: any[];
 };
 
 export default function VerticalTabs(props: VerticalTabsProps) {
@@ -67,17 +67,24 @@ export default function VerticalTabs(props: VerticalTabsProps) {
     setValue(newValue);
   };
 
+  // todo melhorar
   function getLabels() {
     const labels = [];
+    const elements = props.elements;
 
-    for (let i = 0; i < props.elements.length; i++) {
-      const label = props.elements[i].label;
-      labels.push(<Tab label={label} {...a11yProps(i)} />);
+    for (let i = 0; i < elements.length; i++) {
+      labels.push(getIndexedTab(elements[i], i));
     }
 
     return labels;
   }
 
+  function getIndexedTab(element: Element, index: number) {
+    const label = element.label;
+    return <Tab label={label} {...a11yProps(index)} />;
+  }
+
+  // todo melhorar
   function getTabPanelValues() {
     const tabPanelValues = [];
 

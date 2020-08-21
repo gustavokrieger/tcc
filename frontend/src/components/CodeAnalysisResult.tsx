@@ -1,25 +1,50 @@
 import React from 'react';
 import VerticalTabs from './VerticalTabs';
+import Button from '@material-ui/core/Button';
 
 export default function CodeAnalysisResult() {
   return (
     <div className="code-analysis-result">
-      <VerticalTabs elements={tempElements} />
+      <VerticalTabs elements={tempButtons} />
     </div>
   );
 }
 
 // todo remover
-const tempElements = [
+const tempButtons = [
   {
     label: 'zero',
-    values: ['zero_value', 'one_value'],
+    values: [
+      <Button key="zero_value" onClick={temp}>
+        zero_value
+      </Button>,
+      <Button key="one_value" onClick={temp2}>
+        one_value
+      </Button>,
+    ],
   },
   {
     label: 'one',
-    values: ['two_value', 'three_value'],
+    values: [
+      <Button key="two_value" onClick={temp}>
+        two_value
+      </Button>,
+      <Button key="three_value" onClick={temp2}>
+        three_value
+      </Button>,
+    ],
   },
 ];
+
+function temp() {
+  console.log('alo');
+}
+
+function temp2() {
+  console.log('tchau');
+}
+
+// todo remover
 const tempReport = {
   formatVersion: 0,
   pmdVersion: '6.25.0',
