@@ -15,31 +15,25 @@ const tempButtons = [
   {
     label: 'zero',
     elements: [
-      <Button key="zero_value" onClick={temp}>
-        zero_value
-      </Button>,
-      <Button key="one_value" onClick={temp2}>
-        one_value
-      </Button>,
+      <Button onClick={temp}>zero_value</Button>,
+      <Button onClick={temp2}>one_value</Button>,
     ],
   },
   {
     label: 'one',
     elements: [
-      <Button key="two_value" onClick={temp}>
-        two_value
-      </Button>,
-      <Button key="three_value" onClick={temp2}>
-        three_value
-      </Button>,
+      <Button onClick={temp}>zero_value2</Button>,
+      <Button onClick={temp2}>one_value2</Button>,
     ],
   },
 ];
 
+// todo remover
 function temp() {
   console.log('alo');
 }
 
+// todo remover
 function temp2() {
   console.log('tchau');
 }

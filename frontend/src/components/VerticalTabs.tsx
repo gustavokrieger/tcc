@@ -77,15 +77,17 @@ export default function VerticalTabs(props: VerticalTabsProps) {
   }
 
   function getTabFromEntry(entry_index: number): JSX.Element {
-    const label = props.entries[entry_index].label;
-    return <Tab label={label} {...a11yProps(entry_index)} />;
+    const entry = props.entries[entry_index];
+    return (
+      <Tab key={entry.label} label={entry.label} {...a11yProps(entry_index)} />
+    );
   }
 
   function getTabPanels(): JSX.Element[] {
     const number_of_entries = props.entries.length;
-    const tabPanels: JSX.Element[] = [];
+    let tabPanels: JSX.Element[] = [];
     for (let i = 0; i < number_of_entries; i++) {
-      tabPanels.concat(getTabPanelsFromEntry(i));
+      tabPanels = tabPanels.concat(getTabPanelsFromEntry(i));
     }
     return tabPanels;
   }
@@ -94,8 +96,9 @@ export default function VerticalTabs(props: VerticalTabsProps) {
     const elements = props.entries[entry_index].elements;
     const tabPanels: JSX.Element[] = [];
     for (const element of elements) {
+      const key = props.entries[entry_index].label + element.props.children;
       tabPanels.push(
-        <TabPanel value={value} index={entry_index}>
+        <TabPanel key={key} value={value} index={entry_index}>
           {element}
         </TabPanel>
       );
