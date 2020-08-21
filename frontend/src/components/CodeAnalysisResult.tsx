@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 export default function CodeAnalysisResult() {
   return (
     <div className="code-analysis-result">
-      <VerticalTabs elements={tempButtons} />
+      <VerticalTabs entries={tempButtons} />
     </div>
   );
 }
@@ -14,7 +14,7 @@ export default function CodeAnalysisResult() {
 const tempButtons = [
   {
     label: 'zero',
-    values: [
+    elements: [
       <Button key="zero_value" onClick={temp}>
         zero_value
       </Button>,
@@ -25,7 +25,7 @@ const tempButtons = [
   },
   {
     label: 'one',
-    values: [
+    elements: [
       <Button key="two_value" onClick={temp}>
         two_value
       </Button>,

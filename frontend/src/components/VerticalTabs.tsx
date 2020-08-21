@@ -51,12 +51,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 type VerticalTabsProps = {
-  elements: Element[];
+  entries: Entry[];
 };
 
-type Element = {
+type Entry = {
   label: string;
-  values: any[];
+  elements: JSX.Element[];
 };
 
 export default function VerticalTabs(props: VerticalTabsProps) {
@@ -67,40 +67,40 @@ export default function VerticalTabs(props: VerticalTabsProps) {
     setValue(newValue);
   };
 
-  // todo melhorar
-  function getLabels() {
-    const labels = [];
-    const elements = props.elements;
-
-    for (let i = 0; i < elements.length; i++) {
-      labels.push(getIndexedTab(elements[i], i));
+  function getTabs(): JSX.Element[] {
+    const number_of_entries = props.entries.length;
+    const tabs: JSX.Element[] = [];
+    for (let i = 0; i < number_of_entries; i++) {
+      tabs.push(getTabFromEntry(i));
     }
-
-    return labels;
+    return tabs;
   }
 
-  function getIndexedTab(element: Element, index: number) {
-    const label = element.label;
-    return <Tab label={label} {...a11yProps(index)} />;
+  function getTabFromEntry(entry_index: number): JSX.Element {
+    const label = props.entries[entry_index].label;
+    return <Tab label={label} {...a11yProps(entry_index)} />;
   }
 
-  // todo melhorar
-  function getTabPanelValues() {
-    const tabPanelValues = [];
-
-    // todo fazer esses elementos se alinharem horizontalmente
-    for (let i = 0; i < props.elements.length; i++) {
-      const values = props.elements[i].values;
-      for (const entry of values) {
-        tabPanelValues.push(
-          <TabPanel value={value} index={i}>
-            {entry}
-          </TabPanel>
-        );
-      }
+  function getTabPanels(): JSX.Element[] {
+    const number_of_entries = props.entries.length;
+    const tabPanels: JSX.Element[] = [];
+    for (let i = 0; i < number_of_entries; i++) {
+      tabPanels.concat(getTabPanelsFromEntry(i));
     }
+    return tabPanels;
+  }
 
-    return tabPanelValues;
+  function getTabPanelsFromEntry(entry_index: number): JSX.Element[] {
+    const elements = props.entries[entry_index].elements;
+    const tabPanels: JSX.Element[] = [];
+    for (const element of elements) {
+      tabPanels.push(
+        <TabPanel value={value} index={entry_index}>
+          {element}
+        </TabPanel>
+      );
+    }
+    return tabPanels;
   }
 
   return (
@@ -113,9 +113,9 @@ export default function VerticalTabs(props: VerticalTabsProps) {
         aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-        {getLabels()}
+        {getTabs()}
       </Tabs>
-      {getTabPanelValues()}
+      {getTabPanels()}
     </div>
   );
 }
