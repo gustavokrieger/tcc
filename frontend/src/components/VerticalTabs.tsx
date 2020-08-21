@@ -67,43 +67,34 @@ export default function VerticalTabs(props: VerticalTabsProps) {
     setValue(newValue);
   };
 
-  function getTabs(): JSX.Element[] {
-    const number_of_entries = props.entries.length;
-    const tabs: JSX.Element[] = [];
-    for (let i = 0; i < number_of_entries; i++) {
-      tabs.push(getTabFromEntry(i));
-    }
-    return tabs;
-  }
+  const tabs = props.entries.map((entry, index) => (
+    <Tab key={entry.label} label={entry.label} {...a11yProps(index)} />
+  ));
 
-  function getTabFromEntry(entry_index: number): JSX.Element {
-    const entry = props.entries[entry_index];
-    return (
-      <Tab key={entry.label} label={entry.label} {...a11yProps(entry_index)} />
-    );
-  }
+  const tabPanels = props.entries.map(getTabPanelsFromEntry);
 
-  function getTabPanels(): JSX.Element[] {
-    const number_of_entries = props.entries.length;
-    let tabPanels: JSX.Element[] = [];
-    for (let i = 0; i < number_of_entries; i++) {
-      tabPanels = tabPanels.concat(getTabPanelsFromEntry(i));
-    }
-    return tabPanels;
-  }
-
-  function getTabPanelsFromEntry(entry_index: number): JSX.Element[] {
-    const elements = props.entries[entry_index].elements;
+  function getTabPanelsFromEntry(
+    entry: Entry,
+    entry_index: number
+  ): JSX.Element[] {
     const tabPanels: JSX.Element[] = [];
-    for (const element of elements) {
-      const key = props.entries[entry_index].label + element.props.children;
-      tabPanels.push(
-        <TabPanel key={key} value={value} index={entry_index}>
-          {element}
-        </TabPanel>
-      );
+    for (const element of entry.elements) {
+      tabPanels.push(getTabPanelFromElement(element, entry.label, entry_index));
     }
     return tabPanels;
+  }
+
+  function getTabPanelFromElement(
+    element: JSX.Element,
+    entry_label: string,
+    entry_index: number
+  ): JSX.Element {
+    const key = entry_label + element.props.children;
+    return (
+      <TabPanel key={key} value={value} index={entry_index}>
+        {element}
+      </TabPanel>
+    );
   }
 
   return (
@@ -116,9 +107,9 @@ export default function VerticalTabs(props: VerticalTabsProps) {
         aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-        {getTabs()}
+        {tabs}
       </Tabs>
-      {getTabPanels()}
+      {tabPanels}
     </div>
   );
 }
