@@ -15,27 +15,18 @@ export default class Entries {
     return this._entries;
   }
 
-  // todo revisar desse para baixo
-  static fromPmdViolationGenerator(
-    pmdViolations: Generator<PmdViolation>
-  ): Entries {
+  static fromGenerator(pmdViolations: Generator<PmdViolation>): Entries {
     const entries = new Entries();
     for (const pmdViolation of pmdViolations) {
-      entries.addViolationToEntries(pmdViolation);
+      entries.addViolation(pmdViolation);
     }
     return entries;
   }
 
-  private addViolationToEntries(pmdViolation: PmdViolation) {
+  private addViolation(pmdViolation: PmdViolation) {
     const label = this.translate(pmdViolation.rule);
-    const entryWithLabel = this.getByLabel(label);
-    let target: Entry;
-    if (entryWithLabel === null) {
-      target = this.addNewEntry(label);
-    } else {
-      target = entryWithLabel;
-    }
-    target.elements.push(<Button>zero_value</Button>);
+    const entry = this.getOrAddByLabel(label);
+    entry.elements.push(<Button>zero_value</Button>);
   }
 
   // todo passar para outra classe
@@ -48,18 +39,27 @@ export default class Entries {
     }
   }
 
+  private getOrAddByLabel(label: string) {
+    const entry = this.getByLabel(label);
+    if (entry === null) {
+      return this.addWithLabel(label);
+    } else {
+      return entry;
+    }
+  }
+
   private getByLabel(label: string) {
     for (const entry of this._entries) {
-      if (label === entry.label) {
+      if (entry.label === label) {
         return entry;
       }
     }
     return null;
   }
 
-  private addNewEntry(label: string) {
-    const entry: Entry = {label: label, elements: []};
-    this._entries.push(entry);
-    return entry;
+  private addWithLabel(label: string): Entry {
+    const newEntry: Entry = {label: label, elements: []};
+    this._entries.push(newEntry);
+    return newEntry;
   }
 }

@@ -6,7 +6,7 @@ import Entries from './vertical_tabs/Entries';
 
 export default function CodeAnalysisResult() {
   const pmdViolations = pmdViolationGenerator(tempReport2);
-  const entries = Entries.fromPmdViolationGenerator(pmdViolations);
+  const entries = Entries.fromGenerator(pmdViolations);
   return (
     <div className="code-analysis-result">
       <VerticalTabs entries={entries} />
