@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 
 <ruleset name="pmd-ruleset">
-
   <description/>
   <rule ref="category/java/design.xml/ExcessiveMethodLength"/>
-
+  <rule ref="category/java/design.xml/ExcessiveParameterList" />
 </ruleset>

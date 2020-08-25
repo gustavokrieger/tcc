@@ -1,7 +1,7 @@
 import * as pmdOutput from './pmdOutput';
 import {PmdViolation} from './PmdViolation';
 
-export function* PmdOutputGenerator(
+export function* pmdViolationGenerator(
   report: pmdOutput.Report
 ): Generator<PmdViolation> {
   for (const file of report.files) {

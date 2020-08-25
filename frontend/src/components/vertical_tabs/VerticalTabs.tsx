@@ -4,6 +4,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import {Entry} from './entry';
+import Entries from './Entries';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -51,12 +53,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 type VerticalTabsProps = {
-  entries: Entry[];
-};
-
-type Entry = {
-  label: string;
-  elements: JSX.Element[];
+  entries: Entries;
 };
 
 export default function VerticalTabs(props: VerticalTabsProps) {
@@ -67,11 +64,11 @@ export default function VerticalTabs(props: VerticalTabsProps) {
     setValue(newValue);
   };
 
-  const tabs = props.entries.map((entry, index) => (
+  const tabs = props.entries.innerArray.map((entry, index) => (
     <Tab key={entry.label} label={entry.label} {...a11yProps(index)} />
   ));
 
-  const tabPanels = props.entries.map(getTabPanelsFromEntry);
+  const tabPanels = props.entries.innerArray.map(getTabPanelsFromEntry);
 
   function getTabPanelsFromEntry(
     entry: Entry,
