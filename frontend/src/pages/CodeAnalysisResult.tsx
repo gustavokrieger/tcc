@@ -1,8 +1,8 @@
 import React from 'react';
-import VerticalTabs from './vertical_tabs/VerticalTabs';
+import VerticalTabs from '../components/vertical_tabs/VerticalTabs';
 import Button from '@material-ui/core/Button';
 import {pmdViolationGenerator} from '../pmdViolationGenerator';
-import Entries from './vertical_tabs/Entries';
+import Entries from '../components/vertical_tabs/Entries';
 
 export default function CodeAnalysisResult() {
   const pmdViolations = pmdViolationGenerator(tempReport2);

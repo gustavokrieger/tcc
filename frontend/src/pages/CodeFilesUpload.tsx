@@ -1,5 +1,5 @@
 import React from 'react';
-import DropzoneArea from './DropzoneArea';
+import DropzoneArea from '../components/DropzoneArea';
 import CodeAnalysis from '../CodeAnalysis';
 
 type Props = {
