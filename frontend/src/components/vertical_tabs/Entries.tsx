@@ -3,6 +3,8 @@ import {PmdViolation} from '../../PmdViolation';
 import Button from '@material-ui/core/Button';
 import {PmdCodeSmellType} from '../../PmdCodeSmellType';
 import React from 'react';
+import {Path} from '../../pages/Path';
+import {Link} from 'react-router-dom';
 
 export default class Entries {
   private readonly _entries: Entry[];
@@ -26,7 +28,13 @@ export default class Entries {
   private addViolation(pmdViolation: PmdViolation) {
     const label = this.translate(pmdViolation.rule);
     const entry = this.getOrAddByLabel(label);
-    entry.elements.push(<Button>zero_value</Button>);
+    const caseNumber = entry.elements.length + 1;
+    const caseName = 'caso' + ' ' + caseNumber;
+    entry.elements.push(
+      <Button component={Link} to={Path.VIOLATION_CASE + '/' + caseName}>
+        {caseName}
+      </Button>
+    );
   }
 
   // todo passar para outra classe
