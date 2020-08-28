@@ -1,6 +1,5 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import Temp from './Temp';
 import CodeAnalysisResult from './pages/CodeAnalysisResult';
 import CodeFilesUpload from './pages/CodeFilesUpload';
 import {Path} from './pages/Path';
