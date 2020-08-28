@@ -1,6 +1,6 @@
 import assert from 'assert';
 
-export default class CodeAnalysis {
+export default class CodeAnalysisRequester {
   async run(files: File[]): Promise<object> {
     const request = this.createCodeFilesRequest(files);
     const response = await this.sendRequest(request);

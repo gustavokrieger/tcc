@@ -1,6 +1,6 @@
 import React from 'react';
 import DropzoneArea from '../components/DropzoneArea';
-import CodeAnalysis from '../CodeAnalysis';
+import CodeAnalysisRequester from '../CodeAnalysisRequester';
 import {useHistory} from 'react-router-dom';
 import {Path} from './Path';
 
@@ -9,7 +9,7 @@ export default function CodeFilesUpload() {
 
   async function handleDrop(files: File[]) {
     history.push(Path.CODE_ANALYSIS_RESULT);
-    const codeAnalysis = new CodeAnalysis();
+    const codeAnalysis = new CodeAnalysisRequester();
     await codeAnalysis.run(files);
   }
 

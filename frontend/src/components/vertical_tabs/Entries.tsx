@@ -29,7 +29,7 @@ export default class Entries {
     const label = this.translate(pmdViolation.rule);
     const entry = this.getOrAddByLabel(label);
     const caseNumber = entry.elements.length + 1;
-    const caseName = 'caso' + ' ' + caseNumber;
+    const caseName = 'caso ' + caseNumber;
     entry.elements.push(
       <Button component={Link} to={Path.VIOLATION_CASE + '/' + caseName}>
         {caseName}
