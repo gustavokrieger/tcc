@@ -1,9 +1,10 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import CodeAnalysisResult from './CodeAnalysisResult';
-import CodeFilesUpload from './CodeFilesUpload';
-import {Path} from './Path';
-import ViolationCase from './ViolationCase';
+import Temp from './Temp';
+import CodeAnalysisResult from './pages/CodeAnalysisResult';
+import CodeFilesUpload from './pages/CodeFilesUpload';
+import {Path} from './pages/Path';
+import ViolationCase from './pages/ViolationCase';
 
 export default function App() {
   return (
