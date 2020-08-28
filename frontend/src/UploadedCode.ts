@@ -14,15 +14,11 @@ export default class UploadedCode {
     return new UploadedCode(lineSplitCode);
   }
 
-  // todo revisar esse método para baixo
-  getCodeThatCausedViolation(pmdViolation: PmdViolation) {
-    const targetLines = this.getLinesThatCausedViolation(pmdViolation);
-    // targetLines[0] = targetLines[0].slice(pmdViolation.begincolumn);
-    this.trimBeginning(targetLines, pmdViolation.begincolumn);
-    // targetLines[targetLines.length - 1] = targetLines[
-    //   targetLines.length - 1
-    // ].slice(0, pmdViolation.endcolumn);
-    this.trimEnding(targetLines, pmdViolation.endcolumn);
+  getCodeThatCausedViolation(pmdViolation: PmdViolation): string[] {
+    const linesWithViolation = this.getLinesThatCausedViolation(pmdViolation);
+    this.trimFirstLine(linesWithViolation, pmdViolation.begincolumn);
+    this.trimLastLine(linesWithViolation, pmdViolation.endcolumn);
+    return linesWithViolation;
   }
 
   private getLinesThatCausedViolation(pmdViolation: PmdViolation): string[] {
@@ -32,15 +28,15 @@ export default class UploadedCode {
     );
   }
 
-  private trimBeginning(codeLines: string[], beginColumn: number) {
-    codeLines[0] = codeLines[0].slice(beginColumn);
+  private trimFirstLine(codeInLines: string[], charactersToTrim: number) {
+    codeInLines[0] = codeInLines[0].slice(charactersToTrim);
   }
 
-  private trimEnding(codeLines: string[], endColumn: number) {
-    const lastElementIndex = codeLines.length - 1;
-    codeLines[lastElementIndex] = codeLines[lastElementIndex].slice(
+  private trimLastLine(codeInLines: string[], charactersToKeep: number) {
+    const lastElementIndex = codeInLines.length - 1;
+    codeInLines[lastElementIndex] = codeInLines[lastElementIndex].slice(
       0,
-      endColumn
+      charactersToKeep
     );
   }
 }
