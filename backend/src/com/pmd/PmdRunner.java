@@ -9,14 +9,14 @@ import java.nio.file.Path;
 
 public class PmdRunner {
 
-  private final String directoryWithFilesToAnalyze;
+  private final String fileOrDirectoryToAnalyze;
 
-  PmdRunner(String directoryWithFilesToAnalyze) {
-    this.directoryWithFilesToAnalyze = directoryWithFilesToAnalyze;
+  PmdRunner(String fileOrDirectoryToAnalyze) {
+    this.fileOrDirectoryToAnalyze = fileOrDirectoryToAnalyze;
   }
 
-  public PmdRunner(Path directoryWithFilesToAnalyze) {
-    this(directoryWithFilesToAnalyze.toString());
+  public PmdRunner(Path fileOrDirectoryToAnalyze) {
+    this(fileOrDirectoryToAnalyze.toString());
   }
 
   public PmdAnalysisResult run() throws IOException {
@@ -29,14 +29,14 @@ public class PmdRunner {
     }
   }
 
-  private PmdAnalysisResult runPmd(Path fileToWriteTheResult) throws IOException {
-    getPmdResult(fileToWriteTheResult);
-    return convertPmdResult(fileToWriteTheResult);
+  private PmdAnalysisResult runPmd(Path fileToWriteTheResultInto) throws IOException {
+    getPmdResult(fileToWriteTheResultInto);
+    return convertPmdResult(fileToWriteTheResultInto);
   }
 
-  private void getPmdResult(Path fileToWriteTheResult) {
+  private void getPmdResult(Path fileToWriteTheResultInto) {
     Pmd pmd = new Pmd();
-    pmd.configure(this.directoryWithFilesToAnalyze, fileToWriteTheResult.toString());
+    pmd.configure(this.fileOrDirectoryToAnalyze, fileToWriteTheResultInto.toString());
     pmd.analyze();
   }
 

@@ -15,10 +15,28 @@ import org.junit.jupiter.api.Test;
 class TestPmdResult {
 
   @Test
-    // todo revisar daqui para baixo
-  void name() throws IOException {
+  void testLongParameterList() throws IOException {
+    Path codeFile = getCodeFileWithLongParameterList();
+    PmdAnalysisResult actualResult = runPmdAndDeleteFile(codeFile);
+    removeDataThatVaries(actualResult);
+    String expectedResult = getLongParameterListExpectedResult();
+    Assertions.assertEquals(expectedResult, actualResult.toString());
+  }
 
-    String code = "package com;\n"
+  private Path getCodeFileWithLongParameterList() throws IOException {
+    String code = getCodeWithLongParameterList();
+    Path codeFile = Files.createTempFile("test-code", "");
+    try {
+      writeTextToFile(code, codeFile);
+    } catch (Exception e) {
+      Files.delete(codeFile);
+      throw e;
+    }
+    return codeFile;
+  }
+
+  private String getCodeWithLongParameterList() {
+    return "package com;\n"
         + "\n"
         + "public class ExampleLongParameter {\n"
         + "\n"
@@ -29,30 +47,63 @@ class TestPmdResult {
         + "  }\n"
         + "\n"
         + "}";
-
-    Path pmdResultFile = Files.createTempFile("pmd-report", "");
-    PmdAnalysisResult actualResult;
-    try {
-      try (BufferedWriter bufferedWriter = Files.newBufferedWriter(pmdResultFile)) {
-        bufferedWriter.write(code);
-      }
-      PmdRunner pmdRunner = new PmdRunner(pmdResultFile);
-      actualResult = pmdRunner.run();
-    } finally {
-      Files.delete(pmdResultFile);
-    }
-    removeVariableData(actualResult);
-    String expectedResult = "{\"formatVersion\":0,\"pmdVersion\":\"6.25.0\",\"timestamp\":\"\",\"files\":[{\"filename\":\"\",\"violations\":[{\"beginline\":5,\"begincolumn\":24,\"endline\":7,\"endcolumn\":19,\"description\":\"Avoid long parameter lists.\",\"rule\":\"ExcessiveParameterList\",\"ruleset\":\"Design\",\"priority\":3,\"externalInfoUrl\":\"https://pmd.github.io/pmd-6.25.0/pmd_rules_java_design.html#excessiveparameterlist\"}]}],\"suppressedViolations\":[],\"processingErrors\":[],\"configurationErrors\":[]}";
-    Assertions.assertEquals(expectedResult, actualResult.toString());
   }
 
-  private void removeVariableData(PmdAnalysisResult pmdAnalysisResult) {
-    pmdAnalysisResult.addProperty("timestamp", "");
-    JsonArray jsonArray = pmdAnalysisResult.getAsJsonArray("files");
-    for (JsonElement jsonElement : jsonArray) {
-      JsonObject jsonObject = jsonElement.getAsJsonObject();
-      jsonObject.addProperty("filename", "");
+  private void writeTextToFile(String text, Path file) throws IOException {
+    try (BufferedWriter bufferedWriter = Files.newBufferedWriter(file)) {
+      bufferedWriter.write(text);
     }
+  }
+
+  private PmdAnalysisResult runPmdAndDeleteFile(Path codeFile) throws IOException {
+    try {
+      return runPmd(codeFile);
+    } finally {
+      Files.delete(codeFile);
+    }
+  }
+
+  private PmdAnalysisResult runPmd(Path file) throws IOException {
+    PmdRunner pmdRunner = new PmdRunner(file);
+    return pmdRunner.run();
+  }
+
+  private void removeDataThatVaries(PmdAnalysisResult pmdAnalysisResult) {
+    removeTimestamp(pmdAnalysisResult);
+    removeFilenames(pmdAnalysisResult);
+  }
+
+  private void removeTimestamp(PmdAnalysisResult pmdAnalysisResult) {
+    pmdAnalysisResult.addProperty("timestamp", "");
+  }
+
+  private void removeFilenames(PmdAnalysisResult pmdAnalysisResult) {
+    JsonArray files = pmdAnalysisResult.getAsJsonArray("files");
+    for (JsonElement file : files) {
+      JsonObject fileAsJsonObject = file.getAsJsonObject();
+      fileAsJsonObject.addProperty("filename", "");
+    }
+  }
+
+  private String getLongParameterListExpectedResult() {
+    return "{\"formatVersion\":0,"
+        + "\"pmdVersion\":\"6.25.0\","
+        + "\"timestamp\":\"\","
+        + "\"files\":["
+        + "{\"filename\":\"\","
+        + "\"violations\":["
+        + "{\"beginline\":5,"
+        + "\"begincolumn\":24,"
+        + "\"endline\":7,"
+        + "\"endcolumn\":19,"
+        + "\"description\":\"Avoid long parameter lists.\","
+        + "\"rule\":\"ExcessiveParameterList\","
+        + "\"ruleset\":\"Design\","
+        + "\"priority\":3,"
+        + "\"externalInfoUrl\":\"https://pmd.github.io/pmd-6.25.0/pmd_rules_java_design.html#excessiveparameterlist\"}]}],"
+        + "\"suppressedViolations\":[],"
+        + "\"processingErrors\":[],"
+        + "\"configurationErrors\":[]}";
   }
 
 }
