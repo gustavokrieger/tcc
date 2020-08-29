@@ -1,4 +1,4 @@
-package servlets;
+package com.servlets;
 
 import com.CodeFilesService;
 import com.pmd.PmdAnalysisResult;
