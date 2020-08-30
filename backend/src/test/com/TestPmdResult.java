@@ -16,15 +16,19 @@ class TestPmdResult {
 
   @Test
   void testLongParameterList() throws IOException {
-    Path codeFile = getCodeFileWithLongParameterList();
+    String code = getCodeWithLongParameterList();
+    String expectedResult = getLongParameterListExpectedResult();
+    test(code, expectedResult);
+  }
+
+  void test(String code, String expectedResult) throws IOException {
+    Path codeFile = createTempFileWithCode(code);
     PmdAnalysisResult actualResult = runPmdAndDeleteFile(codeFile);
     removeDataThatVaries(actualResult);
-    String expectedResult = getLongParameterListExpectedResult();
     Assertions.assertEquals(expectedResult, actualResult.toString());
   }
 
-  private Path getCodeFileWithLongParameterList() throws IOException {
-    String code = getCodeWithLongParameterList();
+  private Path createTempFileWithCode(String code) throws IOException {
     Path codeFile = Files.createTempFile("test-code", "");
     try {
       writeTextToFile(code, codeFile);
