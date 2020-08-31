@@ -1,4 +1,4 @@
-package com.pmd;
+package br.univali.tccbackend.pmd;
 
 import net.sourceforge.pmd.PMD;
 import net.sourceforge.pmd.PMDConfiguration;

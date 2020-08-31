@@ -1,6 +1,6 @@
-package com.pmd;
+package br.univali.tccbackend.pmd;
 
-import com.CodeAnalysisParser;
+import br.univali.tccbackend.CodeAnalysisParser;
 import com.google.gson.JsonObject;
 import java.io.BufferedReader;
 import java.io.IOException;

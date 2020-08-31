@@ -1,4 +1,4 @@
-package com;
+package br.univali.tccbackend;
 
 import java.io.File;
 import java.io.IOException;

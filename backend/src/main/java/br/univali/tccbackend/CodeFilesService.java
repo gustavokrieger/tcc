@@ -1,7 +1,7 @@
-package com;
+package br.univali.tccbackend;
 
-import com.pmd.PmdAnalysisResult;
-import com.pmd.PmdRunner;
+import br.univali.tccbackend.pmd.PmdAnalysisResult;
+import br.univali.tccbackend.pmd.PmdRunner;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

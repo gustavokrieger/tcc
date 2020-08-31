@@ -1,4 +1,4 @@
-package test.com;
+package br.univali.tccbackend.pmd;
 
 class LongMethodTest implements PmdTest {
 
@@ -16,7 +16,7 @@ class LongMethodTest implements PmdTest {
 
   public String getExpectedResult() {
     return "{\"formatVersion\":0,"
-        + "\"pmdVersion\":\"6.25.0\","
+        + "\"pmdVersion\":\"6.26.0\","
         + "\"timestamp\":\"\","
         + "\"files\":["
         + "{\"filename\":\"\","
@@ -29,7 +29,7 @@ class LongMethodTest implements PmdTest {
         + "\"rule\":\"ExcessiveMethodLength\","
         + "\"ruleset\":\"Design\","
         + "\"priority\":3,"
-        + "\"externalInfoUrl\":\"https://pmd.github.io/pmd-6.25.0/pmd_rules_java_design.html#excessivemethodlength\"}]}],"
+        + "\"externalInfoUrl\":\"https://pmd.github.io/pmd-6.26.0/pmd_rules_java_design.html#excessivemethodlength\"}]}],"
         + "\"suppressedViolations\":[],"
         + "\"processingErrors\":[],"
         + "\"configurationErrors\":[]}";

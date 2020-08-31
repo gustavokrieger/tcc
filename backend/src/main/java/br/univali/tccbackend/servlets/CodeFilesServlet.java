@@ -1,7 +1,7 @@
-package com.servlets;
+package br.univali.tccbackend.servlets;
 
-import com.CodeFilesService;
-import com.pmd.PmdAnalysisResult;
+import br.univali.tccbackend.CodeFilesService;
+import br.univali.tccbackend.pmd.PmdAnalysisResult;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;

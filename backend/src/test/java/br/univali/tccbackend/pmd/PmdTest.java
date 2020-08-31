@@ -1,10 +1,8 @@
-package test.com;
+package br.univali.tccbackend.pmd;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.pmd.PmdAnalysisResult;
-import com.pmd.PmdRunner;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;

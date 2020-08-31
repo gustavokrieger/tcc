@@ -1,4 +1,4 @@
-package com;
+package br.univali.tccbackend;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
