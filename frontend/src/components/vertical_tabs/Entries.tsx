@@ -7,11 +7,7 @@ import {Path} from '../../pages/Path';
 import {Link} from 'react-router-dom';
 
 export default class Entries {
-  private readonly _entries: Entry[];
-
-  constructor() {
-    this._entries = [];
-  }
+  private readonly _entries: Entry[] = [];
 
   get innerArray(): Entry[] {
     return this._entries;
