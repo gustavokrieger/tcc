@@ -10,10 +10,14 @@ import java.nio.file.Path;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-interface PmdTest {
+abstract class PmdTest {
+
+  final String PMD_VERSION = "6.26.0";
+  final String PMD_RULES_URL =
+      "https://pmd.github.io/pmd-" + PMD_VERSION + "/pmd_rules_java_design.html";
 
   @Test
-  default void testCompleteExecutionTemplateMethod() throws IOException {
+  void testCompleteExecutionTemplateMethod() throws IOException {
     String code = getInputCode();
     Path codeFile = createTemporaryFileWithCode(code);
     PmdAnalysisResult pmdAnalysisResult = runPmdAndDeleteFile(codeFile);
@@ -22,7 +26,7 @@ interface PmdTest {
     Assertions.assertEquals(expectedResult, pmdAnalysisResult.toString());
   }
 
-  String getInputCode();
+  abstract String getInputCode();
 
   private Path createTemporaryFileWithCode(String code) throws IOException {
     Path codeFile = Files.createTempFile("test-code", "");
@@ -71,6 +75,6 @@ interface PmdTest {
     }
   }
 
-  String getExpectedResult();
+  abstract String getExpectedResult();
 
 }

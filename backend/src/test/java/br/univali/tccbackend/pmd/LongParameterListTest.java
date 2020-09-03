@@ -1,8 +1,8 @@
 package br.univali.tccbackend.pmd;
 
-class LongParameterListTest implements PmdTest {
+class LongParameterListTest extends PmdTest {
 
-  public String getInputCode() {
+  String getInputCode() {
     return "package com;\n"
         + "\n"
         + "public class ExampleLongParameter {\n"
@@ -16,9 +16,9 @@ class LongParameterListTest implements PmdTest {
         + "}";
   }
 
-  public String getExpectedResult() {
+  String getExpectedResult() {
     return "{\"formatVersion\":0,"
-        + "\"pmdVersion\":\"6.26.0\","
+        + "\"pmdVersion\":\"" + PMD_VERSION + "\","
         + "\"timestamp\":\"\","
         + "\"files\":["
         + "{\"filename\":\"\","
@@ -31,9 +31,10 @@ class LongParameterListTest implements PmdTest {
         + "\"rule\":\"ExcessiveParameterList\","
         + "\"ruleset\":\"Design\","
         + "\"priority\":3,"
-        + "\"externalInfoUrl\":\"https://pmd.github.io/pmd-6.26.0/pmd_rules_java_design.html#excessiveparameterlist\"}]}],"
+        + "\"externalInfoUrl\":\"" + PMD_RULES_URL + "#excessiveparameterlist\"}]}],"
         + "\"suppressedViolations\":[],"
         + "\"processingErrors\":[],"
         + "\"configurationErrors\":[]}";
   }
+
 }
