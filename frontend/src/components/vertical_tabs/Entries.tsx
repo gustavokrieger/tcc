@@ -1,46 +1,49 @@
 import {Entry} from './entry';
-import {PmdViolation} from '../../PmdViolation';
 import Button from '@material-ui/core/Button';
-import {PmdCodeSmellType} from '../../PmdCodeSmellType';
 import React from 'react';
 import {Path} from '../../pages/Path';
 import {Link} from 'react-router-dom';
+import CodeWithViolation from '../../CodeWithViolation';
 
 export default class Entries {
   private readonly _entries: Entry[] = [];
 
-  get innerArray(): Entry[] {
+  get innerEntries(): Entry[] {
     return this._entries;
   }
 
-  static fromGenerator(pmdViolations: Generator<PmdViolation>): Entries {
+  static fromGenerator(pmdViolations: Generator<CodeWithViolation>): Entries {
     const entries = new Entries();
     for (const pmdViolation of pmdViolations) {
-      entries.addViolation(pmdViolation);
+      entries.addViolationCase(pmdViolation);
     }
     return entries;
   }
 
-  private addViolation(pmdViolation: PmdViolation) {
-    const label = this.translate(pmdViolation.rule);
+  private addViolationCase(codeWithViolation: CodeWithViolation) {
+    const label = codeWithViolation.getTranslatedRule();
     const entry = this.getOrAddByLabel(label);
     const caseNumber = entry.elements.length + 1;
     const caseName = 'caso ' + caseNumber;
-    entry.elements.push(
-      <Button component={Link} to={Path.VIOLATION_CASE + '/' + caseName}>
+    const element = this.getViolationCaseElement(codeWithViolation, caseName);
+    entry.elements.push(element);
+  }
+
+  private getViolationCaseElement(
+    codeWithViolation: CodeWithViolation,
+    caseName: string
+  ): JSX.Element {
+    return (
+      <Button
+        component={Link}
+        to={{
+          pathname: Path.VIOLATION_CASE + '/' + caseName,
+          state: {code: codeWithViolation.getCodeThatCausedViolation()},
+        }}
+      >
         {caseName}
       </Button>
     );
-  }
-
-  // todo passar para outra classe
-  private translate(pmdCodeSmellType: PmdCodeSmellType) {
-    switch (pmdCodeSmellType) {
-      case PmdCodeSmellType.LONG_METHOD:
-        return 'método longo';
-      case PmdCodeSmellType.LONG_PARAMETER_LIST:
-        return 'lista de parâmetros longa';
-    }
   }
 
   private getOrAddByLabel(label: string) {

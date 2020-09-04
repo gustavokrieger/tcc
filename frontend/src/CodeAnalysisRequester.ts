@@ -1,7 +1,8 @@
 import assert from 'assert';
+import * as pmdOutput from './pmdOutput';
 
 export default class CodeAnalysisRequester {
-  async run(files: File[]): Promise<object> {
+  async run(files: File[]): Promise<pmdOutput.Report> {
     const request = this.createCodeFilesRequest(files);
     const response = await this.sendRequest(request);
     return await response.json();

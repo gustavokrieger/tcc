@@ -64,11 +64,11 @@ export default function VerticalTabs(props: VerticalTabsProps) {
     setValue(newValue);
   };
 
-  const tabs = props.entries.innerArray.map((entry, index) => (
+  const tabs = props.entries.innerEntries.map((entry, index) => (
     <Tab key={entry.label} label={entry.label} {...a11yProps(index)} />
   ));
 
-  const tabPanels = props.entries.innerArray.map(getTabPanelsFromEntry);
+  const tabPanels = props.entries.innerEntries.map(getTabPanelsFromEntry);
 
   function getTabPanelsFromEntry(
     entry: Entry,
