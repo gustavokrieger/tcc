@@ -6,24 +6,28 @@ import * as pmdOutput from './pmdOutput';
 export default class CodeWithViolation {
   private readonly lineSeparatedCode: string[];
   private readonly violation: pmdOutput.Violation;
+  private readonly fullPath: string;
 
   private constructor(
     lineSeparatedCode: string[],
-    violation: pmdOutput.Violation
+    violation: pmdOutput.Violation,
+    fullPath: string
   ) {
     this.lineSeparatedCode = lineSeparatedCode;
     this.violation = violation;
+    this.fullPath = fullPath;
   }
 
   static fromSynchronousFile(
     synchronousFile: SynchronousFile,
-    violation: pmdOutput.Violation
+    violation: pmdOutput.Violation,
+    fullPath: string
   ): CodeWithViolation {
     const code = synchronousFile.text;
     // todo encontrar forma melhor, vai quebrar quando codigo com regex
     const endOfLine = /\r?\n/;
     const lineSeparatedCode = code.split(endOfLine);
-    return new CodeWithViolation(lineSeparatedCode, violation);
+    return new CodeWithViolation(lineSeparatedCode, violation, fullPath);
   }
 
   getCodeThatCausedViolation(): string[] {

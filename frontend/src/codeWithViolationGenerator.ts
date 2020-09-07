@@ -24,7 +24,11 @@ export function* codeWithViolationGenerator(
       assert(outerIndex !== null);
       synchronousFiles.splice(outerIndex, 1);
 
-      yield CodeWithViolation.fromSynchronousFile(outerItem, violation);
+      yield CodeWithViolation.fromSynchronousFile(
+        outerItem,
+        violation,
+        file.filename
+      );
     }
   }
 }

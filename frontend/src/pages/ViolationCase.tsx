@@ -1,6 +1,8 @@
 import React from 'react';
 import {RouteComponentProps, useParams} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
+import SimpleCard from '../components/SimpleCard';
+import SimpleTabs from '../components/SimpleTabs';
 
 type Params = {
   title: string;
@@ -19,7 +21,11 @@ export default function ViolationCase(
   return (
     <div className="violation-case">
       <Typography variant="h3">{title}</Typography>
-      <Typography variant="body1">{code}</Typography>
+      <SimpleTabs
+        itemOne={<SimpleCard>{code}</SimpleCard>}
+        itemTwo={<SimpleCard>{code}</SimpleCard>}
+        itemThree={<SimpleCard>{code}</SimpleCard>}
+      />
     </div>
   );
 }
