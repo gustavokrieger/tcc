@@ -38,7 +38,7 @@ export default class Entries {
         component={Link}
         to={{
           pathname: Path.VIOLATION_CASE + '/' + caseName,
-          state: {code: codeWithViolation.getCodeThatCausedViolation()},
+          state: {codeWithViolation: codeWithViolation},
         }}
       >
         {caseName}
