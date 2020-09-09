@@ -30,7 +30,7 @@ export default class CodeWithViolation {
     return new CodeWithViolation(lineSeparatedCode, violation, fullPath);
   }
 
-  // todo formar classe com essas funções e as de antes de depois
+  // todo formar classe com essas funções e as de antes de depois. criar classe considerando 0 e subclasse 1
   getCodeThatCausedViolation(): string {
     const lineSeparatedResult = this.getLineSeparatedCodeThatCausedViolation();
     return this.joinLines(lineSeparatedResult);
@@ -38,8 +38,15 @@ export default class CodeWithViolation {
 
   private getLineSeparatedCodeThatCausedViolation(): string[] {
     const linesWithViolation = this.getLinesThatCausedViolation();
-    this.trimFirstLine(linesWithViolation, this.violation.begincolumn);
-    this.trimLastLine(linesWithViolation, this.violation.endcolumn);
+    linesWithViolation[0] = this.trimTextThatPrecedesPosition(
+      linesWithViolation[0],
+      this.violation.begincolumn
+    );
+    const lastLine = this.getIndexOfLastLine(linesWithViolation);
+    linesWithViolation[lastLine] = this.trimTextThatSucceedsPosition(
+      linesWithViolation[lastLine],
+      this.violation.endcolumn
+    );
     return linesWithViolation;
   }
 
@@ -47,16 +54,17 @@ export default class CodeWithViolation {
     return this.getLines(this.violation.beginline, this.violation.endline);
   }
 
-  private trimFirstLine(lineSeparatedCode: string[], charactersToTrim: number) {
-    lineSeparatedCode[0] = lineSeparatedCode[0].slice(charactersToTrim);
+  private getIndexOfLastLine(lines: string[]) {
+    return lines.length - 1;
   }
 
-  private trimLastLine(lineSeparatedCode: string[], charactersToKeep: number) {
-    const lastLine = lineSeparatedCode.length - 1;
-    lineSeparatedCode[lastLine] = lineSeparatedCode[lastLine].slice(
-      undefined,
-      charactersToKeep
-    );
+  private trimTextThatPrecedesPosition(text: string, position: number) {
+    position--;
+    return text.slice(position);
+  }
+
+  private trimTextThatSucceedsPosition(line: string, endingColumn: number) {
+    return line.slice(undefined, endingColumn);
   }
 
   private getLines(firstLine: number, lastLine: number) {
@@ -88,7 +96,11 @@ export default class CodeWithViolation {
 
   private getLineSeparatedCodeBeforeViolation(): string[] {
     const linesBeforeViolation = this.getLinesBeforeViolation();
-    this.trimLastLine(linesBeforeViolation, this.violation.begincolumn);
+    const lastLine = this.getIndexOfLastLine(linesBeforeViolation);
+    linesBeforeViolation[lastLine] = this.trimTextThatSucceedsPosition(
+      linesBeforeViolation[lastLine],
+      this.violation.begincolumn - 1
+    );
     return linesBeforeViolation;
   }
 
@@ -105,7 +117,10 @@ export default class CodeWithViolation {
 
   private getLineSeparatedCodeAfterViolation(): string[] {
     const linesAfterViolation = this.getLinesAfterViolation();
-    this.trimFirstLine(linesAfterViolation, this.violation.endcolumn);
+    linesAfterViolation[0] = this.trimTextThatPrecedesPosition(
+      linesAfterViolation[0],
+      this.violation.endcolumn + 1
+    );
     return linesAfterViolation;
   }
 
