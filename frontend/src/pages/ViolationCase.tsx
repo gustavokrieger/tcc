@@ -20,17 +20,17 @@ export default function ViolationCase(
   const codeWithViolation: CodeWithViolation =
     props.location.state.codeWithViolation;
 
-  const code = codeWithViolation.getCodeThatCausedViolation();
-
-  function renderCard(text: string) {
+  function renderCodeCard(codeWithViolation: CodeWithViolation): JSX.Element {
     return (
       <SimpleCard>
         <Typography
           variant="body2"
           component="p"
-          style={{whiteSpace: 'pre-line'}}
+          style={{whiteSpace: 'pre-wrap'}}
         >
-          {text}
+          {codeWithViolation.getCodeBeforeViolation()}
+          <mark>{codeWithViolation.getCodeThatCausedViolation()}</mark>
+          {codeWithViolation.getCodeAfterViolation()}
         </Typography>
       </SimpleCard>
     );
@@ -40,7 +40,7 @@ export default function ViolationCase(
     <div className="violation-case">
       <Typography variant="h3">{title}</Typography>
       <SimpleTabs
-        itemOne={renderCard(code)}
+        itemOne={renderCodeCard(codeWithViolation)}
         itemTwo={<SimpleCard>hold</SimpleCard>}
         itemThree={<SimpleCard>hold</SimpleCard>}
       />

@@ -4,8 +4,6 @@ import * as pmdOutput from './pmdOutput';
 
 // todo adicionar campo de nome de arquivo completo
 export default class CodeWithViolation {
-  private readonly NEWLINE_OF_RETURN = '\n';
-
   private readonly lineSeparatedCode: string[];
   private readonly violation: pmdOutput.Violation;
   private readonly fullPath: string;
@@ -32,9 +30,10 @@ export default class CodeWithViolation {
     return new CodeWithViolation(lineSeparatedCode, violation, fullPath);
   }
 
+  // todo formar classe com essas funções e as de antes de depois
   getCodeThatCausedViolation(): string {
     const lineSeparatedResult = this.getLineSeparatedCodeThatCausedViolation();
-    return lineSeparatedResult.join(this.NEWLINE_OF_RETURN);
+    return this.joinLines(lineSeparatedResult);
   }
 
   private getLineSeparatedCodeThatCausedViolation(): string[] {
@@ -48,7 +47,7 @@ export default class CodeWithViolation {
     const firstLine = this.getZeroIfNumberIsNegative(
       this.violation.beginline - 1
     );
-    return this.lineSeparatedCode.slice(firstLine, this.violation.endline);
+    return this.sliceLines(firstLine, this.violation.endline);
   }
 
   private getZeroIfNumberIsNegative(number: number): number {
@@ -69,6 +68,15 @@ export default class CodeWithViolation {
     );
   }
 
+  private sliceLines(start: number, end: number) {
+    return this.lineSeparatedCode.slice(start, end);
+  }
+
+  private joinLines(lines: string[]): string {
+    const endOfLine = '\n';
+    return lines.join(endOfLine);
+  }
+
   // todo talvez passar para outra classe
   getTranslatedRule() {
     const pmdCodeSmellType = this.violation.rule as PmdCodeSmellType;
@@ -78,5 +86,41 @@ export default class CodeWithViolation {
       case PmdCodeSmellType.LONG_PARAMETER_LIST:
         return 'lista de parâmetros longa';
     }
+  }
+
+  getCodeBeforeViolation(): string {
+    const lineSeparatedResult = this.getLineSeparatedCodeBeforeViolation();
+    return this.joinLines(lineSeparatedResult);
+  }
+
+  private getLineSeparatedCodeBeforeViolation(): string[] {
+    const linesBeforeViolation = this.getLinesBeforeViolation();
+    this.trimLastLine(linesBeforeViolation, this.violation.begincolumn);
+    return linesBeforeViolation;
+  }
+
+  private getLinesBeforeViolation(lines = 10): string[] {
+    const firstLine = this.getZeroIfNumberIsNegative(
+      this.violation.beginline - lines - 1
+    );
+    const lastLine = this.violation.beginline;
+    return this.sliceLines(firstLine, lastLine);
+  }
+
+  getCodeAfterViolation(): string {
+    const lineSeparatedResult = this.getLineSeparatedCodeAfterViolation();
+    return this.joinLines(lineSeparatedResult);
+  }
+
+  private getLineSeparatedCodeAfterViolation(): string[] {
+    const linesAfterViolation = this.getLinesAfterViolation();
+    this.trimFirstLine(linesAfterViolation, this.violation.endcolumn);
+    return linesAfterViolation;
+  }
+
+  private getLinesAfterViolation(lines = 10): string[] {
+    const firstLine = this.violation.endline;
+    const lastLine = this.violation.endline + lines;
+    return this.sliceLines(firstLine, lastLine);
   }
 }
