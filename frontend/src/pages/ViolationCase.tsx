@@ -19,8 +19,9 @@ export default function ViolationCase(
   const {title} = useParams<Params>();
   const codeWithViolation: CodeWithViolation =
     props.location.state.codeWithViolation;
+  const codeThatCausedViolation: string = codeWithViolation.getCodeThatCausedViolation();
 
-  function renderCodeCard(codeWithViolation: CodeWithViolation): JSX.Element {
+  function renderCodeCard(): JSX.Element {
     return (
       <SimpleCard>
         <Typography
@@ -29,8 +30,18 @@ export default function ViolationCase(
           style={{whiteSpace: 'pre-wrap'}}
         >
           {codeWithViolation.getCodeBeforeViolation()}
-          <mark>{codeWithViolation.getCodeThatCausedViolation()}</mark>
+          <mark>{codeThatCausedViolation}</mark>
           {codeWithViolation.getCodeAfterViolation()}
+        </Typography>
+      </SimpleCard>
+    );
+  }
+
+  function renderDescriptionCard(): JSX.Element {
+    return (
+      <SimpleCard>
+        <Typography variant="body2" component="p">
+          {codeWithViolation.getViolationDescription(codeThatCausedViolation)}
         </Typography>
       </SimpleCard>
     );
@@ -40,8 +51,8 @@ export default function ViolationCase(
     <div className="violation-case">
       <Typography variant="h3">{title}</Typography>
       <SimpleTabs
-        itemOne={renderCodeCard(codeWithViolation)}
-        itemTwo={<SimpleCard>hold</SimpleCard>}
+        itemOne={renderCodeCard()}
+        itemTwo={renderDescriptionCard()}
         itemThree={<SimpleCard>hold</SimpleCard>}
       />
     </div>

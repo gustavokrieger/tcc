@@ -1,6 +1,9 @@
 import {PmdCodeSmellType} from './PmdCodeSmellType';
 import SynchronousFile from './SynchronousFile';
 import * as pmdOutput from './pmdOutput';
+import CodeSmellDescription from './code_smells_descriptions/CodeSmellDescription';
+import LongMethodDescription from './code_smells_descriptions/LongMethodDescription';
+import LongParameterListDescription from './code_smells_descriptions/LongParameterListDescription';
 
 // todo adicionar campo de nome de arquivo completo
 export default class CodeWithViolation {
@@ -86,6 +89,27 @@ export default class CodeWithViolation {
         return 'método longo';
       case PmdCodeSmellType.LONG_PARAMETER_LIST:
         return 'lista de parâmetros longa';
+    }
+  }
+
+  // todo talvez passar para outra classe
+  getViolationDescription(codeThatCausedViolation: string): string {
+    const codeSmellDescription = this.getCodeSmellDescription(
+      codeThatCausedViolation
+    );
+    return codeSmellDescription.getDescription();
+  }
+
+  // todo talvez passar para outra classe
+  private getCodeSmellDescription(
+    codeThatCausedViolation: string
+  ): CodeSmellDescription {
+    const pmdCodeSmellType = this.violation.rule as PmdCodeSmellType;
+    switch (pmdCodeSmellType) {
+      case PmdCodeSmellType.LONG_METHOD:
+        return new LongMethodDescription(codeThatCausedViolation);
+      case PmdCodeSmellType.LONG_PARAMETER_LIST:
+        return new LongParameterListDescription(codeThatCausedViolation);
     }
   }
 
