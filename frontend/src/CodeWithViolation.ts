@@ -44,14 +44,7 @@ export default class CodeWithViolation {
   }
 
   private getLinesThatCausedViolation(): string[] {
-    const firstLine = this.getZeroIfNumberIsNegative(
-      this.violation.beginline - 1
-    );
-    return this.sliceLines(firstLine, this.violation.endline);
-  }
-
-  private getZeroIfNumberIsNegative(number: number): number {
-    return Math.max(number, 0);
+    return this.getLines(this.violation.beginline, this.violation.endline);
   }
 
   private trimFirstLine(lineSeparatedCode: string[], charactersToTrim: number) {
@@ -59,17 +52,17 @@ export default class CodeWithViolation {
   }
 
   private trimLastLine(lineSeparatedCode: string[], charactersToKeep: number) {
-    const lastLine = this.getZeroIfNumberIsNegative(
-      lineSeparatedCode.length - 1
-    );
+    const lastLine = lineSeparatedCode.length - 1;
     lineSeparatedCode[lastLine] = lineSeparatedCode[lastLine].slice(
       undefined,
       charactersToKeep
     );
   }
 
-  private sliceLines(start: number, end: number) {
-    return this.lineSeparatedCode.slice(start, end);
+  private getLines(firstLine: number, lastLine: number) {
+    firstLine = Math.max(1, firstLine);
+    firstLine--; // Adjusts for array.
+    return this.lineSeparatedCode.slice(firstLine, lastLine);
   }
 
   private joinLines(lines: string[]): string {
@@ -100,11 +93,9 @@ export default class CodeWithViolation {
   }
 
   private getLinesBeforeViolation(lines = 10): string[] {
-    const firstLine = this.getZeroIfNumberIsNegative(
-      this.violation.beginline - lines - 1
-    );
+    const firstLine = this.violation.beginline - lines;
     const lastLine = this.violation.beginline;
-    return this.sliceLines(firstLine, lastLine);
+    return this.getLines(firstLine, lastLine);
   }
 
   getCodeAfterViolation(): string {
@@ -121,6 +112,6 @@ export default class CodeWithViolation {
   private getLinesAfterViolation(lines = 10): string[] {
     const firstLine = this.violation.endline;
     const lastLine = this.violation.endline + lines;
-    return this.sliceLines(firstLine, lastLine);
+    return this.getLines(firstLine, lastLine);
   }
 }
