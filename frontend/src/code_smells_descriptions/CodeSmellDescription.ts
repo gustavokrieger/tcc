@@ -11,8 +11,12 @@ export default abstract class CodeSmellDescription {
 
   abstract getDescription(): string;
 
-  protected formatCode(text: string): string {
-    return text.trim();
-    // todo aplicar remover espaço duplo e newlines
+  protected formatCode(code: string): string {
+    code = code.trim();
+    return this.replaceWhitespacesWithOneSpace(code);
+  }
+
+  private replaceWhitespacesWithOneSpace(text: string) {
+    return text.replace(/\s+/g, ' ');
   }
 }

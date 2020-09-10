@@ -28,7 +28,7 @@ export default class CodeWithViolation {
   ): CodeWithViolation {
     const code = synchronousFile.text;
     // todo encontrar forma melhor, vai quebrar quando codigo com regex
-    const endOfLine = /\r?\n/;
+    const endOfLine = /\r?\n|\r/;
     const lineSeparatedCode = code.split(endOfLine);
     return new CodeWithViolation(lineSeparatedCode, violation, fullPath);
   }

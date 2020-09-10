@@ -1,8 +1,8 @@
 import CodeSmellDescription from './CodeSmellDescription';
 
 export default class LongParameterListDescription extends CodeSmellDescription {
-  protected formatCode(text: string): string {
-    let code = super.formatCode(text);
+  protected formatCode(code: string): string {
+    code = super.formatCode(code);
     code = this.removeParentheses(code);
     return code.trim();
   }
