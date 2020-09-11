@@ -4,6 +4,7 @@ import * as pmdOutput from './pmdOutput';
 import CodeSmellDescription from './code_smells_descriptions/CodeSmellDescription';
 import LongMethodDescription from './code_smells_descriptions/LongMethodDescription';
 import LongParameterListDescription from './code_smells_descriptions/LongParameterListDescription';
+import TextPruner from './TextPruner';
 
 // todo adicionar campo de nome de arquivo completo
 export default class CodeWithViolation {
@@ -33,52 +34,68 @@ export default class CodeWithViolation {
     return new CodeWithViolation(lineSeparatedCode, violation, fullPath);
   }
 
-  // todo formar classe com essas funções e as de antes de depois. criar classe considerando 0 e subclasse 1
   getCodeThatCausedViolation(): string {
-    const lineSeparatedResult = this.getLineSeparatedCodeThatCausedViolation();
-    return this.joinLines(lineSeparatedResult);
+    const textPruner = new TextPruner(this.lineSeparatedCode);
+    this.pruneLinesThatCausedViolation(textPruner);
+    this.pruneFistLineThatCausedViolation(textPruner);
+    this.pruneLastLineThatCausedViolation(textPruner);
+    return textPruner.getText();
   }
 
-  private getLineSeparatedCodeThatCausedViolation(): string[] {
-    const linesWithViolation = this.getLinesThatCausedViolation();
-    linesWithViolation[0] = this.trimTextThatPrecedesPosition(
-      linesWithViolation[0],
-      this.violation.begincolumn
-    );
-    const lastLine = this.getIndexOfLastLine(linesWithViolation);
-    linesWithViolation[lastLine] = this.trimTextThatSucceedsPosition(
-      linesWithViolation[lastLine],
-      this.violation.endcolumn
-    );
-    return linesWithViolation;
+  private pruneLinesThatCausedViolation(textPruner: TextPruner) {
+    const start = this.violation.beginline - 1;
+    const end = this.violation.endline;
+    textPruner.sliceLines(start, end);
   }
 
-  private getLinesThatCausedViolation(): string[] {
-    return this.getLines(this.violation.beginline, this.violation.endline);
+  private pruneFistLineThatCausedViolation(textPruner: TextPruner) {
+    const character = this.violation.begincolumn - 1;
+    const line = textPruner.getFirstLineIndex();
+    textPruner.removePredecessorsOfCharacterFromLine(character, line);
   }
 
-  private getIndexOfLastLine(lines: string[]) {
-    return lines.length - 1;
+  private pruneLastLineThatCausedViolation(textPruner: TextPruner) {
+    const character = this.violation.endcolumn;
+    const line = textPruner.getLastLineIndex();
+    textPruner.removeSuccessorsOfCharacterFromLine(character, line);
   }
 
-  private trimTextThatPrecedesPosition(text: string, position: number) {
-    position--;
-    return text.slice(position);
+  getCodeBeforeViolation(): string {
+    const textPruner = new TextPruner(this.lineSeparatedCode);
+    this.pruneLinesBeforeViolation(textPruner);
+    this.pruneLastLineBeforeViolation(textPruner);
+    return textPruner.getText();
   }
 
-  private trimTextThatSucceedsPosition(line: string, endingColumn: number) {
-    return line.slice(undefined, endingColumn);
+  private pruneLinesBeforeViolation(textPruner: TextPruner) {
+    const start = textPruner.getFirstLineIndex();
+    const end = this.violation.beginline;
+    textPruner.sliceLines(start, end);
   }
 
-  private getLines(firstLine: number, lastLine: number) {
-    firstLine = Math.max(1, firstLine);
-    firstLine--; // Adjusts for array.
-    return this.lineSeparatedCode.slice(firstLine, lastLine);
+  private pruneLastLineBeforeViolation(textPruner: TextPruner) {
+    const character = this.violation.begincolumn - 1;
+    const line = textPruner.getLastLineIndex();
+    textPruner.removeSuccessorsOfCharacterFromLine(character, line);
   }
 
-  private joinLines(lines: string[]): string {
-    const endOfLine = '\n';
-    return lines.join(endOfLine);
+  getCodeAfterViolation(): string {
+    const textPruner = new TextPruner(this.lineSeparatedCode);
+    this.pruneLinesAfterViolation(textPruner);
+    this.pruneFirstLineAfterViolation(textPruner);
+    return textPruner.getText();
+  }
+
+  private pruneLinesAfterViolation(textPruner: TextPruner) {
+    const start = this.violation.endline - 1;
+    const end = textPruner.getLastLineIndex() + 1;
+    textPruner.sliceLines(start, end);
+  }
+
+  private pruneFirstLineAfterViolation(textPruner: TextPruner) {
+    const character = this.violation.endcolumn;
+    const line = textPruner.getFirstLineIndex();
+    textPruner.removePredecessorsOfCharacterFromLine(character, line);
   }
 
   // todo talvez passar para outra classe
@@ -111,46 +128,5 @@ export default class CodeWithViolation {
       case PmdCodeSmellType.LONG_PARAMETER_LIST:
         return new LongParameterListDescription(codeThatCausedViolation);
     }
-  }
-
-  getCodeBeforeViolation(): string {
-    const lineSeparatedResult = this.getLineSeparatedCodeBeforeViolation();
-    return this.joinLines(lineSeparatedResult);
-  }
-
-  private getLineSeparatedCodeBeforeViolation(): string[] {
-    const linesBeforeViolation = this.getLinesBeforeViolation();
-    const lastLine = this.getIndexOfLastLine(linesBeforeViolation);
-    linesBeforeViolation[lastLine] = this.trimTextThatSucceedsPosition(
-      linesBeforeViolation[lastLine],
-      this.violation.begincolumn - 1
-    );
-    return linesBeforeViolation;
-  }
-
-  private getLinesBeforeViolation(lines = 10): string[] {
-    const firstLine = this.violation.beginline - lines;
-    const lastLine = this.violation.beginline;
-    return this.getLines(firstLine, lastLine);
-  }
-
-  getCodeAfterViolation(): string {
-    const lineSeparatedResult = this.getLineSeparatedCodeAfterViolation();
-    return this.joinLines(lineSeparatedResult);
-  }
-
-  private getLineSeparatedCodeAfterViolation(): string[] {
-    const linesAfterViolation = this.getLinesAfterViolation();
-    linesAfterViolation[0] = this.trimTextThatPrecedesPosition(
-      linesAfterViolation[0],
-      this.violation.endcolumn + 1
-    );
-    return linesAfterViolation;
-  }
-
-  private getLinesAfterViolation(lines = 10): string[] {
-    const firstLine = this.violation.endline;
-    const lastLine = this.violation.endline + lines;
-    return this.getLines(firstLine, lastLine);
   }
 }

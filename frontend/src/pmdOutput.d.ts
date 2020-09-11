@@ -12,6 +12,5 @@ export type Violation = {
   begincolumn: number;
   endline: number;
   endcolumn: number;
-  description: string;
   rule: string;
 };

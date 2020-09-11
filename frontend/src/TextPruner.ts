@@ -1,8 +1,14 @@
-export default class TextTrimmer {
+// todo refatorar para apenas fazer o slice por ultimo
+export default class TextPruner {
   private lines: string[];
 
   constructor(lines: string[]) {
-    this.lines = lines;
+    this.lines = [...lines]; // todo depois de refatorar fazer normal
+  }
+
+  getText(): string {
+    const endOfLine = '\n';
+    return this.lines.join(endOfLine);
   }
 
   getFirstLineIndex() {
@@ -13,15 +19,11 @@ export default class TextTrimmer {
     return this.lines.length - 1;
   }
 
-  removeLinesBeforeIndex(lineIndex: number) {
-    this.lines = this.lines.slice(lineIndex);
+  sliceLines(start?: number, end?: number) {
+    this.lines = this.lines.slice(start, end);
   }
 
-  removeLinesAfterIndex(lineIndex: number) {
-    this.lines = this.lines.slice(undefined, lineIndex);
-  }
-
-  private removePrecedentsOfCharacterFromLineByIndexes(
+  removePredecessorsOfCharacterFromLine(
     characterIndex: number,
     lineIndex: number
   ) {
@@ -29,7 +31,7 @@ export default class TextTrimmer {
     this.lines[lineIndex] = line.slice(characterIndex);
   }
 
-  private removeSuccessorsOfCharacterFromLineByIndexes(
+  removeSuccessorsOfCharacterFromLine(
     characterIndex: number,
     lineIndex: number
   ) {
