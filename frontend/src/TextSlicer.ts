@@ -1,11 +1,9 @@
 export default class TextSlicer {
-  private readonly DEFAULT_COORDINATE_VALUE = 0;
-
   private readonly lines: string[];
-  private _startLine = this.DEFAULT_COORDINATE_VALUE;
-  private _endLine = this.DEFAULT_COORDINATE_VALUE;
-  private _startColumn = this.DEFAULT_COORDINATE_VALUE;
-  private _endColumn = this.DEFAULT_COORDINATE_VALUE;
+  private _startLine: number | undefined;
+  private _endLine: number | undefined;
+  private _startColumn: number | undefined;
+  private _endColumn: number | undefined;
 
   constructor(lines: string[]) {
     this.lines = lines;
@@ -25,13 +23,6 @@ export default class TextSlicer {
 
   set endColumn(value: number) {
     this._endColumn = value;
-  }
-
-  resetCoordinates() {
-    this._startLine = this.DEFAULT_COORDINATE_VALUE;
-    this._endLine = this.DEFAULT_COORDINATE_VALUE;
-    this._startColumn = this.DEFAULT_COORDINATE_VALUE;
-    this._endColumn = this.DEFAULT_COORDINATE_VALUE;
   }
 
   getJoinedSlicedSelection(endOfLine = '\n'): string {
