@@ -6,7 +6,6 @@ import LongMethodDescription from './code_smells_descriptions/LongMethodDescript
 import LongParameterListDescription from './code_smells_descriptions/LongParameterListDescription';
 import TextPruner from './TextPruner';
 
-// todo adicionar campo de nome de arquivo completo
 export default class CodeWithViolation {
   private readonly lineSeparatedCode: string[];
   private readonly violation: pmdOutput.Violation;
