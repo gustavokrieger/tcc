@@ -4,10 +4,10 @@ import * as pmdOutput from './pmdOutput';
 import CodeSmellDescription from './code_smells_descriptions/CodeSmellDescription';
 import LongMethodDescription from './code_smells_descriptions/LongMethodDescription';
 import LongParameterListDescription from './code_smells_descriptions/LongParameterListDescription';
-import TextPruner from './TextPruner';
+import TextSlicer from './TextSlicer';
 
 export default class CodeWithViolation {
-  private readonly lineSeparatedCode: string[];
+  private readonly textSlicer: TextSlicer;
   private readonly violation: pmdOutput.Violation;
   private readonly fullPath: string;
 
@@ -16,7 +16,7 @@ export default class CodeWithViolation {
     violation: pmdOutput.Violation,
     fullPath: string
   ) {
-    this.lineSeparatedCode = lineSeparatedCode;
+    this.textSlicer = new TextSlicer(lineSeparatedCode); // todo refatorar para ser por injeção
     this.violation = violation;
     this.fullPath = fullPath;
   }
@@ -34,67 +34,27 @@ export default class CodeWithViolation {
   }
 
   getCodeThatCausedViolation(): string {
-    const textPruner = new TextPruner(this.lineSeparatedCode);
-    this.pruneLinesThatCausedViolation(textPruner);
-    this.pruneFistLineThatCausedViolation(textPruner);
-    this.pruneLastLineThatCausedViolation(textPruner);
-    return textPruner.getText();
-  }
-
-  private pruneLinesThatCausedViolation(textPruner: TextPruner) {
-    const start = this.violation.beginline - 1;
-    const end = this.violation.endline;
-    textPruner.sliceLines(start, end);
-  }
-
-  private pruneFistLineThatCausedViolation(textPruner: TextPruner) {
-    const character = this.violation.begincolumn - 1;
-    const line = textPruner.getFirstLineIndex();
-    textPruner.removePredecessorsOfCharacterFromLine(character, line);
-  }
-
-  private pruneLastLineThatCausedViolation(textPruner: TextPruner) {
-    const character = this.violation.endcolumn;
-    const line = textPruner.getLastLineIndex();
-    textPruner.removeSuccessorsOfCharacterFromLine(character, line);
+    this.textSlicer.startLine = this.violation.beginline - 1;
+    this.textSlicer.endLine = this.violation.endline;
+    this.textSlicer.startColumn = this.violation.begincolumn - 1;
+    this.textSlicer.endColumn = this.violation.endcolumn;
+    return this.textSlicer.getJoinedSlicedSelection();
   }
 
   getCodeBeforeViolation(): string {
-    const textPruner = new TextPruner(this.lineSeparatedCode);
-    this.pruneLinesBeforeViolation(textPruner);
-    this.pruneLastLineBeforeViolation(textPruner);
-    return textPruner.getText();
-  }
-
-  private pruneLinesBeforeViolation(textPruner: TextPruner) {
-    const start = textPruner.getFirstLineIndex();
-    const end = this.violation.beginline;
-    textPruner.sliceLines(start, end);
-  }
-
-  private pruneLastLineBeforeViolation(textPruner: TextPruner) {
-    const character = this.violation.begincolumn - 1;
-    const line = textPruner.getLastLineIndex();
-    textPruner.removeSuccessorsOfCharacterFromLine(character, line);
+    this.textSlicer.startLine = undefined;
+    this.textSlicer.endLine = this.violation.beginline;
+    this.textSlicer.startColumn = undefined;
+    this.textSlicer.endColumn = this.violation.begincolumn - 1;
+    return this.textSlicer.getJoinedSlicedSelection();
   }
 
   getCodeAfterViolation(): string {
-    const textPruner = new TextPruner(this.lineSeparatedCode);
-    this.pruneLinesAfterViolation(textPruner);
-    this.pruneFirstLineAfterViolation(textPruner);
-    return textPruner.getText();
-  }
-
-  private pruneLinesAfterViolation(textPruner: TextPruner) {
-    const start = this.violation.endline - 1;
-    const end = textPruner.getLastLineIndex() + 1;
-    textPruner.sliceLines(start, end);
-  }
-
-  private pruneFirstLineAfterViolation(textPruner: TextPruner) {
-    const character = this.violation.endcolumn;
-    const line = textPruner.getFirstLineIndex();
-    textPruner.removePredecessorsOfCharacterFromLine(character, line);
+    this.textSlicer.startLine = this.violation.endline - 1;
+    this.textSlicer.endLine = undefined;
+    this.textSlicer.startColumn = this.violation.endcolumn;
+    this.textSlicer.endColumn = undefined;
+    return this.textSlicer.getJoinedSlicedSelection();
   }
 
   // todo talvez passar para outra classe

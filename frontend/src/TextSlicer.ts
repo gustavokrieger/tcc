@@ -9,19 +9,19 @@ export default class TextSlicer {
     this.lines = lines;
   }
 
-  set startLine(value: number) {
+  set startLine(value: number | undefined) {
     this._startLine = value;
   }
 
-  set endLine(value: number) {
+  set endLine(value: number | undefined) {
     this._endLine = value;
   }
 
-  set startColumn(value: number) {
+  set startColumn(value: number | undefined) {
     this._startColumn = value;
   }
 
-  set endColumn(value: number) {
+  set endColumn(value: number | undefined) {
     this._endColumn = value;
   }
 
