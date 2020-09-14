@@ -5,6 +5,7 @@ import CodeSmellDescription from './code_smells_descriptions/CodeSmellDescriptio
 import LongMethodDescription from './code_smells_descriptions/LongMethodDescription';
 import LongParameterListDescription from './code_smells_descriptions/LongParameterListDescription';
 import TextSlicer from './TextSlicer';
+import DataClass from './code_smells_descriptions/DataClass';
 
 export default class CodeWithViolation {
   private readonly textSlicer: TextSlicer;
@@ -65,6 +66,8 @@ export default class CodeWithViolation {
         return 'método longo';
       case PmdCodeSmellType.LONG_PARAMETER_LIST:
         return 'lista de parâmetros longa';
+      case PmdCodeSmellType.DATA_CLASS:
+        return 'classes de dados';
     }
   }
 
@@ -86,6 +89,8 @@ export default class CodeWithViolation {
         return new LongMethodDescription(codeThatCausedViolation);
       case PmdCodeSmellType.LONG_PARAMETER_LIST:
         return new LongParameterListDescription(codeThatCausedViolation);
+      case PmdCodeSmellType.DATA_CLASS:
+        return new DataClass(codeThatCausedViolation);
     }
   }
 }
