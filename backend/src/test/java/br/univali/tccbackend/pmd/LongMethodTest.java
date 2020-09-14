@@ -2,10 +2,9 @@ package br.univali.tccbackend.pmd;
 
 class LongMethodTest extends PmdTest {
 
+  @Override
   String getInputCode() {
-    return "package com;\n"
-        + "\n"
-        + "class Example {\n"
+    return "public class LongMethod {\n"
         + "\n"
         + "    void test(){\n"
         + "        System.out.println(\"\");\n".repeat(100)
@@ -14,6 +13,7 @@ class LongMethodTest extends PmdTest {
         + "}\n";
   }
 
+  @Override
   String getExpectedResult() {
     return "{\"formatVersion\":0,"
         + "\"pmdVersion\":\"" + PMD_VERSION + "\","
@@ -21,9 +21,9 @@ class LongMethodTest extends PmdTest {
         + "\"files\":["
         + "{\"filename\":\"\","
         + "\"violations\":["
-        + "{\"beginline\":5,"
+        + "{\"beginline\":3,"
         + "\"begincolumn\":5,"
-        + "\"endline\":106,"
+        + "\"endline\":104,"
         + "\"endcolumn\":5,"
         + "\"description\":\"Avoid really long methods.\","
         + "\"rule\":\"ExcessiveMethodLength\","

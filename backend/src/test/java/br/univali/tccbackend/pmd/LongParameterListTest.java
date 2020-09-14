@@ -2,10 +2,9 @@ package br.univali.tccbackend.pmd;
 
 class LongParameterListTest extends PmdTest {
 
+  @Override
   String getInputCode() {
-    return "package com;\n"
-        + "\n"
-        + "public class ExampleLongParameter {\n"
+    return "public class LongParameter {\n"
         + "\n"
         + "  public void addPerson(\n"
         + "      int birthYear, int birthMonth, int birthDate, int height, int weight, int a, int b, int c,\n"
@@ -16,6 +15,7 @@ class LongParameterListTest extends PmdTest {
         + "}";
   }
 
+  @Override
   String getExpectedResult() {
     return "{\"formatVersion\":0,"
         + "\"pmdVersion\":\"" + PMD_VERSION + "\","
@@ -23,9 +23,9 @@ class LongParameterListTest extends PmdTest {
         + "\"files\":["
         + "{\"filename\":\"\","
         + "\"violations\":["
-        + "{\"beginline\":5,"
+        + "{\"beginline\":3,"
         + "\"begincolumn\":24,"
-        + "\"endline\":7,"
+        + "\"endline\":5,"
         + "\"endcolumn\":19,"
         + "\"description\":\"Avoid long parameter lists.\","
         + "\"rule\":\"ExcessiveParameterList\","
