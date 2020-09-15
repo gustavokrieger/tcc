@@ -1,7 +1,16 @@
 import CodeSmellDescription from './CodeSmellDescription';
+import assert from 'assert';
 
 export default class DataClass extends CodeSmellDescription {
   getDescription(): string {
-    return 'Descrição de Classe de Dados';
+    const className = this.getClassName();
+    return `A classe "${className}" é uma classe de dados.`;
+  }
+
+  private getClassName(): string {
+    const regex = /(?:class) ([\w$]+)/;
+    const match = this.codeThatCausedViolation.match(regex);
+    assert(match !== null);
+    return match[1];
   }
 }

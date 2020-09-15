@@ -9,8 +9,6 @@ export default abstract class CodeSmellDescription {
     return this._codeThatCausedViolation;
   }
 
-  abstract getDescription(): string;
-
   protected formatCode(code: string): string {
     code = code.trim();
     return this.replaceWhitespacesWithOneSpace(code);
@@ -19,4 +17,6 @@ export default abstract class CodeSmellDescription {
   private replaceWhitespacesWithOneSpace(text: string) {
     return text.replace(/\s+/g, ' ');
   }
+
+  abstract getDescription(): string;
 }
