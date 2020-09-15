@@ -1,7 +1,7 @@
 import CodeSmellDescription from './CodeSmellDescription';
 import assert from 'assert';
 
-export default class DataClass extends CodeSmellDescription {
+export default class DataClassDescription extends CodeSmellDescription {
   getDescription(): string {
     const className = this.getClassName();
     return `A classe "${className}" é uma classe de dados.`;
