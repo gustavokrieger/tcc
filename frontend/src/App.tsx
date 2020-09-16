@@ -4,15 +4,11 @@ import CodeAnalysisResult from './pages/CodeAnalysisResult';
 import CodeFilesUpload from './pages/CodeFilesUpload';
 import {Path} from './pages/Path';
 import ViolationCase from './pages/ViolationCase';
-import Loading from './pages/Loading';
 
 export default function App() {
   return (
     <Router>
       <Switch>
-        <Route path={Path.LOADING}>
-          <Loading />
-        </Route>
         <Route
           path={Path.CODE_ANALYSIS_RESULT}
           render={props => <CodeAnalysisResult {...props} />}
