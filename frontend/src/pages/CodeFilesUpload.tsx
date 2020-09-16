@@ -5,6 +5,7 @@ import {useHistory} from 'react-router-dom';
 import {Path} from './Path';
 import SynchronousFile from '../SynchronousFile';
 import CircularProgress from '../components/CircularProgress';
+import {Props as PropsOfCodeAnalysisResult} from './CodeAnalysisResult';
 
 export default function CodeFilesUpload() {
   const history = useHistory();
@@ -16,16 +17,17 @@ export default function CodeFilesUpload() {
       return;
     }
     setIsLoading(true);
-    getDataAndChangePage();
+    getPropsForCodeAnalysisResult().then(props =>
+      history.push(Path.CODE_ANALYSIS_RESULT, props)
+    );
   }, [uploadedFiles]);
 
-  async function getDataAndChangePage() {
+  async function getPropsForCodeAnalysisResult(): Promise<
+    PropsOfCodeAnalysisResult
+  > {
     const report = await requestReport();
     const synchronousFiles = await getConvertedFiles();
-    history.push(Path.CODE_ANALYSIS_RESULT, {
-      report: report,
-      synchronousFiles: synchronousFiles,
-    });
+    return {report: report, synchronousFiles: synchronousFiles};
   }
 
   async function requestReport() {

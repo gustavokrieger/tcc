@@ -6,7 +6,7 @@ import * as pmdOutput from '../pmdOutput';
 import {RouteComponentProps} from 'react-router-dom';
 import SynchronousFile from '../SynchronousFile';
 
-type Props = {
+export type Props = {
   report: pmdOutput.Report;
   synchronousFiles: SynchronousFile[];
 };
