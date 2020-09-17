@@ -1,11 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import DropzoneArea from '../components/DropzoneArea';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import CodeAnalysisRequester from '../CodeAnalysisRequester';
 import {useHistory} from 'react-router-dom';
 import {Path} from './Path';
 import SynchronousFile from '../SynchronousFile';
 import CircularProgress from '../components/CircularProgress';
 import {Props as PropsOfCodeAnalysisResult} from './CodeAnalysisResult';
+import UploadButton from '../components/UploadButton';
+import assert from 'assert';
 
 export default function CodeFilesUpload() {
   const history = useHistory();
@@ -44,7 +45,9 @@ export default function CodeFilesUpload() {
     return synchronousFiles;
   }
 
-  function handleDrop(files: File[]) {
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    assert(event.target.files !== null);
+    const files = Array.from(event.target.files);
     setUploadedFiles(files);
   }
 
@@ -53,7 +56,7 @@ export default function CodeFilesUpload() {
       {isLoading ? (
         <CircularProgress />
       ) : (
-        <DropzoneArea onDrop={handleDrop} acceptedFiles={['.java']} />
+        <UploadButton accept=".java" onChange={handleChange} />
       )}
     </div>
   );
