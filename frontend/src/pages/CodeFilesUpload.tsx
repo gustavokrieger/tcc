@@ -18,32 +18,10 @@ export default function CodeFilesUpload() {
       return;
     }
     setIsLoading(true);
-    getPropsForCodeAnalysisResult().then(props =>
+    getPropsForCodeAnalysisResult(uploadedFiles).then(props =>
       history.push(Path.CODE_ANALYSIS_RESULT, props)
     );
-  }, [uploadedFiles]);
-
-  async function getPropsForCodeAnalysisResult(): Promise<
-    PropsOfCodeAnalysisResult
-  > {
-    const report = await requestReport();
-    const synchronousFiles = await getConvertedFiles();
-    return {report: report, synchronousFiles: synchronousFiles};
-  }
-
-  async function requestReport() {
-    const codeAnalysisRequester = new CodeAnalysisRequester();
-    return await codeAnalysisRequester.run(uploadedFiles);
-  }
-
-  async function getConvertedFiles() {
-    const synchronousFiles: SynchronousFile[] = [];
-    for (const file of uploadedFiles) {
-      const synchronousFile = await SynchronousFile.fromFile(file);
-      synchronousFiles.push(synchronousFile);
-    }
-    return synchronousFiles;
-  }
+  }, [uploadedFiles, history]);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     assert(event.target.files !== null);
@@ -60,4 +38,26 @@ export default function CodeFilesUpload() {
       )}
     </div>
   );
+}
+
+async function getPropsForCodeAnalysisResult(
+  files: File[]
+): Promise<PropsOfCodeAnalysisResult> {
+  const report = await requestReport(files);
+  const synchronousFiles = await getConvertedFiles(files);
+  return {report: report, synchronousFiles: synchronousFiles};
+}
+
+async function requestReport(files: File[]) {
+  const codeAnalysisRequester = new CodeAnalysisRequester();
+  return await codeAnalysisRequester.run(files);
+}
+
+async function getConvertedFiles(files: File[]) {
+  const synchronousFiles: SynchronousFile[] = [];
+  for (const file of files) {
+    const synchronousFile = await SynchronousFile.fromFile(file);
+    synchronousFiles.push(synchronousFile);
+  }
+  return synchronousFiles;
 }
