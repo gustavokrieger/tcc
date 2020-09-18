@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {RouteComponentProps, useParams} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import SimpleCard from '../components/SimpleCard';
@@ -21,38 +21,49 @@ export default function ViolationCase(
     props.location.state.codeWithViolation;
   const codeThatCausedViolation: string = codeWithViolation.getCodeThatCausedViolation();
 
-  function renderCodeCard(): JSX.Element {
-    return (
-      <SimpleCard>
-        <Typography
-          variant="body2"
-          component="p"
-          style={{whiteSpace: 'pre-wrap'}}
-        >
-          {codeWithViolation.getCodeBeforeViolation()}
-          <mark>{codeThatCausedViolation}</mark>
-          {codeWithViolation.getCodeAfterViolation()}
-        </Typography>
-      </SimpleCard>
-    );
-  }
+  const [codeCard, setCodeCard] = useState(<></>);
+  const [descriptionCard, setDescriptionCard] = useState(<></>);
 
-  function renderDescriptionCard(): JSX.Element {
-    return (
-      <SimpleCard>
-        <Typography variant="body2" component="p">
-          {codeWithViolation.getViolationDescription(codeThatCausedViolation)}
-        </Typography>
-      </SimpleCard>
-    );
-  }
+  useEffect(() => {
+    function renderCodeCard(): JSX.Element {
+      return (
+        <SimpleCard>
+          <Typography
+            variant="body2"
+            component="p"
+            style={{whiteSpace: 'pre-wrap'}}
+          >
+            {codeWithViolation.getCodeBeforeViolation()}
+            <mark>{codeThatCausedViolation}</mark>
+            {codeWithViolation.getCodeAfterViolation()}
+          </Typography>
+        </SimpleCard>
+      );
+    }
+
+    setCodeCard(renderCodeCard());
+  }, [codeWithViolation, codeThatCausedViolation]);
+
+  useEffect(() => {
+    function renderDescriptionCard(): JSX.Element {
+      return (
+        <SimpleCard>
+          <Typography variant="body2" component="p">
+            {codeWithViolation.getViolationDescription(codeThatCausedViolation)}
+          </Typography>
+        </SimpleCard>
+      );
+    }
+
+    setDescriptionCard(renderDescriptionCard());
+  }, [codeWithViolation, codeThatCausedViolation]);
 
   return (
     <div className="violation-case">
       <Typography variant="h3">{title}</Typography>
       <SimpleTabs
-        itemOne={renderCodeCard()}
-        itemTwo={renderDescriptionCard()}
+        itemOne={codeCard}
+        itemTwo={descriptionCard}
         itemThree={<SimpleCard>hold</SimpleCard>}
       />
     </div>
