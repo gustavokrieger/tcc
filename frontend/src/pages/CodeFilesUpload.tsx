@@ -10,6 +10,7 @@ import assert from 'assert';
 
 export default function CodeFilesUpload() {
   const history = useHistory();
+
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
