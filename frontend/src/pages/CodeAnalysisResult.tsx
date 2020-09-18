@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import VerticalTabs from '../components/vertical_tabs/VerticalTabs';
 import Entries from '../components/vertical_tabs/Entries';
 import {codeWithViolationGenerator} from '../codeWithViolationGenerator';
@@ -18,17 +18,23 @@ export default function CodeAnalysisResult(
   const synchronousFiles: SynchronousFile[] =
     props.location.state.synchronousFiles;
 
-  function getEntries() {
-    const codeWithViolations = codeWithViolationGenerator(
-      report,
-      synchronousFiles
-    );
-    return Entries.fromGenerator(codeWithViolations);
-  }
+  const [entries, setEntries] = useState(new Entries());
+
+  useEffect(() => {
+    function getEntries(): Entries {
+      const codeWithViolations = codeWithViolationGenerator(
+        report,
+        synchronousFiles
+      );
+      return Entries.fromGenerator(codeWithViolations);
+    }
+
+    setEntries(getEntries());
+  }, [report, synchronousFiles]);
 
   return (
     <div className="code-analysis-result">
-      <VerticalTabs entries={getEntries()} />
+      <VerticalTabs entries={entries} />
     </div>
   );
 }
