@@ -7,8 +7,18 @@ import CircularProgress from '../components/CircularProgress';
 import {Props as PropsOfCodeAnalysisResult} from './CodeAnalysisResult';
 import UploadButton from '../components/UploadButton';
 import assert from 'assert';
+import {makeStyles} from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+
+const useStyles = makeStyles({
+  root: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+});
 
 export default function CodeFilesUpload() {
+  const classes = useStyles();
   const history = useHistory();
 
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
@@ -31,13 +41,13 @@ export default function CodeFilesUpload() {
   }
 
   return (
-    <div className="code-files-upload">
+    <Container className={classes.root}>
       {isLoading ? (
         <CircularProgress />
       ) : (
         <UploadButton accept=".java" onChange={handleChange} />
       )}
-    </div>
+    </Container>
   );
 }
 
