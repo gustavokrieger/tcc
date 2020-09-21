@@ -14,6 +14,8 @@ const useStyles = makeStyles({
   root: {
     display: 'flex',
     justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: '100vh',
   },
 });
 
