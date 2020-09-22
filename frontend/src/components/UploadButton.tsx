@@ -16,15 +16,19 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type Props = {
+  children: React.ReactNode;
+  className?: string;
   accept: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
 export default function UploadButton(props: Props) {
   const classes = useStyles();
+  const rootClassName =
+    props.className !== undefined ? props.className : classes.root;
 
   return (
-    <div className={classes.root}>
+    <div className={rootClassName}>
       <input
         accept={props.accept}
         className={classes.input}
@@ -35,7 +39,7 @@ export default function UploadButton(props: Props) {
       />
       <label htmlFor="contained-button-file">
         <Button variant="contained" color="primary" component="span">
-          Upload
+          {props.children}
         </Button>
       </label>
     </div>

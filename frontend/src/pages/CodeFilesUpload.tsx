@@ -7,17 +7,28 @@ import CircularProgress from '../components/CircularProgress';
 import {Props as PropsOfCodeAnalysisResult} from './CodeAnalysisResult';
 import UploadButton from '../components/UploadButton';
 import assert from 'assert';
-import {makeStyles} from '@material-ui/core/styles';
+import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {Typography} from '@material-ui/core';
 
-const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '100vh',
-  },
-});
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '35vh',
+    },
+    title: {
+      textTransform: 'capitalize',
+      margin: theme.spacing(3),
+    },
+    upload: {
+      margin: theme.spacing(3),
+    },
+  })
+);
 
 export default function CodeFilesUpload() {
   const classes = useStyles();
@@ -30,8 +41,32 @@ export default function CodeFilesUpload() {
     if (uploadedFiles.length <= 0) {
       return;
     }
+
     setIsLoading(true);
-    getPropsForCodeAnalysisResult(uploadedFiles).then(props =>
+
+    async function getPropsForCodeAnalysisResult(): Promise<
+      PropsOfCodeAnalysisResult
+    > {
+      const report = await requestReport();
+      const synchronousFiles = await getConvertedFiles();
+      return {report: report, synchronousFiles: synchronousFiles};
+    }
+
+    async function requestReport() {
+      const codeAnalysisRequester = new CodeAnalysisRequester();
+      return await codeAnalysisRequester.run(uploadedFiles);
+    }
+
+    async function getConvertedFiles() {
+      const synchronousFiles: SynchronousFile[] = [];
+      for (const file of uploadedFiles) {
+        const synchronousFile = await SynchronousFile.fromFile(file);
+        synchronousFiles.push(synchronousFile);
+      }
+      return synchronousFiles;
+    }
+
+    getPropsForCodeAnalysisResult().then(props =>
       history.push(Path.CODE_ANALYSIS_RESULT, props)
     );
   }, [uploadedFiles, history]);
@@ -44,33 +79,22 @@ export default function CodeFilesUpload() {
 
   return (
     <Container className={classes.root}>
+      <Typography className={classes.title} variant="h2">
+        find code smells
+      </Typography>
       {isLoading ? (
-        <CircularProgress />
+        <CircularProgress className={classes.upload} />
       ) : (
-        <UploadButton accept=".java" onChange={handleChange} />
+        <>
+          <UploadButton
+            className={classes.upload}
+            accept=".java"
+            onChange={handleChange}
+          >
+            upload code
+          </UploadButton>
+        </>
       )}
     </Container>
   );
-}
-
-async function getPropsForCodeAnalysisResult(
-  files: File[]
-): Promise<PropsOfCodeAnalysisResult> {
-  const report = await requestReport(files);
-  const synchronousFiles = await getConvertedFiles(files);
-  return {report: report, synchronousFiles: synchronousFiles};
-}
-
-async function requestReport(files: File[]) {
-  const codeAnalysisRequester = new CodeAnalysisRequester();
-  return await codeAnalysisRequester.run(files);
-}
-
-async function getConvertedFiles(files: File[]) {
-  const synchronousFiles: SynchronousFile[] = [];
-  for (const file of files) {
-    const synchronousFile = await SynchronousFile.fromFile(file);
-    synchronousFiles.push(synchronousFile);
-  }
-  return synchronousFiles;
 }
