@@ -1,16 +1,6 @@
 import CodeSmell from './CodeSmell';
 
 export default class LongParameterList extends CodeSmell {
-  protected formatCode(code: string): string {
-    code = super.formatCode(code);
-    code = this.removeParentheses(code);
-    return code.trim();
-  }
-
-  private removeParentheses(text: string) {
-    return text.slice(1, -1);
-  }
-
   getDescription(): string {
     const parameters = this.getParameters();
     const firstParameter = parameters[0];

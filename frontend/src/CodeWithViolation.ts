@@ -2,10 +2,8 @@ import {PmdCodeSmellType} from './PmdCodeSmellType';
 import SynchronousFile from './SynchronousFile';
 import * as pmdOutput from './pmdOutput';
 import CodeSmell from './code_smells/CodeSmell';
-import LongMethod from './code_smells/LongMethod';
-import LongParameterList from './code_smells/LongParameterList';
 import TextSlicer from './TextSlicer';
-import DataClass from './code_smells/DataClass';
+import SelectorOfCodeSmellCreator from './code_smells/SelectorOfCodeSmellCreator';
 
 export default class CodeWithViolation {
   private readonly textSlicer: TextSlicer;
@@ -58,7 +56,7 @@ export default class CodeWithViolation {
     return this.textSlicer.getJoinedSlicedSelection();
   }
 
-  // todo talvez passar para outra classe
+  // todo refatorar
   getTranslatedRule() {
     const pmdCodeSmellType = this.violation.rule as PmdCodeSmellType;
     switch (pmdCodeSmellType) {
@@ -71,26 +69,18 @@ export default class CodeWithViolation {
     }
   }
 
-  // todo talvez passar para outra classe
+  // todo refatorar
   getViolationDescription(codeSectionContainingCodeSmell: string): string {
-    const codeSmellDescription = this.getCodeSmellDescription(
-      codeSectionContainingCodeSmell
-    );
-    return codeSmellDescription.getDescription();
+    const codeSmell = this.getCodeSmell(codeSectionContainingCodeSmell);
+    return codeSmell.getDescription();
   }
 
-  // todo talvez passar para outra classe
-  private getCodeSmellDescription(
-    codeSectionContainingCodeSmell: string
-  ): CodeSmell {
-    const pmdCodeSmellType = this.violation.rule as PmdCodeSmellType;
-    switch (pmdCodeSmellType) {
-      case PmdCodeSmellType.LONG_METHOD:
-        return new LongMethod(codeSectionContainingCodeSmell);
-      case PmdCodeSmellType.LONG_PARAMETER_LIST:
-        return new LongParameterList(codeSectionContainingCodeSmell);
-      case PmdCodeSmellType.DATA_CLASS:
-        return new DataClass(codeSectionContainingCodeSmell);
-    }
+  // todo refatorar
+  private getCodeSmell(codeSectionContainingCodeSmell: string): CodeSmell {
+    const selectorOfCodeSmellCreator = new SelectorOfCodeSmellCreator(
+      this.violation.rule as PmdCodeSmellType,
+      codeSectionContainingCodeSmell
+    );
+    return selectorOfCodeSmellCreator.selectAndCreate();
   }
 }

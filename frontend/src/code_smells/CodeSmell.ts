@@ -2,7 +2,7 @@ export default abstract class CodeSmell {
   private readonly _codeSectionWithSmell: string;
 
   constructor(codeSectionWithSmell: string) {
-    this._codeSectionWithSmell = this.formatCode(codeSectionWithSmell);
+    this._codeSectionWithSmell = codeSectionWithSmell;
   }
 
   protected get codeSectionWithSmell(): string {
@@ -10,15 +10,6 @@ export default abstract class CodeSmell {
   }
 
   abstract get translation(): string;
-
-  protected formatCode(code: string): string {
-    code = code.trim();
-    return this.replaceWhitespacesWithOneSpace(code);
-  }
-
-  private replaceWhitespacesWithOneSpace(text: string) {
-    return text.replace(/\s+/g, ' ');
-  }
 
   abstract getDescription(): string;
 }
