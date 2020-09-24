@@ -1,7 +1,7 @@
-import CodeSmellDescription from './CodeSmellDescription';
+import CodeSmell from './CodeSmell';
 import assert from 'assert';
 
-export default class LongMethodDescription extends CodeSmellDescription {
+export default class LongMethod extends CodeSmell {
   getDescription(): string {
     const methodName = this.getMethodName();
     return `O método "${methodName}" possui linhas demais.`;
@@ -9,7 +9,7 @@ export default class LongMethodDescription extends CodeSmellDescription {
 
   private getMethodName(): string {
     const regex = /(?:[a-z]+) ([\w$]+)\(/; // todo refatorar para ser classe reutilizavel
-    const match = this.codeSectionContainingCodeSmell.match(regex);
+    const match = this.codeSectionWithSmell.match(regex);
     assert(match !== null);
     return match[1];
   }

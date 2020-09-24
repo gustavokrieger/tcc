@@ -1,6 +1,6 @@
-import CodeSmellDescription from './CodeSmellDescription';
+import CodeSmell from './CodeSmell';
 
-export default class LongParameterListDescription extends CodeSmellDescription {
+export default class LongParameterList extends CodeSmell {
   protected formatCode(code: string): string {
     code = super.formatCode(code);
     code = this.removeParentheses(code);
@@ -23,6 +23,6 @@ export default class LongParameterListDescription extends CodeSmellDescription {
   }
 
   private getParameters(): string[] {
-    return this.codeSectionContainingCodeSmell.split(', ');
+    return this.codeSectionWithSmell.split(', ');
   }
 }

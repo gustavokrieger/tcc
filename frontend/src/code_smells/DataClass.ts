@@ -1,7 +1,7 @@
-import CodeSmellDescription from './CodeSmellDescription';
+import CodeSmell from './CodeSmell';
 import assert from 'assert';
 
-export default class DataClassDescription extends CodeSmellDescription {
+export default class DataClass extends CodeSmell {
   getDescription(): string {
     const className = this.getClassName();
     return `A classe "${className}" é uma classe de dados.`;
@@ -9,7 +9,7 @@ export default class DataClassDescription extends CodeSmellDescription {
 
   private getClassName(): string {
     const regex = /(?:class) ([\w$]+)/;
-    const match = this.codeSectionContainingCodeSmell.match(regex);
+    const match = this.codeSectionWithSmell.match(regex);
     assert(match !== null);
     return match[1];
   }

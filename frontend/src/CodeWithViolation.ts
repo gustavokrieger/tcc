@@ -1,11 +1,11 @@
 import {PmdCodeSmellType} from './PmdCodeSmellType';
 import SynchronousFile from './SynchronousFile';
 import * as pmdOutput from './pmdOutput';
-import CodeSmellDescription from './code_smells_descriptions/CodeSmellDescription';
-import LongMethodDescription from './code_smells_descriptions/LongMethodDescription';
-import LongParameterListDescription from './code_smells_descriptions/LongParameterListDescription';
+import CodeSmell from './code_smells/CodeSmell';
+import LongMethod from './code_smells/LongMethod';
+import LongParameterList from './code_smells/LongParameterList';
 import TextSlicer from './TextSlicer';
-import DataClassDescription from './code_smells_descriptions/DataClassDescription';
+import DataClass from './code_smells/DataClass';
 
 export default class CodeWithViolation {
   private readonly textSlicer: TextSlicer;
@@ -82,15 +82,15 @@ export default class CodeWithViolation {
   // todo talvez passar para outra classe
   private getCodeSmellDescription(
     codeSectionContainingCodeSmell: string
-  ): CodeSmellDescription {
+  ): CodeSmell {
     const pmdCodeSmellType = this.violation.rule as PmdCodeSmellType;
     switch (pmdCodeSmellType) {
       case PmdCodeSmellType.LONG_METHOD:
-        return new LongMethodDescription(codeSectionContainingCodeSmell);
+        return new LongMethod(codeSectionContainingCodeSmell);
       case PmdCodeSmellType.LONG_PARAMETER_LIST:
-        return new LongParameterListDescription(codeSectionContainingCodeSmell);
+        return new LongParameterList(codeSectionContainingCodeSmell);
       case PmdCodeSmellType.DATA_CLASS:
-        return new DataClassDescription(codeSectionContainingCodeSmell);
+        return new DataClass(codeSectionContainingCodeSmell);
     }
   }
 }
