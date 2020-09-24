@@ -19,7 +19,7 @@ export default function ViolationCase(
   const {title} = useParams<Params>();
   const codeWithViolation: CodeWithViolation =
     props.location.state.codeWithViolation;
-  const codeThatCausedViolation: string = codeWithViolation.getCodeThatCausedViolation();
+  const codeSectionContainingCodeSmell: string = codeWithViolation.getCodeThatCausedViolation();
 
   const [codeCard, setCodeCard] = useState(<></>);
   const [descriptionCard, setDescriptionCard] = useState(<></>);
@@ -34,7 +34,7 @@ export default function ViolationCase(
             style={{whiteSpace: 'pre-wrap'}}
           >
             {codeWithViolation.getCodeBeforeViolation()}
-            <mark>{codeThatCausedViolation}</mark>
+            <mark>{codeSectionContainingCodeSmell}</mark>
             {codeWithViolation.getCodeAfterViolation()}
           </Typography>
         </SimpleCard>
@@ -42,21 +42,23 @@ export default function ViolationCase(
     }
 
     setCodeCard(renderCodeCard());
-  }, [codeWithViolation, codeThatCausedViolation]);
+  }, [codeWithViolation, codeSectionContainingCodeSmell]);
 
   useEffect(() => {
     function renderDescriptionCard(): JSX.Element {
       return (
         <SimpleCard>
           <Typography variant="body2" component="p">
-            {codeWithViolation.getViolationDescription(codeThatCausedViolation)}
+            {codeWithViolation.getViolationDescription(
+              codeSectionContainingCodeSmell
+            )}
           </Typography>
         </SimpleCard>
       );
     }
 
     setDescriptionCard(renderDescriptionCard());
-  }, [codeWithViolation, codeThatCausedViolation]);
+  }, [codeWithViolation, codeSectionContainingCodeSmell]);
 
   return (
     <div className="violation-case">

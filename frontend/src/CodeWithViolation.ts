@@ -72,25 +72,25 @@ export default class CodeWithViolation {
   }
 
   // todo talvez passar para outra classe
-  getViolationDescription(codeThatCausedViolation: string): string {
+  getViolationDescription(codeSectionContainingCodeSmell: string): string {
     const codeSmellDescription = this.getCodeSmellDescription(
-      codeThatCausedViolation
+      codeSectionContainingCodeSmell
     );
     return codeSmellDescription.getDescription();
   }
 
   // todo talvez passar para outra classe
   private getCodeSmellDescription(
-    codeThatCausedViolation: string
+    codeSectionContainingCodeSmell: string
   ): CodeSmellDescription {
     const pmdCodeSmellType = this.violation.rule as PmdCodeSmellType;
     switch (pmdCodeSmellType) {
       case PmdCodeSmellType.LONG_METHOD:
-        return new LongMethodDescription(codeThatCausedViolation);
+        return new LongMethodDescription(codeSectionContainingCodeSmell);
       case PmdCodeSmellType.LONG_PARAMETER_LIST:
-        return new LongParameterListDescription(codeThatCausedViolation);
+        return new LongParameterListDescription(codeSectionContainingCodeSmell);
       case PmdCodeSmellType.DATA_CLASS:
-        return new DataClassDescription(codeThatCausedViolation);
+        return new DataClassDescription(codeSectionContainingCodeSmell);
     }
   }
 }

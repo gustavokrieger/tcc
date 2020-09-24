@@ -1,12 +1,14 @@
 export default abstract class CodeSmellDescription {
-  private readonly _codeThatCausedViolation: string;
+  private readonly _codeSectionContainingCodeSmell: string;
 
-  constructor(codeThatCausedViolation: string) {
-    this._codeThatCausedViolation = this.formatCode(codeThatCausedViolation);
+  constructor(codeSectionContainingCodeSmell: string) {
+    this._codeSectionContainingCodeSmell = this.formatCode(
+      codeSectionContainingCodeSmell
+    );
   }
 
-  protected get codeThatCausedViolation(): string {
-    return this._codeThatCausedViolation;
+  protected get codeSectionContainingCodeSmell(): string {
+    return this._codeSectionContainingCodeSmell;
   }
 
   protected formatCode(code: string): string {

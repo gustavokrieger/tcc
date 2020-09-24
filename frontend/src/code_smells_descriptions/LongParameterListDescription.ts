@@ -23,6 +23,6 @@ export default class LongParameterListDescription extends CodeSmellDescription {
   }
 
   private getParameters(): string[] {
-    return this.codeThatCausedViolation.split(', ');
+    return this.codeSectionContainingCodeSmell.split(', ');
   }
 }

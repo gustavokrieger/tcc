@@ -9,7 +9,7 @@ export default class DataClassDescription extends CodeSmellDescription {
 
   private getClassName(): string {
     const regex = /(?:class) ([\w$]+)/;
-    const match = this.codeThatCausedViolation.match(regex);
+    const match = this.codeSectionContainingCodeSmell.match(regex);
     assert(match !== null);
     return match[1];
   }
