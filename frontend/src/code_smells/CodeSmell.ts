@@ -9,6 +9,8 @@ export default abstract class CodeSmell {
     return this._codeSectionWithSmell;
   }
 
+  abstract get translation(): string;
+
   protected formatCode(code: string): string {
     code = code.trim();
     return this.replaceWhitespacesWithOneSpace(code);

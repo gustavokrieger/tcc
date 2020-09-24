@@ -25,4 +25,8 @@ export default class LongParameterList extends CodeSmell {
   private getParameters(): string[] {
     return this.codeSectionWithSmell.split(', ');
   }
+
+  get translation(): string {
+    return 'lista de parâmetros longa';
+  }
 }

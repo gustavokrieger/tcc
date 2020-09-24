@@ -13,4 +13,8 @@ export default class DataClass extends CodeSmell {
     assert(match !== null);
     return match[1];
   }
+
+  get translation(): string {
+    return 'classes de dados';
+  }
 }
