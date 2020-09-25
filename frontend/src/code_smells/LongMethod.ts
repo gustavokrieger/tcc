@@ -2,6 +2,10 @@ import CodeSmell from './CodeSmell';
 import assert from 'assert';
 
 export default class LongMethod extends CodeSmell {
+  get translation(): string {
+    return 'método longo';
+  }
+
   getDescription(): string {
     const methodName = this.getMethodName();
     return `O método "${methodName}" possui linhas demais.`;
@@ -12,9 +16,5 @@ export default class LongMethod extends CodeSmell {
     const match = this.codeSectionWithSmell.match(regex);
     assert(match !== null);
     return match[1];
-  }
-
-  get translation(): string {
-    return 'método longo';
   }
 }

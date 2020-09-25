@@ -4,6 +4,7 @@ import React from 'react';
 import {Path} from '../../pages/Path';
 import {Link} from 'react-router-dom';
 import CodeWithViolation from '../../CodeWithViolation';
+import CodeSmellCreator from '../../code_smells/CodeSmellCreator';
 
 export default class Entries {
   private readonly _entries: Entry[] = [];
@@ -21,16 +22,27 @@ export default class Entries {
   }
 
   private addViolationCase(codeWithViolation: CodeWithViolation) {
-    const label = codeWithViolation.getTranslatedRule();
+    const codeSmellCreator = codeWithViolation.getCodeSmellCreator();
+    const label = this.getCodeSmellTranslation(codeSmellCreator);
     const entry = this.getOrAddByLabel(label);
     const caseNumber = entry.elements.length + 1;
     const caseName = 'caso ' + caseNumber;
-    const element = this.getViolationCaseElement(codeWithViolation, caseName);
+    const element = this.getViolationCaseElement(
+      codeWithViolation,
+      codeSmellCreator,
+      caseName
+    );
     entry.elements.push(element);
+  }
+
+  private getCodeSmellTranslation(codeSmellCreator: CodeSmellCreator) {
+    const codeSmell = codeSmellCreator.create();
+    return codeSmell.translation;
   }
 
   private getViolationCaseElement(
     codeWithViolation: CodeWithViolation,
+    codeSmellCreator: CodeSmellCreator,
     caseName: string
   ): JSX.Element {
     return (
@@ -38,7 +50,10 @@ export default class Entries {
         component={Link}
         to={{
           pathname: Path.VIOLATION_CASE + '/' + caseName,
-          state: {codeWithViolation: codeWithViolation},
+          state: {
+            codeWithViolation: codeWithViolation,
+            codeSmellCreator: codeSmellCreator,
+          },
         }}
       >
         {caseName}

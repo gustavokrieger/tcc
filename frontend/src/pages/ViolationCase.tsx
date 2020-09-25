@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import SimpleCard from '../components/SimpleCard';
 import SimpleTabs from '../components/SimpleTabs';
 import CodeWithViolation from '../CodeWithViolation';
+import CodeSmellCreator from '../code_smells/CodeSmellCreator';
 
 type Params = {
   title: string;
@@ -11,6 +12,7 @@ type Params = {
 
 type Props = {
   codeWithViolation: CodeWithViolation;
+  codeSmellCreator: CodeSmellCreator;
 };
 
 export default function ViolationCase(
@@ -19,7 +21,9 @@ export default function ViolationCase(
   const {title} = useParams<Params>();
   const codeWithViolation: CodeWithViolation =
     props.location.state.codeWithViolation;
-  const codeSectionContainingCodeSmell: string = codeWithViolation.getCodeThatCausedViolation();
+  const codeSmellCreator: CodeSmellCreator =
+    props.location.state.codeSmellCreator;
+  const codeSmellDescription = codeSmellCreator.create().getDescription();
 
   const [codeCard, setCodeCard] = useState(<></>);
   const [descriptionCard, setDescriptionCard] = useState(<></>);
@@ -34,7 +38,7 @@ export default function ViolationCase(
             style={{whiteSpace: 'pre-wrap'}}
           >
             {codeWithViolation.getCodeBeforeViolation()}
-            <mark>{codeSectionContainingCodeSmell}</mark>
+            <mark>{codeSmellCreator.codeSectionWithSmell}</mark>
             {codeWithViolation.getCodeAfterViolation()}
           </Typography>
         </SimpleCard>
@@ -42,23 +46,21 @@ export default function ViolationCase(
     }
 
     setCodeCard(renderCodeCard());
-  }, [codeWithViolation, codeSectionContainingCodeSmell]);
+  }, [codeWithViolation, codeSmellCreator]);
 
   useEffect(() => {
     function renderDescriptionCard(): JSX.Element {
       return (
         <SimpleCard>
           <Typography variant="body2" component="p">
-            {codeWithViolation.getViolationDescription(
-              codeSectionContainingCodeSmell
-            )}
+            {codeSmellDescription}
           </Typography>
         </SimpleCard>
       );
     }
 
     setDescriptionCard(renderDescriptionCard());
-  }, [codeWithViolation, codeSectionContainingCodeSmell]);
+  }, [codeSmellDescription]);
 
   return (
     <div className="violation-case">

@@ -3,6 +3,6 @@ import LongMethod from './LongMethod';
 
 export default class LongMethodCreator extends CodeSmellCreator {
   protected factoryMethod(): LongMethod {
-    return new LongMethod(this.codeSectionWithSmell);
+    return new LongMethod(this.formattedCodeSectionWithSmell);
   }
 }

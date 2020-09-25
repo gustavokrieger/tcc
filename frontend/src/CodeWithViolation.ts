@@ -1,13 +1,12 @@
-import {PmdCodeSmellType} from './PmdCodeSmellType';
 import SynchronousFile from './SynchronousFile';
 import * as pmdOutput from './pmdOutput';
-import CodeSmell from './code_smells/CodeSmell';
 import TextSlicer from './TextSlicer';
 import SelectorOfCodeSmellCreator from './code_smells/SelectorOfCodeSmellCreator';
+import CodeSmellCreator from './code_smells/CodeSmellCreator';
 
 export default class CodeWithViolation {
   private readonly textSlicer: TextSlicer;
-  private readonly violation: pmdOutput.Violation;
+  private readonly _violation: pmdOutput.Violation;
   private readonly fullPath: string;
 
   private constructor(
@@ -16,7 +15,7 @@ export default class CodeWithViolation {
     fullPath: string
   ) {
     this.textSlicer = new TextSlicer(lineSeparatedCode); // todo refatorar para ser por injeção
-    this.violation = violation;
+    this._violation = violation;
     this.fullPath = fullPath;
   }
 
@@ -33,54 +32,34 @@ export default class CodeWithViolation {
   }
 
   getCodeThatCausedViolation(): string {
-    this.textSlicer.startLine = this.violation.beginline - 1;
-    this.textSlicer.endLine = this.violation.endline;
-    this.textSlicer.startColumn = this.violation.begincolumn - 1;
-    this.textSlicer.endColumn = this.violation.endcolumn;
+    this.textSlicer.startLine = this._violation.beginline - 1;
+    this.textSlicer.endLine = this._violation.endline;
+    this.textSlicer.startColumn = this._violation.begincolumn - 1;
+    this.textSlicer.endColumn = this._violation.endcolumn;
     return this.textSlicer.getJoinedSlicedSelection();
   }
 
   getCodeBeforeViolation(): string {
     this.textSlicer.startLine = undefined;
-    this.textSlicer.endLine = this.violation.beginline;
+    this.textSlicer.endLine = this._violation.beginline;
     this.textSlicer.startColumn = undefined;
-    this.textSlicer.endColumn = this.violation.begincolumn - 1;
+    this.textSlicer.endColumn = this._violation.begincolumn - 1;
     return this.textSlicer.getJoinedSlicedSelection();
   }
 
   getCodeAfterViolation(): string {
-    this.textSlicer.startLine = this.violation.endline - 1;
+    this.textSlicer.startLine = this._violation.endline - 1;
     this.textSlicer.endLine = undefined;
-    this.textSlicer.startColumn = this.violation.endcolumn;
+    this.textSlicer.startColumn = this._violation.endcolumn;
     this.textSlicer.endColumn = undefined;
     return this.textSlicer.getJoinedSlicedSelection();
   }
 
-  // todo refatorar
-  getTranslatedRule() {
-    const pmdCodeSmellType = this.violation.rule as PmdCodeSmellType;
-    switch (pmdCodeSmellType) {
-      case PmdCodeSmellType.LONG_METHOD:
-        return 'método longo';
-      case PmdCodeSmellType.LONG_PARAMETER_LIST:
-        return 'lista de parâmetros longa';
-      case PmdCodeSmellType.DATA_CLASS:
-        return 'classes de dados';
-    }
-  }
-
-  // todo refatorar
-  getViolationDescription(codeSectionContainingCodeSmell: string): string {
-    const codeSmell = this.getCodeSmell(codeSectionContainingCodeSmell);
-    return codeSmell.getDescription();
-  }
-
-  // todo refatorar
-  private getCodeSmell(codeSectionContainingCodeSmell: string): CodeSmell {
-    const selectorOfCodeSmellCreator = new SelectorOfCodeSmellCreator(
-      this.violation.rule as PmdCodeSmellType,
-      codeSectionContainingCodeSmell
+  getCodeSmellCreator(): CodeSmellCreator {
+    const selectorOfCodeSmellCreator = SelectorOfCodeSmellCreator.fromViolation(
+      this._violation,
+      this.getCodeThatCausedViolation()
     );
-    return selectorOfCodeSmellCreator.selectAndCreate();
+    return selectorOfCodeSmellCreator.select();
   }
 }

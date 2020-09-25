@@ -3,13 +3,13 @@ import DataClassCreator from './DataClassCreator';
 import LongMethodCreator from './LongMethodCreator';
 import LongParameterListCreator from './LongParameterListCreator';
 import CodeSmellCreator from './CodeSmellCreator';
-import CodeSmell from './CodeSmell';
+import * as pmdOutput from '../pmdOutput';
 
 export default class SelectorOfCodeSmellCreator {
   private readonly pmdCodeSmellType: PmdCodeSmellType;
   private readonly codeSectionWithSmell: string;
 
-  constructor(
+  private constructor(
     pmdCodeSmellType: PmdCodeSmellType,
     codeSectionWithSmell: string
   ) {
@@ -17,7 +17,18 @@ export default class SelectorOfCodeSmellCreator {
     this.codeSectionWithSmell = codeSectionWithSmell;
   }
 
-  private select(): CodeSmellCreator {
+  static fromViolation(
+    violation: pmdOutput.Violation,
+    codeSectionWithSmell: string
+  ): SelectorOfCodeSmellCreator {
+    const pmdCodeSmellType = violation.rule as PmdCodeSmellType;
+    return new SelectorOfCodeSmellCreator(
+      pmdCodeSmellType,
+      codeSectionWithSmell
+    );
+  }
+
+  select(): CodeSmellCreator {
     switch (this.pmdCodeSmellType) {
       case PmdCodeSmellType.DATA_CLASS:
         return new DataClassCreator(this.codeSectionWithSmell);
@@ -26,10 +37,5 @@ export default class SelectorOfCodeSmellCreator {
       case PmdCodeSmellType.LONG_PARAMETER_LIST:
         return new LongParameterListCreator(this.codeSectionWithSmell);
     }
-  }
-
-  selectAndCreate(): CodeSmell {
-    const codeSmellCreator = this.select();
-    return codeSmellCreator.create();
   }
 }

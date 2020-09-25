@@ -1,6 +1,10 @@
 import CodeSmell from './CodeSmell';
 
 export default class LongParameterList extends CodeSmell {
+  get translation(): string {
+    return 'lista de parâmetros longa';
+  }
+
   getDescription(): string {
     const parameters = this.getParameters();
     const firstParameter = parameters[0];
@@ -14,9 +18,5 @@ export default class LongParameterList extends CodeSmell {
 
   private getParameters(): string[] {
     return this.codeSectionWithSmell.split(', ');
-  }
-
-  get translation(): string {
-    return 'lista de parâmetros longa';
   }
 }

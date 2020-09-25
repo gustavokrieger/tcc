@@ -3,6 +3,6 @@ import DataClass from './DataClass';
 
 export default class DataClassCreator extends CodeSmellCreator {
   protected factoryMethod(): DataClass {
-    return new DataClass(this.codeSectionWithSmell);
+    return new DataClass(this.formattedCodeSectionWithSmell);
   }
 }

@@ -1,32 +1,38 @@
 import CodeSmell from './CodeSmell';
 
 export default abstract class CodeSmellCreator {
-  private _codeSectionWithSmell: string;
+  private readonly _codeSectionWithSmell: string;
+  private _formattedCodeSectionWithSmell = '';
 
   constructor(codeSectionWithSmell: string) {
     this._codeSectionWithSmell = codeSectionWithSmell;
   }
 
-  protected get codeSectionWithSmell(): string {
+  get codeSectionWithSmell(): string {
     return this._codeSectionWithSmell;
   }
 
-  protected set codeSectionWithSmell(value: string) {
-    this._codeSectionWithSmell = value;
+  protected get formattedCodeSectionWithSmell(): string {
+    return this._formattedCodeSectionWithSmell;
+  }
+
+  protected set formattedCodeSectionWithSmell(value: string) {
+    this._formattedCodeSectionWithSmell = value;
   }
 
   create(): CodeSmell {
+    this._formattedCodeSectionWithSmell = this._codeSectionWithSmell;
     this.formatCode();
     return this.factoryMethod();
   }
 
   protected formatCode() {
-    this._codeSectionWithSmell = this._codeSectionWithSmell.trim();
+    this._formattedCodeSectionWithSmell = this._formattedCodeSectionWithSmell.trim();
     this.replaceCodeWhitespacesWithOneSpace();
   }
 
   private replaceCodeWhitespacesWithOneSpace() {
-    this._codeSectionWithSmell = this._codeSectionWithSmell.replace(
+    this._formattedCodeSectionWithSmell = this._formattedCodeSectionWithSmell.replace(
       /\s+/g,
       ' '
     );

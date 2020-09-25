@@ -3,16 +3,19 @@ import LongParameterList from './LongParameterList';
 
 export default class LongParameterListCreator extends CodeSmellCreator {
   protected factoryMethod(): LongParameterList {
-    return new LongParameterList(this.codeSectionWithSmell);
+    return new LongParameterList(this.formattedCodeSectionWithSmell);
   }
 
   protected formatCode() {
     super.formatCode();
-    this.removeParentheses();
-    this.codeSectionWithSmell = this.codeSectionWithSmell.trim();
+    this.removeCodeParentheses();
+    this.formattedCodeSectionWithSmell = this.formattedCodeSectionWithSmell.trim();
   }
 
-  private removeParentheses() {
-    this.codeSectionWithSmell = this.codeSectionWithSmell.slice(1, -1);
+  private removeCodeParentheses() {
+    this.formattedCodeSectionWithSmell = this.formattedCodeSectionWithSmell.slice(
+      1,
+      -1
+    );
   }
 }
