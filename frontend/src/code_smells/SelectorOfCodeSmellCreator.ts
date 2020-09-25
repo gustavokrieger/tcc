@@ -4,6 +4,7 @@ import LongMethodCreator from './implementations/LongMethodCreator';
 import LongParameterListCreator from './implementations/LongParameterListCreator';
 import CodeSmellCreator from './CodeSmellCreator';
 import * as pmdOutput from '../pmdOutput';
+import LargeClassCreator from './implementations/LargeClassCreator';
 
 export default class SelectorOfCodeSmellCreator {
   private readonly pmdCodeSmellType: PmdCodeSmellType;
@@ -32,6 +33,8 @@ export default class SelectorOfCodeSmellCreator {
     switch (this.pmdCodeSmellType) {
       case PmdCodeSmellType.DATA_CLASS:
         return new DataClassCreator(this.codeSectionWithSmell);
+      case PmdCodeSmellType.LARGE_CLASS:
+        return new LargeClassCreator(this.codeSectionWithSmell);
       case PmdCodeSmellType.LONG_METHOD:
         return new LongMethodCreator(this.codeSectionWithSmell);
       case PmdCodeSmellType.LONG_PARAMETER_LIST:
