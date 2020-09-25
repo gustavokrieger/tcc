@@ -1,4 +1,4 @@
-import CodeSmellCreator from './CodeSmellCreator';
+import CodeSmellCreator from '../CodeSmellCreator';
 import LongParameterList from './LongParameterList';
 
 export default class LongParameterListCreator extends CodeSmellCreator {

@@ -1,4 +1,4 @@
-import CodeSmell from './CodeSmell';
+import CodeSmell from '../CodeSmell';
 import assert from 'assert';
 
 export default class DataClass extends CodeSmell {

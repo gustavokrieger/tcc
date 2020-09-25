@@ -1,7 +1,7 @@
 import {PmdCodeSmellType} from '../PmdCodeSmellType';
-import DataClassCreator from './DataClassCreator';
-import LongMethodCreator from './LongMethodCreator';
-import LongParameterListCreator from './LongParameterListCreator';
+import DataClassCreator from './implementations/DataClassCreator';
+import LongMethodCreator from './implementations/LongMethodCreator';
+import LongParameterListCreator from './implementations/LongParameterListCreator';
 import CodeSmellCreator from './CodeSmellCreator';
 import * as pmdOutput from '../pmdOutput';
 

@@ -1,4 +1,4 @@
-import CodeSmellCreator from './CodeSmellCreator';
+import CodeSmellCreator from '../CodeSmellCreator';
 import LongMethod from './LongMethod';
 
 export default class LongMethodCreator extends CodeSmellCreator {

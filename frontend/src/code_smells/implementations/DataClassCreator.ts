@@ -1,4 +1,4 @@
-import CodeSmellCreator from './CodeSmellCreator';
+import CodeSmellCreator from '../CodeSmellCreator';
 import DataClass from './DataClass';
 
 export default class DataClassCreator extends CodeSmellCreator {

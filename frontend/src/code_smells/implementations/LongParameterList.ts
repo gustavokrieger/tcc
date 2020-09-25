@@ -1,4 +1,4 @@
-import CodeSmell from './CodeSmell';
+import CodeSmell from '../CodeSmell';
 
 export default class LongParameterList extends CodeSmell {
   get translation(): string {
