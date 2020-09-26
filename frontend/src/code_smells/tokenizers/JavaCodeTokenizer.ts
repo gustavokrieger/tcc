@@ -7,7 +7,7 @@ export default abstract class JavaCodeTokenizer {
     this._code = formattedJavaCode.code;
   }
 
-  protected get code() {
+  protected get code(): string {
     return this._code;
   }
 }

@@ -5,11 +5,11 @@ export default class FormattedJavaCode {
     this._code = code;
   }
 
-  get code() {
+  get code(): string {
     return this._code;
   }
 
-  static format(code: string) {
+  static format(code: string): FormattedJavaCode {
     code = code.trim();
     code = this.replaceWhitespacesWithSingleSpace(code);
     return new FormattedJavaCode(code);
