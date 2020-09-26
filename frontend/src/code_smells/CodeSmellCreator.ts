@@ -1,8 +1,9 @@
 import CodeSmell from './CodeSmell';
+import FormattedJavaCode from './FormattedJavaCode';
+import JavaCodeTokenizer from './tokenizers/JavaCodeTokenizer';
 
 export default abstract class CodeSmellCreator {
   private readonly _codeSectionWithSmell: string;
-  private _formattedCodeSectionWithSmell = '';
 
   constructor(codeSectionWithSmell: string) {
     this._codeSectionWithSmell = codeSectionWithSmell;
@@ -12,31 +13,19 @@ export default abstract class CodeSmellCreator {
     return this._codeSectionWithSmell;
   }
 
-  protected get formattedCodeSectionWithSmell(): string {
-    return this._formattedCodeSectionWithSmell;
-  }
-
-  protected set formattedCodeSectionWithSmell(value: string) {
-    this._formattedCodeSectionWithSmell = value;
-  }
-
   create(): CodeSmell {
-    this._formattedCodeSectionWithSmell = this._codeSectionWithSmell;
-    this.formatCode();
-    return this.factoryMethod();
-  }
-
-  protected formatCode() {
-    this._formattedCodeSectionWithSmell = this._formattedCodeSectionWithSmell.trim();
-    this.replaceCodeWhitespacesWithOneSpace();
-  }
-
-  private replaceCodeWhitespacesWithOneSpace() {
-    this._formattedCodeSectionWithSmell = this._formattedCodeSectionWithSmell.replace(
-      /\s+/g,
-      ' '
+    const formattedJavaCode = FormattedJavaCode.format(
+      this._codeSectionWithSmell
     );
+    const javaCodeTokenizer = this.makeJavaCodeTokenizer(formattedJavaCode);
+    return this.makeCodeSmell(javaCodeTokenizer);
   }
 
-  protected abstract factoryMethod(): CodeSmell;
+  protected abstract makeJavaCodeTokenizer(
+    formattedJavaCode: FormattedJavaCode
+  ): JavaCodeTokenizer;
+
+  protected abstract makeCodeSmell(
+    javaCodeTokenizer: JavaCodeTokenizer
+  ): CodeSmell;
 }

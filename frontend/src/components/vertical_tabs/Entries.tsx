@@ -37,7 +37,7 @@ export default class Entries {
 
   private getCodeSmellTranslation(codeSmellCreator: CodeSmellCreator) {
     const codeSmell = codeSmellCreator.create();
-    return codeSmell.translation;
+    return codeSmell.getTranslation();
   }
 
   private getViolationCaseElement(

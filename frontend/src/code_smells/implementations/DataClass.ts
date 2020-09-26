@@ -1,20 +1,19 @@
 import CodeSmell from '../CodeSmell';
-import assert from 'assert';
+import ClassTokenizer from '../tokenizers/ClassTokenizer';
 
-export default class DataClass extends CodeSmell {
-  get translation(): string {
+export default class DataClass implements CodeSmell {
+  private readonly classTokenizer: ClassTokenizer;
+
+  constructor(classTokenizer: ClassTokenizer) {
+    this.classTokenizer = classTokenizer;
+  }
+
+  getTranslation(): string {
     return 'classes de dados';
   }
 
   getDescription(): string {
-    const className = this.getClassName();
+    const className = this.classTokenizer.getName();
     return `A classe "${className}" é uma classe de dados.`;
-  }
-
-  private getClassName(): string {
-    const regex = /(?:class) ([\w$]+)/;
-    const match = this.codeSectionWithSmell.match(regex);
-    assert(match !== null);
-    return match[1];
   }
 }

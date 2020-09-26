@@ -1,4 +1,4 @@
-import {PmdCodeSmellType} from '../PmdCodeSmellType';
+import {PmdCodeSmellType} from './PmdCodeSmellType';
 import DataClassCreator from './implementations/DataClassCreator';
 import LongMethodCreator from './implementations/LongMethodCreator';
 import LongParameterListCreator from './implementations/LongParameterListCreator';

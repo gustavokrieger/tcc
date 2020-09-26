@@ -1,21 +1,18 @@
 import CodeSmellCreator from '../CodeSmellCreator';
 import LongParameterList from './LongParameterList';
+import FormattedJavaCode from '../FormattedJavaCode';
+import ParametersTokenizer from '../tokenizers/ParametersTokenizer';
 
 export default class LongParameterListCreator extends CodeSmellCreator {
-  protected factoryMethod(): LongParameterList {
-    return new LongParameterList(this.formattedCodeSectionWithSmell);
+  protected makeJavaCodeTokenizer(
+    formattedJavaCode: FormattedJavaCode
+  ): ParametersTokenizer {
+    return new ParametersTokenizer(formattedJavaCode);
   }
 
-  protected formatCode() {
-    super.formatCode();
-    this.removeCodeParentheses();
-    this.formattedCodeSectionWithSmell = this.formattedCodeSectionWithSmell.trim();
-  }
-
-  private removeCodeParentheses() {
-    this.formattedCodeSectionWithSmell = this.formattedCodeSectionWithSmell.slice(
-      1,
-      -1
-    );
+  protected makeCodeSmell(
+    javaCodeTokenizer: ParametersTokenizer
+  ): LongParameterList {
+    return new LongParameterList(javaCodeTokenizer);
   }
 }

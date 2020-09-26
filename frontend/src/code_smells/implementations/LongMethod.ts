@@ -1,20 +1,19 @@
 import CodeSmell from '../CodeSmell';
-import assert from 'assert';
+import MethodTokenizer from '../tokenizers/MethodTokenizer';
 
-export default class LongMethod extends CodeSmell {
-  get translation(): string {
+export default class LongMethod implements CodeSmell {
+  private readonly methodTokenizer: MethodTokenizer;
+
+  constructor(methodTokenizer: MethodTokenizer) {
+    this.methodTokenizer = methodTokenizer;
+  }
+
+  getTranslation(): string {
     return 'método longo';
   }
 
   getDescription(): string {
-    const methodName = this.getMethodName();
+    const methodName = this.methodTokenizer.getName();
     return `O método "${methodName}" possui linhas demais.`;
-  }
-
-  private getMethodName(): string {
-    const regex = /(?:[a-z]+) ([\w$]+)\(/; // todo refatorar para ser classe reutilizavel
-    const match = this.codeSectionWithSmell.match(regex);
-    assert(match !== null);
-    return match[1];
   }
 }

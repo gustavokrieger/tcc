@@ -1,20 +1,19 @@
 import CodeSmell from '../CodeSmell';
-import assert from 'assert';
+import ClassTokenizer from '../tokenizers/ClassTokenizer';
 
-export default class LargeClass extends CodeSmell {
-  get translation(): string {
+export default class LargeClass implements CodeSmell {
+  private readonly classTokenizer: ClassTokenizer;
+
+  constructor(classTokenizer: ClassTokenizer) {
+    this.classTokenizer = classTokenizer;
+  }
+
+  getTranslation(): string {
     return 'classes grandes';
   }
 
   getDescription(): string {
-    const className = this.getClassName();
+    const className = this.classTokenizer.getName();
     return `A classe "${className}" é uma classe de grande demais.`;
-  }
-
-  private getClassName(): string {
-    const regex = /(?:class) ([\w$]+)/; // todo refatorar para reutilizar
-    const match = this.codeSectionWithSmell.match(regex);
-    assert(match !== null);
-    return match[1];
   }
 }
