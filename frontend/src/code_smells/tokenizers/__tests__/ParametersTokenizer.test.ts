@@ -8,7 +8,7 @@ function createParametersTokenizer(code: string) {
   return new ParametersTokenizer(formattedJavaCode);
 }
 
-test('no parameter', () => {
+test('get all, no parameters', () => {
   const code = '()';
   const parametersTokenizer = createParametersTokenizer(code);
 
@@ -34,7 +34,7 @@ function getCodeWithOneParameter(betweenParts: string) {
   );
 }
 
-test('one parameter', () => {
+test('get all, one parameter', () => {
   const code = getCodeWithOneParameter('');
   const parametersTokenizer = createParametersTokenizer(code);
 
@@ -44,7 +44,7 @@ test('one parameter', () => {
   expect(actual).toStrictEqual(expected);
 });
 
-test('one parameter with excessive spaces', () => {
+test('get all, one parameter, with excessive spaces', () => {
   const code = getCodeWithOneParameter(' ');
   const parametersTokenizer = createParametersTokenizer(code);
 
@@ -54,7 +54,7 @@ test('one parameter with excessive spaces', () => {
   expect(actual).toStrictEqual(expected);
 });
 
-test('one parameter with newlines', () => {
+test('get all, one parameter, with newlines', () => {
   const code = getCodeWithOneParameter(endOfLine);
   const parametersTokenizer = createParametersTokenizer(code);
 
@@ -90,7 +90,7 @@ function getCodeWithTwoParameter(betweenParts: string) {
   );
 }
 
-test('two parameters', () => {
+test('get all, two parameters', () => {
   const code = getCodeWithTwoParameter('');
   const parametersTokenizer = createParametersTokenizer(code);
 
@@ -100,7 +100,7 @@ test('two parameters', () => {
   expect(actual).toStrictEqual(expected);
 });
 
-test('two parameters with excessive spaces', () => {
+test('get all, two parameters, with excessive spaces', () => {
   const code = getCodeWithTwoParameter(' ');
   const parametersTokenizer = createParametersTokenizer(code);
 
@@ -110,7 +110,7 @@ test('two parameters with excessive spaces', () => {
   expect(actual).toStrictEqual(expected);
 });
 
-test('two parameters with newlines', () => {
+test('get all, two parameters, with newlines', () => {
   const code = getCodeWithTwoParameter(endOfLine);
   const parametersTokenizer = createParametersTokenizer(code);
 
@@ -160,7 +160,7 @@ function getCodeWithThreeParameter(betweenParts: string) {
   );
 }
 
-test('three parameters', () => {
+test('get all, three parameters', () => {
   const code = getCodeWithThreeParameter('');
   const parametersTokenizer = createParametersTokenizer(code);
 
@@ -170,7 +170,7 @@ test('three parameters', () => {
   expect(actual).toStrictEqual(expected);
 });
 
-test('three parameters with excessive spaces', () => {
+test('get all, three parameters, with excessive spaces', () => {
   const code = getCodeWithThreeParameter(' ');
   const parametersTokenizer = createParametersTokenizer(code);
 
@@ -180,7 +180,7 @@ test('three parameters with excessive spaces', () => {
   expect(actual).toStrictEqual(expected);
 });
 
-test('three parameters with newlines', () => {
+test('get all, three parameters, with newlines', () => {
   const code = getCodeWithThreeParameter(endOfLine);
   const parametersTokenizer = createParametersTokenizer(code);
 
