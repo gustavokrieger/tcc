@@ -1,8 +1,8 @@
-import SynchronousFile from './SynchronousFile';
-import * as pmdOutput from './pmdOutput';
+import SynchronousFile from '../SynchronousFile';
+import * as pmdOutput from '../pmdOutput';
 import TextSlicer from './TextSlicer';
-import SelectorOfCodeSmellCreator from './code_smells/SelectorOfCodeSmellCreator';
-import CodeSmellCreator from './code_smells/CodeSmellCreator';
+import SelectorOfCodeSmellCreator from '../code_smells/SelectorOfCodeSmellCreator';
+import CodeSmellCreator from '../code_smells/CodeSmellCreator';
 
 export default class CodeWithViolation {
   private readonly textSlicer: TextSlicer;

@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import React from 'react';
 import {Path} from '../../pages/Path';
 import {Link} from 'react-router-dom';
-import CodeWithViolation from '../../CodeWithViolation';
+import CodeWithViolation from '../../code_with_violation/CodeWithViolation';
 import CodeSmellCreator from '../../code_smells/CodeSmellCreator';
 
 export default class Entries {

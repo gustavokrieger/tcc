@@ -3,7 +3,7 @@ import {RouteComponentProps, useParams} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import SimpleCard from '../components/SimpleCard';
 import SimpleTabs from '../components/SimpleTabs';
-import CodeWithViolation from '../CodeWithViolation';
+import CodeWithViolation from '../code_with_violation/CodeWithViolation';
 import CodeSmellCreator from '../code_smells/CodeSmellCreator';
 
 type Params = {

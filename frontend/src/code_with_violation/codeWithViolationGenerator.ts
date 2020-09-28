@@ -1,7 +1,7 @@
-import * as pmdOutput from './pmdOutput';
+import * as pmdOutput from '../pmdOutput';
 import CodeWithViolation from './CodeWithViolation';
 import assert from 'assert';
-import SynchronousFile from './SynchronousFile';
+import SynchronousFile from '../SynchronousFile';
 
 // todo refatorar
 export function* codeWithViolationGenerator(

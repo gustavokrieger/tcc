@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import VerticalTabs from '../components/vertical_tabs/VerticalTabs';
 import Entries from '../components/vertical_tabs/Entries';
-import {codeWithViolationGenerator} from '../codeWithViolationGenerator';
+import {codeWithViolationGenerator} from '../code_with_violation/codeWithViolationGenerator';
 import * as pmdOutput from '../pmdOutput';
 import {RouteComponentProps} from 'react-router-dom';
 import SynchronousFile from '../SynchronousFile';
