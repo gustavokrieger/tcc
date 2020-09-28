@@ -21,6 +21,11 @@ test('get name', () => {
   testGetName(code);
 });
 
+test('get name, one line method', () => {
+  const code = 'void test(){System.out.println("hi");}';
+  testGetName(code);
+});
+
 test('get name, with parameter', () => {
   const code = `
   void test(int a) {
