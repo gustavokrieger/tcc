@@ -8,6 +8,16 @@ function createParametersTokenizer(code: string) {
   return new ParametersTokenizer(formattedJavaCode);
 }
 
+test('no parameter', () => {
+  const code = '()';
+  const parametersTokenizer = createParametersTokenizer(code);
+
+  const actual = parametersTokenizer.getAll();
+  const expected = [''];
+
+  expect(actual).toStrictEqual(expected);
+});
+
 function getCodeWithOneParameter(betweenParts: string) {
   return (
     betweenParts +
