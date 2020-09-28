@@ -1,5 +1,5 @@
-import ParametersTokenizer from './ParametersTokenizer';
-import FormattedJavaCode from '../FormattedJavaCode';
+import ParametersTokenizer from '../ParametersTokenizer';
+import FormattedJavaCode from '../../FormattedJavaCode';
 
 const endOfLine = '\n';
 

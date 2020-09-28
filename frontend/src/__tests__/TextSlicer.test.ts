@@ -1,4 +1,4 @@
-import TextSlicer from './TextSlicer';
+import TextSlicer from '../TextSlicer';
 
 const lines = [
   'In the beginning God created the heaven and the earth.',
