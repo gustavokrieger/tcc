@@ -9,6 +9,9 @@ export default function App() {
   return (
     <Router>
       <Switch>
+        <Route exact path={Path.HOME}>
+          <CodeFilesUpload />
+        </Route>
         <Route
           path={Path.CODE_ANALYSIS_RESULT}
           render={props => <CodeAnalysisResult {...props} />}
@@ -17,9 +20,6 @@ export default function App() {
           path={Path.VIOLATION_CASE + '/:title'}
           render={props => <ViolationCase {...props} />}
         />
-        <Route path={Path.HOME}>
-          <CodeFilesUpload />
-        </Route>
       </Switch>
     </Router>
   );
