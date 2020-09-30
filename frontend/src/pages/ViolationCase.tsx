@@ -5,6 +5,7 @@ import SimpleCard from '../components/SimpleCard';
 import SimpleTabs from '../components/SimpleTabs';
 import CodeWithViolation from '../code_with_violation/CodeWithViolation';
 import CodeSmellCreator from '../code_smells/CodeSmellCreator';
+import {Container} from '@material-ui/core';
 
 type Params = {
   title: string;
@@ -63,13 +64,13 @@ export default function ViolationCase(
   }, [codeSmellDescription]);
 
   return (
-    <div className="violation-case">
+    <Container className="violation-case">
       <Typography variant="h3">{title}</Typography>
       <SimpleTabs
         itemOne={codeCard}
         itemTwo={descriptionCard}
         itemThree={<SimpleCard>hold</SimpleCard>}
       />
-    </div>
+    </Container>
   );
 }

@@ -5,6 +5,7 @@ import {codeWithViolationGenerator} from '../code_with_violation/codeWithViolati
 import * as pmdOutput from '../pmdOutput';
 import {RouteComponentProps} from 'react-router-dom';
 import SynchronousFile from '../SynchronousFile';
+import {Container} from '@material-ui/core';
 
 export type Props = {
   report: pmdOutput.Report;
@@ -33,8 +34,8 @@ export default function CodeAnalysisResult(
   }, [report, synchronousFiles]);
 
   return (
-    <div className="code-analysis-result">
+    <Container className="code-analysis-result">
       <VerticalTabs entries={entries} />
-    </div>
+    </Container>
   );
 }
