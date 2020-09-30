@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import {makeStyles, Theme} from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -53,6 +54,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 type VerticalTabsProps = {
+  className?: string;
   entries: Entries;
 };
 
@@ -74,11 +76,11 @@ export default function VerticalTabs(props: VerticalTabsProps) {
     entry: Entry,
     entry_index: number
   ): JSX.Element[] {
-    const tabPanels: JSX.Element[] = [];
+    const panels: JSX.Element[] = [];
     for (const element of entry.elements) {
-      tabPanels.push(getTabPanelFromElement(element, entry.label, entry_index));
+      panels.push(getTabPanelFromElement(element, entry.label, entry_index));
     }
-    return tabPanels;
+    return panels;
   }
 
   function getTabPanelFromElement(
@@ -95,7 +97,7 @@ export default function VerticalTabs(props: VerticalTabsProps) {
   }
 
   return (
-    <div className={classes.root}>
+    <div className={clsx(classes.root, props.className)}>
       <Tabs
         orientation="vertical"
         variant="scrollable"

@@ -6,6 +6,16 @@ import * as pmdOutput from '../pmdOutput';
 import {RouteComponentProps} from 'react-router-dom';
 import SynchronousFile from '../SynchronousFile';
 import {Container} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+  root: {
+    height: '100vh',
+  },
+  tabs: {
+    height: '100%',
+  },
+});
 
 export type Props = {
   report: pmdOutput.Report;
@@ -15,6 +25,7 @@ export type Props = {
 export default function CodeAnalysisResult(
   props: RouteComponentProps<{}, any, Props | any> // "any" is a Workaround.
 ) {
+  const classes = useStyles();
   const report: pmdOutput.Report = props.location.state.report;
   const synchronousFiles: SynchronousFile[] =
     props.location.state.synchronousFiles;
@@ -34,8 +45,8 @@ export default function CodeAnalysisResult(
   }, [report, synchronousFiles]);
 
   return (
-    <Container className="code-analysis-result">
-      <VerticalTabs entries={entries} />
+    <Container className={classes.root}>
+      <VerticalTabs className={classes.tabs} entries={entries} />
     </Container>
   );
 }
