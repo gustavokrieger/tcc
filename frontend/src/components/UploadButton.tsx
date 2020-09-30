@@ -1,6 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,11 +25,9 @@ type Props = {
 
 export default function UploadButton(props: Props) {
   const classes = useStyles();
-  const rootClassName =
-    props.className !== undefined ? props.className : classes.root;
 
   return (
-    <div className={rootClassName}>
+    <div className={clsx(classes.root, props.className)}>
       <input
         accept={props.accept}
         className={classes.input}
