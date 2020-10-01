@@ -1,7 +1,7 @@
 import FormattedJavaCode from '../../FormattedJavaCode';
 import ClassTokenizer from '../ClassTokenizer';
 
-const endOfLine = '\n';
+const endOfLine = '\n'; // todo passar para test helper
 
 function testGetName(code: string) {
   const formattedJavaCode = FormattedJavaCode.format(code);
