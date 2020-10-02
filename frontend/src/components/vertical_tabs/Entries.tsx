@@ -9,16 +9,19 @@ import CodeSmellCreator from '../../code_smells/CodeSmellCreator';
 export default class Entries {
   private readonly _entries: Entry[] = [];
 
-  get innerEntries(): Entry[] {
-    return this._entries;
-  }
+  constructor() {}
 
-  static fromGenerator(pmdViolations: Generator<CodeWithViolation>): Entries {
+  static fromIterable(pmdViolations: Iterable<CodeWithViolation>): Entries {
     const entries = new Entries();
     for (const pmdViolation of pmdViolations) {
       entries.addViolationCase(pmdViolation);
     }
     return entries;
+  }
+
+  get innerEntries(): readonly Entry[] {
+    const copy = [...this._entries];
+    return Object.freeze(copy);
   }
 
   private addViolationCase(codeWithViolation: CodeWithViolation) {

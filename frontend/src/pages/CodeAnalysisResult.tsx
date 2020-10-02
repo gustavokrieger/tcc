@@ -38,7 +38,7 @@ export default function CodeAnalysisResult(
         report,
         synchronousFiles
       );
-      return Entries.fromGenerator(codeWithViolations);
+      return Entries.fromIterable(codeWithViolations);
     }
 
     setEntries(getEntries());
