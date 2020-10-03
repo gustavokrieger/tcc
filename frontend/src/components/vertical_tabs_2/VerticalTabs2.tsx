@@ -21,8 +21,8 @@ export type Tab = {
   children: React.ReactNode;
 };
 
-type Props = {
-  tabs: Tab[];
+export type Props = {
+  tabs: Iterable<Tab>;
 };
 
 export default function VerticalTabs2(props: Props) {
@@ -32,7 +32,8 @@ export default function VerticalTabs2(props: Props) {
   const tabsChildren: JSX.Element[] = [];
   const tabPanels: JSX.Element[] = [];
 
-  props.tabs.forEach((tab, index) => {
+  let index = 0;
+  for (const tab of props.tabs) {
     tabsChildren.push(
       <Tab key={index} label={tab.label} {...a11yProps(index)} />
     );
@@ -42,7 +43,9 @@ export default function VerticalTabs2(props: Props) {
         {tab.children}
       </TabPanel>
     );
-  });
+
+    index++;
+  }
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
