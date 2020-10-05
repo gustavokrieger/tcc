@@ -29,8 +29,9 @@ export default function VerticalTabs2(props: Props) {
   const classes = useStyles();
 
   const [value, setValue] = useState(0);
-  const [tabsChildren] = useState<JSX.Element[]>([]);
-  const [tabPanels] = useState<JSX.Element[]>([]);
+
+  const tabsChildren: JSX.Element[] = [];
+  const tabPanels: JSX.Element[] = [];
 
   let index = 0;
   for (const tab of props.tabs) {
