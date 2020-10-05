@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {makeStyles, Theme} from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -27,10 +27,10 @@ export type Props = {
 
 export default function VerticalTabs2(props: Props) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
 
-  const tabsChildren: JSX.Element[] = [];
-  const tabPanels: JSX.Element[] = [];
+  const [value, setValue] = useState(0);
+  const [tabsChildren] = useState<JSX.Element[]>([]);
+  const [tabPanels] = useState<JSX.Element[]>([]);
 
   let index = 0;
   for (const tab of props.tabs) {
