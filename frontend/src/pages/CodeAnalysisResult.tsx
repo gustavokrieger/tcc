@@ -19,66 +19,44 @@ const useStyles = makeStyles({
 
 export type Props = {
   report: pmdOutput.Report;
-  synchronousFiles: SynchronousFile[];
+  contentsOfFiles: ContentsOfFile[];
+};
+
+export type ContentsOfFile = {
+  name: string;
+  text: string;
 };
 
 export default function CodeAnalysisResult(
   props: RouteComponentProps<{}, any, Props | any> // "any" is a Workaround.
 ) {
   const classes = useStyles();
-  const [report, setReport] = useState<pmdOutput.Report>(
-    props.location.state.report
-  );
-  const [synchronousFiles, setSynchronousFiles] = useState<SynchronousFile[]>(
-    props.location.state.synchronousFiles
-  );
+  const report: pmdOutput.Report = props.location.state.report;
 
+  const [synchronousFiles] = useState<SynchronousFile[]>(tempConvert());
   const [entries, setEntries] = useState(new Entries());
 
-  useEffect(() => {
-    let localReport = report;
-    let localSynchronousFiles = synchronousFiles;
-
-    const test = sessionStorage.getItem('test');
-    if (test !== null) {
-      const fromStorage: Props = JSON.parse(test);
-
-      const newSynchronousFiles: SynchronousFile[] = [];
-      for (const synchronousFile of fromStorage.synchronousFiles) {
-        // fromStorage.synchronousFiles[index] = Object.create(
-        //   SynchronousFile.prototype,
-        //   Object.getOwnPropertyDescriptors(synchronousFile)
-        // );
-        // const instance = new SynchronousFile('', '');
-        // Object.assign(instance, synchronousFile);
-        // fromStorage.synchronousFiles[i] = instance;
-
-        const newSynchronousFile = SynchronousFile.fromJSON(synchronousFile);
-        newSynchronousFiles.push(newSynchronousFile);
-      }
-      setReport(fromStorage.report);
-      setSynchronousFiles(newSynchronousFiles);
-
-      localReport = fromStorage.report;
-      localSynchronousFiles = newSynchronousFiles;
+  // todo remover
+  function tempConvert(): SynchronousFile[] {
+    const cOfFs: ContentsOfFile[] = props.location.state.contentsOfFiles;
+    const sFs: SynchronousFile[] = [];
+    for (const cOfF of cOfFs) {
+      const sF = new SynchronousFile(cOfF.text, cOfF.name);
+      sFs.push(sF);
     }
+    return sFs;
+  }
 
+  useEffect(() => {
     function getEntries(): Entries {
-      const codeWithViolations = codeWithViolationGenerator(localReport, [
-        ...localSynchronousFiles,
-      ]);
+      const codeWithViolations = codeWithViolationGenerator(
+        report,
+        synchronousFiles
+      );
       return Entries.fromIterable(codeWithViolations);
     }
 
     setEntries(getEntries());
-  }, []);
-
-  useEffect(() => {
-    const toStorage: Props = {
-      report: report,
-      synchronousFiles: synchronousFiles,
-    };
-    sessionStorage.setItem('test', JSON.stringify(toStorage));
   }, [report, synchronousFiles]);
 
   return (
