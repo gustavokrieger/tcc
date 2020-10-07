@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import VerticalTabs from '../components/vertical_tabs/VerticalTabs';
-import Entries from '../components/vertical_tabs/Entries';
 import {codeWithViolationGenerator} from '../code_with_violation/codeWithViolationGenerator';
 import * as pmdOutput from '../pmdOutput';
 import {RouteComponentProps} from 'react-router-dom';
 import {Container} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
+import Tabs from '../components/vertical_tabs/Tabs';
+import VerticalTabs from '../components/vertical_tabs/VerticalTabs';
 
 const useStyles = makeStyles({
   root: {
@@ -33,23 +33,23 @@ export default function CodeAnalysisResult(
   const report: pmdOutput.Report = props.location.state.report;
   const contentsOfFiles = props.location.state.contentsOfFiles;
 
-  const [entries, setEntries] = useState(new Entries());
+  const [tabs, setTabs] = useState(new Tabs());
 
   useEffect(() => {
-    function getEntries(): Entries {
+    function createTabs(): Tabs {
       const codeWithViolations = codeWithViolationGenerator(
         report,
         contentsOfFiles
       );
-      return Entries.fromIterable(codeWithViolations);
+      return Tabs.fromIterable(codeWithViolations);
     }
 
-    setEntries(getEntries());
+    setTabs(createTabs());
   }, [report, contentsOfFiles]);
 
   return (
     <Container className={classes.root}>
-      <VerticalTabs className={classes.tabs} entries={entries} />
+      <VerticalTabs className={classes.tabs} tabs={tabs.getAll()} />
     </Container>
   );
 }

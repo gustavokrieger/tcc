@@ -1,41 +1,39 @@
-import {Entry} from './entry';
 import Button from '@material-ui/core/Button';
 import React from 'react';
 import {Path} from '../../pages/Path';
 import {Link} from 'react-router-dom';
 import CodeWithViolation from '../../code_with_violation/CodeWithViolation';
 import CodeSmellCreator from '../../code_smells/CodeSmellCreator';
+import {Tab} from './VerticalTabs';
 
-export default class Entries {
-  private readonly _entries: Entry[] = [];
+export default class Tabs {
+  private readonly tabs: Tab[] = [];
 
-  constructor() {}
-
-  static fromIterable(pmdViolations: Iterable<CodeWithViolation>): Entries {
-    const entries = new Entries();
+  static fromIterable(pmdViolations: Iterable<CodeWithViolation>): Tabs {
+    const tabs = new Tabs();
     for (const pmdViolation of pmdViolations) {
-      entries.addViolationCase(pmdViolation);
+      tabs.addViolationCase(pmdViolation);
     }
-    return entries;
+    return tabs;
   }
 
-  get innerEntries(): readonly Entry[] {
-    const copy = [...this._entries];
+  getAll(): readonly Tab[] {
+    const copy = [...this.tabs];
     return Object.freeze(copy);
   }
 
   private addViolationCase(codeWithViolation: CodeWithViolation) {
     const codeSmellCreator = codeWithViolation.getCodeSmellCreator();
     const label = this.getCodeSmellTranslation(codeSmellCreator);
-    const entry = this.getOrAddByLabel(label);
-    const caseNumber = entry.elements.length + 1;
+    const tab = this.getOrAddByLabel(label);
+    const caseNumber = tab.children.length + 1;
     const caseName = 'caso ' + caseNumber;
     const element = this.getViolationCaseElement(
       codeWithViolation,
       codeSmellCreator,
       caseName
     );
-    entry.elements.push(element);
+    tab.children.push(element);
   }
 
   private getCodeSmellTranslation(codeSmellCreator: CodeSmellCreator) {
@@ -65,26 +63,26 @@ export default class Entries {
   }
 
   private getOrAddByLabel(label: string) {
-    const entry = this.getByLabel(label);
-    if (entry === null) {
+    const tab = this.getByLabel(label);
+    if (tab === null) {
       return this.addWithLabel(label);
     } else {
-      return entry;
+      return tab;
     }
   }
 
   private getByLabel(label: string) {
-    for (const entry of this._entries) {
-      if (entry.label === label) {
-        return entry;
+    for (const tab of this.tabs) {
+      if (tab.label === label) {
+        return tab;
       }
     }
     return null;
   }
 
-  private addWithLabel(label: string): Entry {
-    const newEntry: Entry = {label: label, elements: []};
-    this._entries.push(newEntry);
-    return newEntry;
+  private addWithLabel(label: string): Tab {
+    const newTab: Tab = {label: label, children: []};
+    this.tabs.push(newTab);
+    return newTab;
   }
 }
