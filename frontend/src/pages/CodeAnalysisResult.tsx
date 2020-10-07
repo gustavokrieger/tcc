@@ -4,7 +4,6 @@ import Entries from '../components/vertical_tabs/Entries';
 import {codeWithViolationGenerator} from '../code_with_violation/codeWithViolationGenerator';
 import * as pmdOutput from '../pmdOutput';
 import {RouteComponentProps} from 'react-router-dom';
-import SynchronousFile from '../SynchronousFile';
 import {Container} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 
@@ -32,32 +31,21 @@ export default function CodeAnalysisResult(
 ) {
   const classes = useStyles();
   const report: pmdOutput.Report = props.location.state.report;
+  const contentsOfFiles = props.location.state.contentsOfFiles;
 
-  const [synchronousFiles] = useState<SynchronousFile[]>(tempConvert());
   const [entries, setEntries] = useState(new Entries());
-
-  // todo remover
-  function tempConvert(): SynchronousFile[] {
-    const cOfFs: ContentsOfFile[] = props.location.state.contentsOfFiles;
-    const sFs: SynchronousFile[] = [];
-    for (const cOfF of cOfFs) {
-      const sF = new SynchronousFile(cOfF.text, cOfF.name);
-      sFs.push(sF);
-    }
-    return sFs;
-  }
 
   useEffect(() => {
     function getEntries(): Entries {
       const codeWithViolations = codeWithViolationGenerator(
         report,
-        synchronousFiles
+        contentsOfFiles
       );
       return Entries.fromIterable(codeWithViolations);
     }
 
     setEntries(getEntries());
-  }, [report, synchronousFiles]);
+  }, [report, contentsOfFiles]);
 
   return (
     <Container className={classes.root}>

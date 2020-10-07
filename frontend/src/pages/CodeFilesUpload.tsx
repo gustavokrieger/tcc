@@ -2,9 +2,11 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 import CodeAnalysisRequester from '../CodeAnalysisRequester';
 import {useHistory} from 'react-router-dom';
 import {Path} from './Path';
-import SynchronousFile from '../SynchronousFile';
 import CircularProgress from '../components/CircularProgress';
-import {Props as PropsOfCodeAnalysisResult} from './CodeAnalysisResult';
+import {
+  ContentsOfFile,
+  Props as PropsOfCodeAnalysisResult,
+} from './CodeAnalysisResult';
 import UploadButton from '../components/UploadButton';
 import assert from 'assert';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
@@ -48,8 +50,8 @@ export default function CodeFilesUpload() {
       PropsOfCodeAnalysisResult
     > {
       const report = await requestReport();
-      const synchronousFiles = await getConvertedFiles();
-      return {report: report, synchronousFiles: synchronousFiles};
+      const contentsOfFiles = await getConvertedFiles();
+      return {report: report, contentsOfFiles: contentsOfFiles};
     }
 
     async function requestReport() {
@@ -58,12 +60,14 @@ export default function CodeFilesUpload() {
     }
 
     async function getConvertedFiles() {
-      const synchronousFiles: SynchronousFile[] = [];
+      const contentsOfFiles: ContentsOfFile[] = [];
       for (const file of uploadedFiles) {
-        const synchronousFile = await SynchronousFile.fromFile(file);
-        synchronousFiles.push(synchronousFile);
+        const text = await file.text();
+        const name = file.name;
+        const contentsOfFile: ContentsOfFile = {text: text, name: name};
+        contentsOfFiles.push(contentsOfFile);
       }
-      return synchronousFiles;
+      return contentsOfFiles;
     }
 
     getPropsForCodeAnalysisResult().then(props =>

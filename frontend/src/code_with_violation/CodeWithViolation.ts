@@ -1,8 +1,8 @@
-import SynchronousFile from '../SynchronousFile';
 import * as pmdOutput from '../pmdOutput';
 import TextSlicer from './TextSlicer';
 import SelectorOfCodeSmellCreator from '../code_smells/SelectorOfCodeSmellCreator';
 import CodeSmellCreator from '../code_smells/CodeSmellCreator';
+import {ContentsOfFile} from '../pages/CodeAnalysisResult';
 
 export default class CodeWithViolation {
   private readonly textSlicer: TextSlicer;
@@ -19,12 +19,12 @@ export default class CodeWithViolation {
     this.fullPath = fullPath;
   }
 
-  static fromSynchronousFile(
-    synchronousFile: SynchronousFile,
+  static fromContentsOfFile(
+    contentsOfFile: ContentsOfFile,
     violation: pmdOutput.Violation,
     fullPath: string
   ): CodeWithViolation {
-    const code = synchronousFile.text;
+    const code = contentsOfFile.text;
     // todo encontrar forma melhor, vai quebrar quando codigo com regex
     const endOfLine = /\r?\n|\r/;
     const lineSeparatedCode = code.split(endOfLine);
