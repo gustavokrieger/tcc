@@ -48,6 +48,7 @@ export default class Tabs {
   ): JSX.Element {
     return (
       <Button
+        key={caseName}
         component={Link}
         to={{
           pathname: Path.VIOLATION_CASE + '/' + caseName,
