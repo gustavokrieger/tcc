@@ -5,5 +5,6 @@
   <rule ref="category/java/design.xml/ExcessiveMethodLength"/>
   <rule ref="category/java/design.xml/ExcessiveParameterList"/>
   <rule ref="category/java/design.xml/DataClass"/>
-  <rule ref="category/java/design.xml/ExcessiveClassLength" />
+  <rule ref="category/java/design.xml/ExcessiveClassLength"/>
+  <rule ref="category/java/design.xml/CouplingBetweenObjects"/>
 </ruleset>
