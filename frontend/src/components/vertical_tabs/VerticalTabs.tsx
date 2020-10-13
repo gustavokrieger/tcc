@@ -57,12 +57,12 @@ export default function VerticalTabs(props: Props) {
   return (
     <div className={clsx(classes.root, props.className)}>
       <Tabs
+        className={classes.tabs}
         orientation="vertical"
         variant="scrollable"
         value={value}
         onChange={handleChange}
         aria-label="Vertical tabs"
-        className={classes.tabs}
       >
         {tabsChildren}
       </Tabs>

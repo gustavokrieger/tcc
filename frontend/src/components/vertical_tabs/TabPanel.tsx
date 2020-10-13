@@ -1,6 +1,13 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+import {makeStyles} from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+  box: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+});
 
 interface Props {
   children?: React.ReactNode;
@@ -9,6 +16,8 @@ interface Props {
 }
 
 export default function TabPanel(props: Props) {
+  const classes = useStyles();
+
   return (
     <div
       role="tabpanel"
@@ -17,8 +26,8 @@ export default function TabPanel(props: Props) {
       aria-labelledby={`vertical-tab-${props.index}`}
     >
       {props.value === props.index && (
-        <Box p={3}>
-          <Typography>{props.children}</Typography>
+        <Box className={classes.box} p={3}>
+          {props.children}
         </Box>
       )}
     </div>
