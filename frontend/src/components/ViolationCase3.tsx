@@ -1,9 +1,6 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import {TransitionProps} from '@material-ui/core/transitions';
@@ -14,8 +11,24 @@ const useStyles = makeStyles({
   dialogPaper: {
     minHeight: '90vh',
     maxHeight: '90vh',
-    minWidth: '90vw',
-    maxWidth: '90vw',
+    minWidth: '75vw',
+    maxWidth: '75vw',
+  },
+  dialogContent: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    height: '100%',
+    width: '100%',
+  },
+  codeCard: {
+    height: '780px',
+    width: '65%',
+    overflow: 'auto',
+  },
+  descriptionCard: {
+    width: '32%',
+    height: '200px',
   },
 });
 
@@ -43,9 +56,6 @@ export default function ViolationCase3() {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Slide in alert dialog
-      </Button>
       <Dialog
         classes={{paper: classes.dialogPaper}}
         open={open}
@@ -58,20 +68,19 @@ export default function ViolationCase3() {
         <DialogTitle id="alert-dialog-slide-title">
           {"Use Google's location service?"}
         </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            Let Google help apps determine location. This means sending
-            anonymous location data to Google, even when no apps are running.
-          </DialogContentText>
+        <DialogContent className={classes.dialogContent}>
+          <SimpleCard className={classes.codeCard}>
+            {[...new Array(50)]
+              .map(
+                () => `Cras mattis consectetur purus sit amet fermentum.
+Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
+              )
+              .join('\n')}
+          </SimpleCard>
+          <SimpleCard className={classes.descriptionCard}>alo2</SimpleCard>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Disagree
-          </Button>
-          <Button onClick={handleClose} color="primary">
-            Agree
-          </Button>
-        </DialogActions>
       </Dialog>
     </div>
   );
