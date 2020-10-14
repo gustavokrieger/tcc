@@ -10,8 +10,7 @@ public final class CodeAnalysisParser {
   }
 
   public static JsonObject parseJson(Reader json) {
-    JsonParser jsonParser = new JsonParser();
-    return jsonParser.parse(json).getAsJsonObject();
+    return JsonParser.parseReader(json).getAsJsonObject();
   }
 
 }
