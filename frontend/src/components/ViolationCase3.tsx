@@ -7,6 +7,17 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import {TransitionProps} from '@material-ui/core/transitions';
+import SimpleCard from './SimpleCard';
+import {makeStyles} from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+  dialogPaper: {
+    minHeight: '90vh',
+    maxHeight: '90vh',
+    minWidth: '90vw',
+    maxWidth: '90vw',
+  },
+});
 
 const Transition = React.forwardRef(
   (
@@ -18,7 +29,9 @@ const Transition = React.forwardRef(
 );
 
 export default function ViolationCase3() {
-  const [open, setOpen] = React.useState(false);
+  const classes = useStyles();
+
+  const [open, setOpen] = React.useState(true);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -34,6 +47,7 @@ export default function ViolationCase3() {
         Slide in alert dialog
       </Button>
       <Dialog
+        classes={{paper: classes.dialogPaper}}
         open={open}
         TransitionComponent={Transition}
         keepMounted
