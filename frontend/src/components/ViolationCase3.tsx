@@ -6,6 +6,7 @@ import Slide from '@material-ui/core/Slide';
 import {TransitionProps} from '@material-ui/core/transitions';
 import SimpleCard from './SimpleCard';
 import {makeStyles} from '@material-ui/core/styles';
+import {Typography} from '@material-ui/core';
 
 const useStyles = makeStyles({
   dialogPaper: {
@@ -28,7 +29,9 @@ const useStyles = makeStyles({
   },
   descriptionCard: {
     width: '32%',
-    height: '200px',
+    maxHeight: '390px',
+    textAlign: 'center',
+    overflowY: 'auto',
   },
 });
 
@@ -70,16 +73,44 @@ export default function ViolationCase3() {
         </DialogTitle>
         <DialogContent className={classes.dialogContent}>
           <SimpleCard className={classes.codeCard}>
-            {[...new Array(50)]
-              .map(
-                () => `Cras mattis consectetur purus sit amet fermentum.
-Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
-              )
-              .join('\n')}
+            <Typography component="pre">
+              {'package fibsandlies;\n' +
+                '\n' +
+                'import java.util.Map;\n' +
+                'import java.util.HashMap;\n' +
+                '\n' +
+                'public class FibCalculator extends Fibonacci implements Calculator {\n' +
+                '    private static Map<Integer, Integer> memoized = new HashMap<>();\n' +
+                '\n' +
+                '    public static void main(String[] args) {\n' +
+                '        memoized.put(1, 1);\n' +
+                '        memoized.put(2, 1);\n' +
+                '        System.out.println(fibonacci(12)); // Get the 12th Fibonacci number and print to console\n' +
+                '    }\n' +
+                '\n' +
+                '    public static int fibonacci(int fibIndex) {\n' +
+                '        if (memoized.containsKey(fibIndex)) return memoized.get(fibIndex);\n' +
+                '        else {\n' +
+                '            int answer = fibonacci(fibIndex - 1) + fibonacci(fibIndex - 2);\n' +
+                '            memoized.put(fibIndex, answer);\n' +
+                '            return answer;\n' +
+                '        }\n' +
+                '    }\n' +
+                '}'}
+            </Typography>
           </SimpleCard>
-          <SimpleCard className={classes.descriptionCard}>alo2</SimpleCard>
+          <SimpleCard className={classes.descriptionCard}>
+            <Typography>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat.
+            </Typography>
+          </SimpleCard>
         </DialogContent>
       </Dialog>
     </div>
