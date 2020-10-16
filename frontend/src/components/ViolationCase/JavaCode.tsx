@@ -8,7 +8,7 @@ SyntaxHighlighter.registerLanguage('java', java);
 
 const useStyles = makeStyles({
   root: {
-    minWidth: '45vw',
+    minWidth: '48.5vw',
   },
   code: {
     fontSize: '17px',
