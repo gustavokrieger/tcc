@@ -1,20 +1,53 @@
-import React, {useEffect} from 'react';
-import Prism from 'prismjs';
-import 'prismjs/components/prism-java';
-import '../prism.css';
+import React from 'react';
+import {Light as SyntaxHighlighter} from 'react-syntax-highlighter';
+import java from 'react-syntax-highlighter/dist/esm/languages/hljs/java';
+import {githubGist} from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
-type Props = {
-  children: React.ReactNode;
-};
+SyntaxHighlighter.registerLanguage('java', java);
 
-export default function JavaCode(props: Props) {
-  useEffect(() => {
-    Prism.highlightAll();
-  }, []);
+const linesToMark = [1, 2, 3, 4, 5];
 
+export default function JavaCode() {
   return (
-    <pre>
-      <code className="language-java">{props.children}</code>
-    </pre>
+    <SyntaxHighlighter
+      language="java"
+      style={githubGist}
+      showLineNumbers
+      wrapLines
+      startingLineNumber={1}
+      lineProps={lineNumber => {
+        const style = {display: 'block', backgroundColor: ''};
+        if (linesToMark.includes(lineNumber)) {
+          style.backgroundColor = '#fff5b1';
+        }
+        return {style};
+      }}
+    >
+      {CODE}
+    </SyntaxHighlighter>
   );
 }
+
+const CODE = `package fibsandlies;
+
+import java.util.Map;
+import java.util.HashMap;
+
+public class FibCalculator extends Fibonacci implements Calculator {
+  private static Map<Integer, Integer> memoized = new HashMap<>();
+
+  public static void main(String[] args) {
+    memoized.put(1, 1);
+    memoized.put(2, 1);
+    System.out.println(fibonacci(12)); // Get the 12th Fibonacci number and print to console
+  }
+
+  public static int fibonacci(int fibIndex) {
+    if (memoized.containsKey(fibIndex)) return memoized.get(fibIndex);
+    else {
+        int answer = fibonacci(fibIndex - 1) + fibonacci(fibIndex - 2);
+        memoized.put(fibIndex, answer);
+        return answer;
+    }
+  }
+}`;
