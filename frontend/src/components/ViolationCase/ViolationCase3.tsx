@@ -5,18 +5,28 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import {TransitionProps} from '@material-ui/core/transitions';
 import SimpleCard from './SimpleCard';
-import {makeStyles} from '@material-ui/core/styles';
-import {Typography} from '@material-ui/core';
-import JavaCode from './JavaCode';
+import Typography from '@material-ui/core/Typography';
+import JavaCode, {JavaCodeProps} from './JavaCode';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 const useStyles = makeStyles({
+  title: {
+    textTransform: 'uppercase',
+  },
   dialogPaper: {
-    minHeight: '90vh',
-    maxHeight: '90vh',
+    minHeight: '93vh',
+    maxHeight: '93vh',
     minWidth: '75vw',
     maxWidth: '75vw',
   },
-  dialogContent: {
+  contentWithText: {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    height: '1vh',
+    width: '68%',
+  },
+  contentWithCards: {
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
@@ -25,7 +35,7 @@ const useStyles = makeStyles({
   },
   codeCard: {
     display: 'flex',
-    height: '776px',
+    height: '79.6vh',
     width: '69.2%',
     overflow: 'auto',
   },
@@ -37,16 +47,14 @@ const useStyles = makeStyles({
   },
 });
 
-const Transition = React.forwardRef(
-  (
-    props: TransitionProps & {children?: React.ReactElement<any, any>},
-    ref: React.Ref<unknown>
-  ) => {
-    return <Slide direction="up" ref={ref} {...props} />;
-  }
-);
+export type ViolationCaseProps = {
+  title: string;
+  fileName: string;
+  javaCodeProps: JavaCodeProps;
+  description: string;
+};
 
-export default function ViolationCase3() {
+export default function ViolationCase3(props: ViolationCaseProps) {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(true);
@@ -70,27 +78,32 @@ export default function ViolationCase3() {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">
-          {"Use Google's location service?"}
+        <DialogTitle className={classes.title} id="alert-dialog-slide-title">
+          {props.title}
         </DialogTitle>
-        <DialogContent className={classes.dialogContent}>
+        <DialogContent className={classes.contentWithText}>
+          <DialogContentText id="alert-dialog-slide-description">
+            {props.fileName}
+          </DialogContentText>
+        </DialogContent>
+        <DialogContent className={classes.contentWithCards}>
           <SimpleCard className={classes.codeCard}>
-            <JavaCode />
+            <JavaCode {...props.javaCodeProps} />
           </SimpleCard>
           <SimpleCard className={classes.descriptionCard}>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit
-              amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-              veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-              ex ea commodo consequat.
-            </Typography>
+            <Typography>{props.description}</Typography>
           </SimpleCard>
         </DialogContent>
       </Dialog>
     </div>
   );
 }
+
+const Transition = React.forwardRef(
+  (
+    props: TransitionProps & {children?: React.ReactElement<any, any>},
+    ref: React.Ref<unknown>
+  ) => {
+    return <Slide direction="up" ref={ref} {...props} />;
+  }
+);

@@ -15,14 +15,14 @@ const useStyles = makeStyles({
   },
 });
 
-type Props = {
+export type JavaCodeProps = {
   children: string;
   startingLineNumber: number;
   lineMarkStart: number;
   lineMarkEnd: number;
 };
 
-export default function JavaCode(props: Props) {
+export default function JavaCode(props: JavaCodeProps) {
   const classes = useStyles();
 
   return (
