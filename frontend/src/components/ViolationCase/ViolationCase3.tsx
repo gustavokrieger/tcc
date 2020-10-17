@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import JavaCode, {JavaCodeProps} from './JavaCode';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles({
   title: {
@@ -57,7 +58,7 @@ export type ViolationCaseProps = {
 export default function ViolationCase3(props: ViolationCaseProps) {
   const classes = useStyles();
 
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -69,6 +70,9 @@ export default function ViolationCase3(props: ViolationCaseProps) {
 
   return (
     <div>
+      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+        {props.title}
+      </Button>
       <Dialog
         classes={{paper: classes.dialogPaper}}
         open={open}
