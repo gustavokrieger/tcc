@@ -17,14 +17,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export type Tab = {
-  label: string;
-  children: React.ReactNode[];
-};
-
 export type Props = {
   className?: string;
   tabs: Iterable<Tab>;
+};
+
+export type Tab = {
+  label: string;
+  children: React.ReactNode[];
 };
 
 export default function VerticalTabs(props: Props) {

@@ -12,6 +12,9 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles({
+  button: {
+    marginBottom: '1vh',
+  },
   title: {
     textTransform: 'uppercase',
   },
@@ -70,7 +73,12 @@ export default function ViolationCase3(props: ViolationCaseProps) {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button
+        className={classes.button}
+        variant="outlined"
+        color="primary"
+        onClick={handleClickOpen}
+      >
         {props.title}
       </Button>
       <Dialog
