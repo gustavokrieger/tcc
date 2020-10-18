@@ -3,15 +3,16 @@ import CodeAnalysisRequester from '../CodeAnalysisRequester';
 import {useHistory} from 'react-router-dom';
 import {Path} from './Path';
 import CircularProgress from '../components/CircularProgress';
-import {
-  ContentsOfFile,
-  Props as PropsOfCodeAnalysisResult,
-} from './CodeAnalysisResult';
 import UploadButton from '../components/UploadButton';
 import assert from 'assert';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {Typography} from '@material-ui/core';
+import {ViolationCaseProps} from '../components/ViolationCase/ViolationCase3';
+import {CodeAnalysisResultProps} from './CodeAnalysisResult2';
+import ContentsOfFileUtility from '../ContentsOfFileUtility';
+import {codeWithViolationGenerator} from '../code_with_violation/codeWithViolationGenerator';
+import CodeSmellCasesList from '../CodeSmellCasesList';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,27 +48,25 @@ export default function CodeFilesUpload() {
     setIsLoading(true);
 
     async function getPropsForCodeAnalysisResult(): Promise<
-      PropsOfCodeAnalysisResult
+      CodeAnalysisResultProps
     > {
       const report = await requestReport();
-      const contentsOfFiles = await getConvertedFiles();
-      return {report: report, contentsOfFiles: contentsOfFiles};
+      const contentsOfFiles = await ContentsOfFileUtility.convertFiles(
+        uploadedFiles
+      );
+      const codeWithViolations = codeWithViolationGenerator(
+        report,
+        contentsOfFiles
+      );
+      const codeSmellCasesList = CodeSmellCasesList.fromIterable(
+        codeWithViolations
+      );
+      return {codeSmellCasesList: codeSmellCasesList.getAll()};
     }
 
     async function requestReport() {
       const codeAnalysisRequester = new CodeAnalysisRequester();
       return await codeAnalysisRequester.run(uploadedFiles);
-    }
-
-    async function getConvertedFiles() {
-      const contentsOfFiles: ContentsOfFile[] = [];
-      for (const file of uploadedFiles) {
-        const text = await file.text();
-        const name = file.name;
-        const contentsOfFile: ContentsOfFile = {text: text, name: name};
-        contentsOfFiles.push(contentsOfFile);
-      }
-      return contentsOfFiles;
     }
 
     getPropsForCodeAnalysisResult().then(props =>

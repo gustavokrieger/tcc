@@ -6,8 +6,8 @@ import {ContentsOfFile} from '../pages/CodeAnalysisResult';
 
 export default class CodeWithViolation {
   private readonly textSlicer: TextSlicer;
-  private readonly _violation: pmdOutput.Violation;
-  private readonly fullPath: string;
+  private readonly violation: pmdOutput.Violation;
+  private readonly _fullPath: string;
 
   private constructor(
     lineSeparatedCode: string[],
@@ -15,8 +15,8 @@ export default class CodeWithViolation {
     fullPath: string
   ) {
     this.textSlicer = new TextSlicer(lineSeparatedCode); // todo refatorar para ser por injeção
-    this._violation = violation;
-    this.fullPath = fullPath;
+    this.violation = violation;
+    this._fullPath = fullPath;
   }
 
   static fromContentsOfFile(
@@ -31,33 +31,45 @@ export default class CodeWithViolation {
     return new CodeWithViolation(lineSeparatedCode, violation, fullPath);
   }
 
+  get fullPath(): string {
+    return this._fullPath;
+  }
+
+  getFirstLineOfViolation(): number {
+    return this.violation.beginline;
+  }
+
+  getLastLineOfViolation(): number {
+    return this.violation.endline;
+  }
+
   getCodeThatCausedViolation(): string {
-    this.textSlicer.startLine = this._violation.beginline - 1;
-    this.textSlicer.endLine = this._violation.endline;
-    this.textSlicer.startColumn = this._violation.begincolumn - 1;
-    this.textSlicer.endColumn = this._violation.endcolumn;
+    this.textSlicer.startLine = this.violation.beginline - 1;
+    this.textSlicer.endLine = this.violation.endline;
+    this.textSlicer.startColumn = this.violation.begincolumn - 1;
+    this.textSlicer.endColumn = this.violation.endcolumn;
     return this.textSlicer.getJoinedSlicedSelection();
   }
 
   getCodeBeforeViolation(): string {
     this.textSlicer.startLine = undefined;
-    this.textSlicer.endLine = this._violation.beginline;
+    this.textSlicer.endLine = this.violation.beginline;
     this.textSlicer.startColumn = undefined;
-    this.textSlicer.endColumn = this._violation.begincolumn - 1;
+    this.textSlicer.endColumn = this.violation.begincolumn - 1;
     return this.textSlicer.getJoinedSlicedSelection();
   }
 
   getCodeAfterViolation(): string {
-    this.textSlicer.startLine = this._violation.endline - 1;
+    this.textSlicer.startLine = this.violation.endline - 1;
     this.textSlicer.endLine = undefined;
-    this.textSlicer.startColumn = this._violation.endcolumn;
+    this.textSlicer.startColumn = this.violation.endcolumn;
     this.textSlicer.endColumn = undefined;
     return this.textSlicer.getJoinedSlicedSelection();
   }
 
   getCodeSmellCreator(): CodeSmellCreator {
     const selectorOfCodeSmellCreator = SelectorOfCodeSmellCreator.fromViolation(
-      this._violation,
+      this.violation,
       this.getCodeThatCausedViolation()
     );
     return selectorOfCodeSmellCreator.select();

@@ -17,10 +17,10 @@ const useStyles = makeStyles({
 });
 
 export type CodeAnalysisResultProps = {
-  codeSmellCasesList: CodeSmellCases[];
+  codeSmellCasesList: Iterable<CodeSmellCases>;
 };
 
-type CodeSmellCases = {
+export type CodeSmellCases = {
   codeSmell: string;
   cases: ViolationCaseProps[];
 };
