@@ -1,7 +1,7 @@
 import {CodeSmellCases} from './pages/CodeAnalysisResult2';
 import CodeWithViolation from './code_with_violation/CodeWithViolation';
-import {JavaCodeProps} from './components/ViolationCase/JavaCode';
-import {ViolationCaseProps} from './components/ViolationCase/ViolationCase3';
+import {JavaCodeProps} from './components/violation_case/JavaCode';
+import {ViolationCaseProps} from './components/violation_case/ViolationCase3';
 
 export default class CodeSmellCasesList {
   private readonly list: CodeSmellCases[] = [];
@@ -22,14 +22,20 @@ export default class CodeSmellCasesList {
   }
 
   private addViolationCase(codeWithViolation: CodeWithViolation) {
-    const code =
-      codeWithViolation.getCodeBeforeViolation() +
-      codeWithViolation.getCodeThatCausedViolation() +
-      codeWithViolation.getCodeAfterViolation(); // todo trocar para ser parte do codigo antes e depois
+    const additionalLines = 3;
+    const code = codeWithViolation.getCodeThatCausedViolationAndLinesAroundIt(
+      additionalLines
+    );
+
+    let startingLineNumber =
+      codeWithViolation.getFirstLineOfViolation() - additionalLines;
+    if (startingLineNumber < 1) {
+      startingLineNumber = 1;
+    }
 
     const javaCodeProps: JavaCodeProps = {
       children: code,
-      startingLineNumber: 1, //todo mudar para ser dinamico
+      startingLineNumber: startingLineNumber,
       lineMarkStart: codeWithViolation.getFirstLineOfViolation(),
       lineMarkEnd: codeWithViolation.getLastLineOfViolation(),
     };
