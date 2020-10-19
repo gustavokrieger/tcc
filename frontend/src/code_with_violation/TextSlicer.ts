@@ -25,12 +25,12 @@ export default class TextSlicer {
     this._endColumn = value;
   }
 
-  getJoinedSlicedSelection(endOfLine = '\n'): string {
-    const lines = this.sliceSelection();
+  sliceAndJoin(endOfLine = '\n'): string {
+    const lines = this.slice();
     return lines.join(endOfLine);
   }
 
-  sliceSelection(): string[] {
+  private slice(): string[] {
     const lines = this.lines.slice(this._startLine, this._endLine);
     if (lines.length === 1) {
       this.sliceSingleLine(lines);
