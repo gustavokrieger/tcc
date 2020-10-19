@@ -40,11 +40,11 @@ const useStyles = makeStyles({
   codeCard: {
     display: 'flex',
     height: '79.6vh',
-    width: '69.2%',
+    width: '70.4%',
     overflow: 'auto',
   },
   descriptionCard: {
-    width: '29.5%',
+    width: '28.7%',
     maxHeight: '39.8vh',
     textAlign: 'center',
     overflowY: 'auto',
