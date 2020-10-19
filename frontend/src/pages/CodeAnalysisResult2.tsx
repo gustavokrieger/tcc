@@ -5,7 +5,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import VerticalTabs, {Tab} from '../components/vertical_tabs/VerticalTabs';
 import ViolationCase3, {
   ViolationCaseProps,
-} from '../components/ViolationCase/ViolationCase3';
+} from '../components/violation_case/ViolationCase3';
 
 const useStyles = makeStyles({
   root: {
@@ -35,19 +35,22 @@ export default function CodeAnalysisResult2(
   const [tabs, setTabs] = useState<Tab[]>([]);
 
   useEffect(() => {
-    const newTabs: Tab[] = [];
-    for (const codeSmellCases of codeSmellCasesList) {
-      const tabChildren: React.ReactNode[] = [];
-      for (const codeSmellCase of codeSmellCases.cases) {
-        tabChildren.push(<ViolationCase3 {...codeSmellCase} />);
+    function createTabs(): Tab[] {
+      const newTabs: Tab[] = [];
+      for (const codeSmellCases of codeSmellCasesList) {
+        const tabChildren: React.ReactNode[] = [];
+        for (const codeSmellCase of codeSmellCases.cases) {
+          tabChildren.push(<ViolationCase3 {...codeSmellCase} />);
+        }
+        const newTab: Tab = {
+          label: codeSmellCases.codeSmell,
+          children: tabChildren,
+        };
+        newTabs.push(newTab);
       }
-      const newTab: Tab = {
-        label: codeSmellCases.codeSmell,
-        children: tabChildren,
-      };
-      newTabs.push(newTab);
+      return newTabs;
     }
-    setTabs(newTabs);
+    setTabs(createTabs());
   }, [codeSmellCasesList]);
 
   return (
