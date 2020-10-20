@@ -89,11 +89,7 @@ export default function CodeFilesUpload() {
         <CircularProgress className={classes.upload} />
       ) : (
         <>
-          <UploadButton
-            className={classes.upload}
-            accept=".java"
-            onChange={handleChange}
-          >
+          <UploadButton className={classes.upload} onChange={handleChange}>
             upload code
           </UploadButton>
         </>

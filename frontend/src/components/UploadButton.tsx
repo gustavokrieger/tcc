@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme: Theme) =>
 type Props = {
   children: React.ReactNode;
   className?: string;
-  accept: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -29,7 +28,6 @@ export default function UploadButton(props: Props) {
   return (
     <div className={clsx(classes.root, props.className)}>
       <input
-        accept={props.accept}
         className={classes.input}
         id="contained-button-file"
         multiple
