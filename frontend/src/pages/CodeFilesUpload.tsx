@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       textTransform: 'capitalize',
-      margin: theme.spacing(2),
+      margin: theme.spacing(4),
     },
     subtitle: {
       fontSize: '18px',
