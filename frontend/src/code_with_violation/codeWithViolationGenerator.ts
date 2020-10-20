@@ -1,37 +1,54 @@
 import * as pmdOutput from '../pmdOutput';
 import CodeWithViolation from './CodeWithViolation';
-import assert from 'assert';
-import {ContentsOfFile} from '../pages/CodeAnalysisResult';
+import {ContentsOfFile} from '../pages/CodeFilesUpload';
 
-// todo refatorar
 export function* codeWithViolationGenerator(
-  report: pmdOutput.Report,
-  contentsOfFiles: ContentsOfFile[]
+  files: pmdOutput.File[],
+  contentsOfFiles: Iterable<ContentsOfFile>
 ): Generator<CodeWithViolation> {
-  contentsOfFiles = [...contentsOfFiles];
-  for (const file of report.files) {
-    for (const violation of file.violations) {
-      const fileNames = file.filename.split('\\');
-      const lastFilename = fileNames[fileNames.length - 1];
-      let outerItem = null;
-      let outerIndex = null;
-      let relativePath = '';
-      contentsOfFiles.forEach((item, index) => {
-        if (item.name === lastFilename) {
-          outerItem = item;
-          outerIndex = index;
-          relativePath = item.relativePath;
-        }
-      });
-      assert(outerItem !== null);
-      assert(outerIndex !== null);
-      contentsOfFiles.splice(outerIndex, 1); // todo fazer com q não remova
+  for (const file of files) {
+    let fileRelativePath = getFileRelativePath(file.filename);
+    fileRelativePath = fileRelativePath.replaceAll('\\', '/');
 
+    const contentsOfFile = getContentsOfFileWithRelativePath(
+      contentsOfFiles,
+      fileRelativePath
+    );
+
+    for (const violation of file.violations) {
       yield CodeWithViolation.fromContentsOfFile(
-        outerItem,
+        contentsOfFile,
         violation,
-        relativePath
+        fileRelativePath
       );
     }
   }
+}
+
+function getContentsOfFileWithRelativePath(
+  contentsOfFiles: Iterable<ContentsOfFile>,
+  relativePath: string
+): ContentsOfFile {
+  for (const contentsOfFile of contentsOfFiles) {
+    if (contentsOfFile.relativePath === relativePath) {
+      return contentsOfFile;
+    }
+  }
+  throw new Error(); // todo criar exception
+}
+
+function getFileRelativePath(filename: string): string {
+  const pathWithTemporaryDirectory = getPathWithTemporaryDirectory(filename);
+  return removeFirstDirectory(pathWithTemporaryDirectory);
+}
+
+function getPathWithTemporaryDirectory(filename: string): string {
+  const directoryId = 'CyXWc8mDSV';
+  const index = filename.indexOf(directoryId);
+  return filename.substring(index);
+}
+
+function removeFirstDirectory(pathWithTemporaryDirectory: string): string {
+  const index = pathWithTemporaryDirectory.indexOf('\\');
+  return pathWithTemporaryDirectory.substring(index + 1);
 }
