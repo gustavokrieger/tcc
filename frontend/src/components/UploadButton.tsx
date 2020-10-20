@@ -32,8 +32,8 @@ export default function UploadButton(props: Props) {
         id="contained-button-file"
         multiple
         // @ts-ignore
-        directory="" // Workaround for directory upload.
-        webkitdirectory="" // Workaround for directory upload.
+        directory="" // Non-standard.
+        webkitdirectory="" // Non-standard.
         type="file"
         onChange={props.onChange}
       />

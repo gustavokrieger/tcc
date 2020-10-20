@@ -24,6 +24,7 @@ export type Props = {
 export type ContentsOfFile = {
   name: string;
   text: string;
+  relativePath: string;
 };
 
 export default function CodeAnalysisResult(

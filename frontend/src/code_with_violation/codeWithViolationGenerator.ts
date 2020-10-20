@@ -8,16 +8,19 @@ export function* codeWithViolationGenerator(
   report: pmdOutput.Report,
   contentsOfFiles: ContentsOfFile[]
 ): Generator<CodeWithViolation> {
+  contentsOfFiles = [...contentsOfFiles];
   for (const file of report.files) {
     for (const violation of file.violations) {
       const fileNames = file.filename.split('\\');
       const lastFilename = fileNames[fileNames.length - 1];
       let outerItem = null;
       let outerIndex = null;
+      let relativePath = '';
       contentsOfFiles.forEach((item, index) => {
         if (item.name === lastFilename) {
           outerItem = item;
           outerIndex = index;
+          relativePath = item.relativePath;
         }
       });
       assert(outerItem !== null);
@@ -27,7 +30,7 @@ export function* codeWithViolationGenerator(
       yield CodeWithViolation.fromContentsOfFile(
         outerItem,
         violation,
-        file.filename
+        relativePath
       );
     }
   }

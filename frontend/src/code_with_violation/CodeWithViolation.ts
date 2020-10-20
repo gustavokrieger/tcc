@@ -7,7 +7,7 @@ import {ContentsOfFile} from '../pages/CodeAnalysisResult';
 export default class CodeWithViolation {
   private readonly textSlicer: TextSlicer;
   private readonly violation: pmdOutput.Violation;
-  private readonly _fullPath: string;
+  private readonly _relativePath: string;
 
   private constructor(
     lineSeparatedCode: string[],
@@ -16,7 +16,7 @@ export default class CodeWithViolation {
   ) {
     this.textSlicer = new TextSlicer(lineSeparatedCode); // todo refatorar para ser por injeção
     this.violation = violation;
-    this._fullPath = fullPath;
+    this._relativePath = fullPath;
   }
 
   static fromContentsOfFile(
@@ -31,8 +31,8 @@ export default class CodeWithViolation {
     return new CodeWithViolation(lineSeparatedCode, violation, fullPath);
   }
 
-  get fullPath(): string {
-    return this._fullPath;
+  get relativePath(): string {
+    return this._relativePath;
   }
 
   getFirstLineOfViolation(): number {

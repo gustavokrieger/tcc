@@ -32,7 +32,6 @@ export default class CodeSmellCasesList {
     if (startingLineNumber < 1) {
       startingLineNumber = 1;
     }
-
     const javaCodeProps: JavaCodeProps = {
       children: code,
       startingLineNumber: startingLineNumber,
@@ -40,25 +39,22 @@ export default class CodeSmellCasesList {
       lineMarkEnd: codeWithViolation.getLastLineOfViolation(),
     };
 
-    const codeSmell = this.getCodeSmellTranslation(codeWithViolation);
-    const entry = this.getOrAddByCodeSmell(codeSmell);
+    const codeSmellCreator = codeWithViolation.getCodeSmellCreator();
+    const codeSmell = codeSmellCreator.create();
+
+    const codeSmellTranslation = codeSmell.getTranslation();
+    const entry = this.getOrAddByCodeSmell(codeSmellTranslation);
     const caseNumber = entry.cases.length + 1;
     const caseName = 'caso ' + caseNumber;
 
     const codeSmellCases: ViolationCaseProps = {
       title: caseName,
-      fileName: codeWithViolation.fullPath,
-      description: 'temp', //todo mudar para ser dinamico
+      fileName: codeWithViolation.relativePath,
+      description: codeSmell.getDescription(),
       javaCodeProps: javaCodeProps,
     };
 
     entry.cases.push(codeSmellCases);
-  }
-
-  private getCodeSmellTranslation(codeWithViolation: CodeWithViolation) {
-    const codeSmellCreator = codeWithViolation.getCodeSmellCreator();
-    const codeSmell = codeSmellCreator.create();
-    return codeSmell.getTranslation();
   }
 
   private getOrAddByCodeSmell(codeSmell: string) {
