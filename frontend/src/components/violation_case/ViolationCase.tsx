@@ -58,7 +58,7 @@ export type ViolationCaseProps = {
   description: string;
 };
 
-export default function ViolationCase3(props: ViolationCaseProps) {
+export default function ViolationCase(props: ViolationCaseProps) {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);

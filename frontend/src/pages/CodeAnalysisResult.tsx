@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {codeWithViolationGenerator} from '../code_with_violation/codeWithViolationGenerator';
-import * as pmdOutput from '../pmdOutput';
 import {RouteComponentProps} from 'react-router-dom';
 import {Container} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
-import Tabs from '../components/vertical_tabs/Tabs';
-import VerticalTabs from '../components/vertical_tabs/VerticalTabs';
+import VerticalTabs, {Tab} from '../components/vertical_tabs/VerticalTabs';
+import ViolationCase, {
+  ViolationCaseProps,
+} from '../components/violation_case/ViolationCase';
 
 const useStyles = makeStyles({
   root: {
@@ -16,41 +16,46 @@ const useStyles = makeStyles({
   },
 });
 
-export type Props = {
-  report: pmdOutput.Report;
-  contentsOfFiles: ContentsOfFile[];
+export type CodeAnalysisResultProps = {
+  codeSmellCasesList: Iterable<CodeSmellCases>;
 };
 
-export type ContentsOfFile = {
-  name: string;
-  text: string;
-  relativePath: string;
+export type CodeSmellCases = {
+  codeSmell: string;
+  cases: ViolationCaseProps[];
 };
 
 export default function CodeAnalysisResult(
-  props: RouteComponentProps<{}, any, Props | any> // "any" is a Workaround.
+  props: RouteComponentProps<{}, any, CodeAnalysisResultProps | any> // "any" is a Workaround.
 ) {
   const classes = useStyles();
-  const report: pmdOutput.Report = props.location.state.report;
-  const contentsOfFiles = props.location.state.contentsOfFiles;
+  const codeSmellCasesList: CodeSmellCases[] =
+    props.location.state.codeSmellCasesList;
 
-  const [tabs, setTabs] = useState(new Tabs());
+  const [tabs, setTabs] = useState<Tab[]>([]);
 
   useEffect(() => {
-    function createTabs(): Tabs {
-      const codeWithViolations = codeWithViolationGenerator(
-        report,
-        contentsOfFiles
-      );
-      return Tabs.fromIterable(codeWithViolations);
+    function createTabs(): Tab[] {
+      const newTabs: Tab[] = [];
+      for (const codeSmellCases of codeSmellCasesList) {
+        const tabChildren: React.ReactNode[] = [];
+        for (const codeSmellCase of codeSmellCases.cases) {
+          tabChildren.push(<ViolationCase {...codeSmellCase} />);
+        }
+        const newTab: Tab = {
+          label: codeSmellCases.codeSmell,
+          children: tabChildren,
+        };
+        newTabs.push(newTab);
+      }
+      return newTabs;
     }
-
     setTabs(createTabs());
-  }, [report, contentsOfFiles]);
+  }, [codeSmellCasesList]);
 
   return (
     <Container className={classes.root}>
-      <VerticalTabs className={classes.tabs} tabs={tabs.getAll()} />
+      <VerticalTabs className={classes.tabs} tabs={tabs} />
     </Container>
   );
 }

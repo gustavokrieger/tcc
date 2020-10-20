@@ -13,7 +13,9 @@ export default class CodeAnalysisRequester {
     const input = 'http://localhost:8080/tcc_backend_war_exploded/code-files';
     const formData = new FormData();
     for (const file of files) {
-      formData.append('file', file, file.name);
+      // @ts-ignore
+      const relativePath = file.webkitRelativePath; // Non-standard.
+      formData.append(file.name, file, relativePath);
     }
     const init = {
       method: 'POST',

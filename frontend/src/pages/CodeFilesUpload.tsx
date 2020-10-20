@@ -7,12 +7,11 @@ import UploadButton from '../components/UploadButton';
 import assert from 'assert';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {Typography} from '@material-ui/core';
-import {ViolationCaseProps} from '../components/ViolationCase/ViolationCase3';
-import {CodeAnalysisResultProps} from './CodeAnalysisResult2';
+import Typography from '@material-ui/core/Typography';
+import {CodeAnalysisResultProps} from './CodeAnalysisResult';
 import ContentsOfFileUtility from '../ContentsOfFileUtility';
-import {codeWithViolationGenerator} from '../code_with_violation/codeWithViolationGenerator';
 import CodeSmellCasesList from '../CodeSmellCasesList';
+import {codeWithViolationGenerator} from '../code_with_violation/codeWithViolationGenerator';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,6 +36,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+export type ContentsOfFile = {
+  text: string;
+  relativePath: string;
+};
+
 export default function CodeFilesUpload() {
   const classes = useStyles();
   const history = useHistory();
@@ -59,7 +63,7 @@ export default function CodeFilesUpload() {
         uploadedFiles
       );
       const codeWithViolations = codeWithViolationGenerator(
-        report,
+        report.files,
         contentsOfFiles
       );
       const codeSmellCasesList = CodeSmellCasesList.fromIterable(

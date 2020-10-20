@@ -1,10 +1,10 @@
-import {CodeSmellCases} from './pages/CodeAnalysisResult2';
+import {CodeSmellCases} from './pages/CodeAnalysisResult';
 import CodeWithViolation from './code_with_violation/CodeWithViolation';
 import {JavaCodeProps} from './components/violation_case/JavaCode';
-import {ViolationCaseProps} from './components/violation_case/ViolationCase3';
+import {ViolationCaseProps} from './components/violation_case/ViolationCase';
 
 export default class CodeSmellCasesList {
-  private readonly list: CodeSmellCases[] = [];
+  private readonly array: CodeSmellCases[] = [];
 
   static fromIterable(
     CodeWithViolationList: Iterable<CodeWithViolation>
@@ -17,7 +17,7 @@ export default class CodeSmellCasesList {
   }
 
   getAll(): readonly CodeSmellCases[] {
-    const copy = [...this.list];
+    const copy = [...this.array];
     return Object.freeze(copy);
   }
 
@@ -67,7 +67,7 @@ export default class CodeSmellCasesList {
   }
 
   private getByCodeSmell(codeSmell: string) {
-    for (const entry of this.list) {
+    for (const entry of this.array) {
       if (entry.codeSmell === codeSmell) {
         return entry;
       }
@@ -77,7 +77,7 @@ export default class CodeSmellCasesList {
 
   private addWithCodeSmell(codeSmell: string): CodeSmellCases {
     const newEntry: CodeSmellCases = {codeSmell: codeSmell, cases: []};
-    this.list.push(newEntry);
+    this.array.push(newEntry);
     return newEntry;
   }
 }

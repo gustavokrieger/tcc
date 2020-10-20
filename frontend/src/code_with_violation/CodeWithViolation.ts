@@ -2,7 +2,7 @@ import * as pmdOutput from '../pmdOutput';
 import TextSlicer from './TextSlicer';
 import SelectorOfCodeSmellCreator from '../code_smells/SelectorOfCodeSmellCreator';
 import CodeSmellCreator from '../code_smells/CodeSmellCreator';
-import {ContentsOfFile} from '../pages/CodeAnalysisResult';
+import {ContentsOfFile} from '../pages/CodeFilesUpload';
 
 export default class CodeWithViolation {
   private readonly textSlicer: TextSlicer;
@@ -12,23 +12,23 @@ export default class CodeWithViolation {
   private constructor(
     lineSeparatedCode: string[],
     violation: pmdOutput.Violation,
-    fullPath: string
+    relativePath: string
   ) {
     this.textSlicer = new TextSlicer(lineSeparatedCode); // todo refatorar para ser por injeção
     this.violation = violation;
-    this._relativePath = fullPath;
+    this._relativePath = relativePath;
   }
 
   static fromContentsOfFile(
     contentsOfFile: ContentsOfFile,
     violation: pmdOutput.Violation,
-    fullPath: string
+    relativePath: string
   ): CodeWithViolation {
     const code = contentsOfFile.text;
     // todo encontrar forma melhor, vai quebrar quando codigo com regex
     const endOfLine = /\r?\n|\r/;
     const lineSeparatedCode = code.split(endOfLine);
-    return new CodeWithViolation(lineSeparatedCode, violation, fullPath);
+    return new CodeWithViolation(lineSeparatedCode, violation, relativePath);
   }
 
   get relativePath(): string {
