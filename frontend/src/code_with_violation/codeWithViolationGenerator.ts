@@ -2,6 +2,7 @@ import * as pmdOutput from '../pmdOutput';
 import CodeWithViolation from './CodeWithViolation';
 import {ContentsOfFile} from '../pages/CodeFilesUpload';
 
+// todo pode ser melhorado para ganhar desempenho
 export function* codeWithViolationGenerator(
   files: pmdOutput.File[],
   contentsOfFiles: Iterable<ContentsOfFile>
