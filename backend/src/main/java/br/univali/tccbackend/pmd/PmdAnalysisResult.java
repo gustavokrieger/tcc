@@ -5,22 +5,22 @@ import com.google.gson.JsonObject;
 
 public class PmdAnalysisResult {
 
-  private final JsonObject pmdAnalysisResult;
+  private final JsonObject jsonObject;
 
-  PmdAnalysisResult(JsonObject pmdAnalysisResult) {
-    this.pmdAnalysisResult = pmdAnalysisResult;
+  PmdAnalysisResult(JsonObject jsonObject) {
+    this.jsonObject = jsonObject;
   }
 
   public String toString() {
-    return pmdAnalysisResult.toString();
+    return jsonObject.toString();
   }
 
   public void addProperty(String property, String value) {
-    pmdAnalysisResult.addProperty(property, value);
+    jsonObject.addProperty(property, value);
   }
 
   public JsonArray getAsJsonArray(String memberName) {
-    return pmdAnalysisResult.getAsJsonArray(memberName);
+    return jsonObject.getAsJsonArray(memberName);
   }
 
 }
