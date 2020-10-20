@@ -25,10 +25,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       textTransform: 'capitalize',
-      margin: theme.spacing(3),
+      margin: theme.spacing(2),
+    },
+    subtitle: {
+      fontSize: '18px',
+      margin: theme.spacing(2),
     },
     upload: {
-      margin: theme.spacing(3),
+      margin: theme.spacing(2),
     },
   })
 );
@@ -83,14 +87,17 @@ export default function CodeFilesUpload() {
   return (
     <Container className={classes.root}>
       <Typography className={classes.title} variant="h2">
-        find code smells
+        encontrar code smells
+      </Typography>
+      <Typography className={classes.subtitle} color="textSecondary">
+        selecione a pasta com o código que deseja analisar!
       </Typography>
       {isLoading ? (
         <CircularProgress className={classes.upload} />
       ) : (
         <>
           <UploadButton className={classes.upload} onChange={handleChange}>
-            upload code
+            upload de código
           </UploadButton>
         </>
       )}
