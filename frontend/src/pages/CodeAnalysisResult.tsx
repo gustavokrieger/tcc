@@ -14,20 +14,18 @@ const useStyles = makeStyles({
   titleContainer: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
-    height: '15vh',
-  },
-  title: {
-    textTransform: 'capitalize',
+    alignItems: 'flex-end',
+    height: '10vh',
   },
   mainContainer: {
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
-    height: '85vh',
+    height: '90vh',
   },
   tabsPaper: {
-    height: '56%',
+    height: '68%',
+    minWidth: '29.8%',
   },
 });
 
@@ -71,8 +69,8 @@ export default function CodeAnalysisResult(
   return (
     <>
       <Container className={classes.titleContainer}>
-        <Typography className={classes.title} variant="h2">
-          resultado da análise
+        <Typography variant="h2">
+          Resultado da Análise
         </Typography>
       </Container>
       <Container className={classes.mainContainer}>
