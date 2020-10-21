@@ -94,7 +94,7 @@ export default function CodeFilesUpload() {
         encontrar code smells
       </Typography>
       <Typography className={classes.subtitle} color="textSecondary">
-        selecione a pasta com o código que deseja analisar!
+        selecione abaixo a pasta com o código que deseja analisar!
       </Typography>
       {isLoading ? (
         <CircularProgress className={classes.upload} />
