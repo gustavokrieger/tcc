@@ -8,13 +8,23 @@ import ViolationCase, {
 } from '../components/violation_case/ViolationCase';
 import ControlledAccordions from '../components/ControlledAccordions';
 import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
-  root: {
+  titleContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '15vh',
+  },
+  title: {
+    textTransform: 'capitalize',
+  },
+  mainContainer: {
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
-    height: '100vh',
+    height: '85vh',
   },
   tabsPaper: {
     height: '56%',
@@ -59,11 +69,18 @@ export default function CodeAnalysisResult(
   }, [codeSmellCasesList]);
 
   return (
-    <Container className={classes.root}>
-      <Paper variant="outlined" className={classes.tabsPaper}>
-        <VerticalTabs tabs={tabs} />
-      </Paper>
-      <ControlledAccordions />
-    </Container>
+    <>
+      <Container className={classes.titleContainer}>
+        <Typography className={classes.title} variant="h2">
+          resultado da análise
+        </Typography>
+      </Container>
+      <Container className={classes.mainContainer}>
+        <Paper variant="outlined" className={classes.tabsPaper}>
+          <VerticalTabs tabs={tabs} />
+        </Paper>
+        <ControlledAccordions />
+      </Container>
+    </>
   );
 }
