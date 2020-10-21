@@ -85,7 +85,16 @@ export default function CodeFilesUpload() {
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     assert(event.target.files !== null);
     const files = Array.from(event.target.files);
-    setUploadedFiles(files);
+    const javaFiles = files.filter(hasJavaExtension);
+    setUploadedFiles(javaFiles);
+  }
+
+  function hasJavaExtension(file: File) {
+    const fileNameParts = file.name.split('.');
+    if (fileNameParts.length === 0) {
+      return false;
+    }
+    return fileNameParts[fileNameParts.length - 1] === 'java';
   }
 
   return (

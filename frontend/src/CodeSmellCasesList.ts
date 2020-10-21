@@ -45,7 +45,7 @@ export default class CodeSmellCasesList {
     const codeSmellTranslation = codeSmell.getTranslation();
     const entry = this.getOrAddByCodeSmell(codeSmellTranslation);
     const caseNumber = entry.cases.length + 1;
-    const caseName = 'caso ' + caseNumber;
+    const caseName = 'ocorrência ' + caseNumber;
 
     const codeSmellCases: ViolationCaseProps = {
       title: caseName,
