@@ -3,6 +3,9 @@ import Box from '@material-ui/core/Box';
 import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
+  root: {
+    overflow: 'auto',
+  },
   box: {
     display: 'flex',
     flexDirection: 'column',
@@ -20,6 +23,7 @@ export default function TabPanel(props: Props) {
 
   return (
     <div
+      className={classes.root}
       role="tabpanel"
       hidden={props.value !== props.index}
       id={`vertical-tabpanel-${props.index}`}

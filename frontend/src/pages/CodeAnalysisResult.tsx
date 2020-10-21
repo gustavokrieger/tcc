@@ -6,13 +6,18 @@ import VerticalTabs, {Tab} from '../components/vertical_tabs/VerticalTabs';
 import ViolationCase, {
   ViolationCaseProps,
 } from '../components/violation_case/ViolationCase';
+import ControlledAccordions from '../components/ControlledAccordions';
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles({
   root: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
     height: '100vh',
   },
-  tabs: {
-    height: '100%',
+  tabsPaper: {
+    height: '56%',
   },
 });
 
@@ -55,7 +60,10 @@ export default function CodeAnalysisResult(
 
   return (
     <Container className={classes.root}>
-      <VerticalTabs className={classes.tabs} tabs={tabs} />
+      <Paper variant="outlined" className={classes.tabsPaper}>
+        <VerticalTabs tabs={tabs} />
+      </Paper>
+      <ControlledAccordions />
     </Container>
   );
 }
