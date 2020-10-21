@@ -14,6 +14,6 @@ export default class LargeClass implements CodeSmell {
 
   getDescription(): string {
     const className = this.classTokenizer.getName();
-    return `A classe "${className}" é uma classe de grande demais.`;
+    return `A classe "${className}" é uma classe de grande demais. O problema é. A solução é`;
   }
 }

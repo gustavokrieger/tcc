@@ -14,6 +14,6 @@ export default class LongMethod implements CodeSmell {
 
   getDescription(): string {
     const methodName = this.methodTokenizer.getName();
-    return `O método "${methodName}" possui linhas demais.`;
+    return `O método "${methodName}" possui linhas demais. O problema é. A solução é`;
   }
 }

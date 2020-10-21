@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -49,6 +49,12 @@ const useStyles = makeStyles({
     textAlign: 'center',
     overflowY: 'auto',
   },
+  firstTextHighlight: {
+    color: 'red',
+  },
+  secondTextHighlight: {
+    color: 'green',
+  },
 });
 
 export type ViolationCaseProps = {
@@ -61,7 +67,51 @@ export type ViolationCaseProps = {
 export default function ViolationCase(props: ViolationCaseProps) {
   const classes = useStyles();
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [formattedDescription, setFormattedDescription] = useState(<></>);
+
+  useEffect(() => {
+    function getFormattedDescription() {
+      const firstPartToHighlight = 'O problema';
+      const [firstPart, remainingText] = props.description.split(
+        firstPartToHighlight
+      );
+      const secondTextToHighlight = 'A solução';
+      const [secondPart, thirdPart] = remainingText.split(
+        secondTextToHighlight
+      );
+
+      const firstParagraph = <Typography>{firstPart}</Typography>;
+      const secondParagraph = (
+        <Typography>
+          <span className={classes.firstTextHighlight}>
+            {firstPartToHighlight}
+          </span>
+          {secondPart}
+        </Typography>
+      );
+      const thirdParagraph = (
+        <Typography>
+          <span className={classes.secondTextHighlight}>
+            {secondTextToHighlight}
+          </span>
+          {thirdPart}
+        </Typography>
+      );
+      return (
+        <>
+          {firstParagraph}
+          {secondParagraph}
+          {thirdParagraph}
+        </>
+      );
+    }
+    setFormattedDescription(getFormattedDescription());
+  }, [
+    props.description,
+    classes.firstTextHighlight,
+    classes.secondTextHighlight,
+  ]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -103,7 +153,7 @@ export default function ViolationCase(props: ViolationCaseProps) {
             <JavaCode {...props.javaCodeProps} />
           </SimpleCard>
           <SimpleCard className={classes.descriptionCard}>
-            <Typography>{props.description}</Typography>
+            {formattedDescription}
           </SimpleCard>
         </DialogContent>
       </Dialog>

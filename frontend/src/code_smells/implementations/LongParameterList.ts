@@ -19,7 +19,7 @@ export default class LongParameterList implements CodeSmell {
     const lastParameter = parameters[numberOfParameters - 1];
     return (
       `A lista de parametros que inicia com "${firstParameter}" e finaliza com "${lastParameter}" ` +
-      `possui ${numberOfParameters} elementos, um número muito elevado.`
+      `possui ${numberOfParameters} elementos, um número muito elevado. O problema é. A solução é`
     );
   }
 }
