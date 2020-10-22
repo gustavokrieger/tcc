@@ -7,15 +7,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class PmdRunner {
+public class FilePmdRunner {
 
   private final String fileOrDirectoryToAnalyze;
 
-  PmdRunner(String fileOrDirectoryToAnalyze) {
+  private FilePmdRunner(String fileOrDirectoryToAnalyze) {
     this.fileOrDirectoryToAnalyze = fileOrDirectoryToAnalyze;
   }
 
-  public PmdRunner(Path fileOrDirectoryToAnalyze) {
+  public FilePmdRunner(Path fileOrDirectoryToAnalyze) {
     this(fileOrDirectoryToAnalyze.toString());
   }
 
