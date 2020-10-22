@@ -2,52 +2,15 @@ package br.univali.tccbackend.pmd;
 
 class LargeClassTest extends PmdTest {
 
-  final int NUMBER_OF_REPETITIONS = 98;
-
   @Override
   String getInputCode() {
+    String method = "\n"
+        + "    public void bar() {\n"
+        + "        System.out.println(\"\");\n".repeat(48)
+        + "    }\n"
+        + "\n";
     return "public class Foo {\n"
-        + "\n"
-        + "    public void bar1() {\n"
-        + "        System.out.println(\"\");\n".repeat(NUMBER_OF_REPETITIONS)
-        + "    }\n"
-        + "\n"
-        + "    public void bar2() {\n"
-        + "        System.out.println(\"\");\n".repeat(NUMBER_OF_REPETITIONS)
-        + "    }\n"
-        + "\n"
-        + "    public void bar3() {\n"
-        + "        System.out.println(\"\");\n".repeat(NUMBER_OF_REPETITIONS)
-        + "    }\n"
-        + "\n"
-        + "    public void bar4() {\n"
-        + "        System.out.println(\"\");\n".repeat(NUMBER_OF_REPETITIONS)
-        + "    }\n"
-        + "\n"
-        + "    public void bar5() {\n"
-        + "        System.out.println(\"\");\n".repeat(NUMBER_OF_REPETITIONS)
-        + "    }\n"
-        + "\n"
-        + "    public void bar6() {\n"
-        + "        System.out.println(\"\");\n".repeat(NUMBER_OF_REPETITIONS)
-        + "    }\n"
-        + "\n"
-        + "    public void bar7() {\n"
-        + "        System.out.println(\"\");\n".repeat(NUMBER_OF_REPETITIONS)
-        + "    }\n"
-        + "\n"
-        + "    public void bar8() {\n"
-        + "        System.out.println(\"\");\n".repeat(NUMBER_OF_REPETITIONS)
-        + "    }\n"
-        + "\n"
-        + "    public void bar9() {\n"
-        + "        System.out.println(\"\");\n".repeat(NUMBER_OF_REPETITIONS)
-        + "    }\n"
-        + "\n"
-        + "    public void bar10() {\n"
-        + "        System.out.println(\"\");\n".repeat(NUMBER_OF_REPETITIONS)
-        + "    }\n"
-        + "\n"
+        + method.repeat(10)
         + "}\n";
   }
 
@@ -61,7 +24,7 @@ class LargeClassTest extends PmdTest {
         + "\"violations\":["
         + "{\"beginline\":1,"
         + "\"begincolumn\":8,"
-        + "\"endline\":1013,"
+        + "\"endline\":522,"
         + "\"endcolumn\":1,"
         + "\"description\":\"Avoid really long classes.\","
         + "\"rule\":\"ExcessiveClassLength\","

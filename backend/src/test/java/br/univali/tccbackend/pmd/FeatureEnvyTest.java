@@ -1,16 +1,15 @@
 package br.univali.tccbackend.pmd;
 
-class LongMethodTest extends PmdTest {
+class FeatureEnvyTest extends PmdTest {
 
   @Override
   String getInputCode() {
-    return "public class LongMethod {\n"
+    return "import blah.blah.Baz;\n".repeat(15)
         + "\n"
-        + "    void test(){\n"
-        + "        System.out.println(\"\");\n".repeat(50)
-        + "    }\n"
+        + "public class Foo {\n"
+        + "    public void doWork() {}\n"
         + "\n"
-        + "}\n";
+        + "}";
   }
 
   @Override
@@ -21,18 +20,17 @@ class LongMethodTest extends PmdTest {
         + "\"files\":["
         + "{\"filename\":\"\","
         + "\"violations\":["
-        + "{\"beginline\":3,"
-        + "\"begincolumn\":5,"
-        + "\"endline\":54,"
-        + "\"endcolumn\":5,"
-        + "\"description\":\"Avoid really long methods.\","
-        + "\"rule\":\"ExcessiveMethodLength\","
+        + "{\"beginline\":1,"
+        + "\"begincolumn\":1,"
+        + "\"endline\":20,"
+        + "\"endcolumn\":1,"
+        + "\"description\":\"A high number of imports can indicate a high degree of coupling within an object.\","
+        + "\"rule\":\"ExcessiveImports\","
         + "\"ruleset\":\"Design\","
         + "\"priority\":3,"
-        + "\"externalInfoUrl\":\"" + PMD_RULES_URL + "#excessivemethodlength\"}]}],"
+        + "\"externalInfoUrl\":\"" + PMD_RULES_URL + "#excessiveimports\"}]}],"
         + "\"suppressedViolations\":[],"
         + "\"processingErrors\":[],"
         + "\"configurationErrors\":[]}";
   }
-
 }

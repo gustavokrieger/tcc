@@ -4,15 +4,25 @@ class LongParameterListTest extends PmdTest {
 
   @Override
   String getInputCode() {
+    String parameters = getParameters();
     return "public class LongParameter {\n"
         + "\n"
-        + "  public void addPerson(\n"
-        + "      int birthYear, int birthMonth, int birthDate, int height, int weight, int a, int b, int c,\n"
-        + "      int d, int e) {\n"
+        + "  public void addPerson(" + parameters + ") {\n"
         + "    return;\n"
         + "  }\n"
         + "\n"
         + "}";
+  }
+
+  private String getParameters() {
+    int numberOfParameters = 5;
+    String parameter = "int foo";
+    StringBuilder parameters = new StringBuilder();
+    for (int i = 1; i < numberOfParameters; i++) {
+      parameters.append(parameter).append(i).append(", ");
+    }
+    parameters.append(parameter);
+    return parameters.toString();
   }
 
   @Override
@@ -25,8 +35,8 @@ class LongParameterListTest extends PmdTest {
         + "\"violations\":["
         + "{\"beginline\":3,"
         + "\"begincolumn\":24,"
-        + "\"endline\":5,"
-        + "\"endcolumn\":19,"
+        + "\"endline\":3,"
+        + "\"endcolumn\":72,"
         + "\"description\":\"Avoid long parameter lists.\","
         + "\"rule\":\"ExcessiveParameterList\","
         + "\"ruleset\":\"Design\","
