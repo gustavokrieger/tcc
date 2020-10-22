@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-class TextPmdRunner {
+class TextPmdRunner implements PmdRunner {
 
   private final String code;
 
@@ -13,7 +13,7 @@ class TextPmdRunner {
     this.code = code;
   }
 
-  PmdAnalysisResult run() throws IOException {
+  public PmdAnalysisResult run() throws IOException {
     Path codeFile = createTemporaryFileWithCode();
     return runPmdAndDeleteFile(codeFile);
   }
@@ -44,8 +44,8 @@ class TextPmdRunner {
   }
 
   private PmdAnalysisResult runPmd(Path file) throws IOException {
-    FilePmdRunner filePmdRunner = new FilePmdRunner(file);
-    return filePmdRunner.run();
+    PmdRunner pmdRunner = new FilePmdRunner(file);
+    return pmdRunner.run();
   }
 
 }

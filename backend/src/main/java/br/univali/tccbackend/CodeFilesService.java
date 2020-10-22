@@ -2,6 +2,7 @@ package br.univali.tccbackend;
 
 import br.univali.tccbackend.pmd.PmdAnalysisResult;
 import br.univali.tccbackend.pmd.FilePmdRunner;
+import br.univali.tccbackend.pmd.PmdRunner;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -49,8 +50,8 @@ public class CodeFilesService {
   }
 
   private PmdAnalysisResult runPmdAnalysisOnDirectory(Path directory) throws IOException {
-    FilePmdRunner filePmdRunner = new FilePmdRunner(directory);
-    return filePmdRunner.run();
+    PmdRunner pmdRunner = new FilePmdRunner(directory);
+    return pmdRunner.run();
   }
 
 }

@@ -24,8 +24,8 @@ abstract class PmdTest {
   abstract String getInputCode();
 
   private PmdAnalysisResult getPmdAnalysisResult(String code) throws IOException {
-    TextPmdRunner textPmdRunner = new TextPmdRunner(code);
-    PmdAnalysisResult pmdAnalysisResult = textPmdRunner.run();
+    PmdRunner pmdRunner = new TextPmdRunner(code);
+    PmdAnalysisResult pmdAnalysisResult = pmdRunner.run();
     removeDataThatVaries(pmdAnalysisResult);
     return pmdAnalysisResult;
   }

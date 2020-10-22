@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class FilePmdRunner {
+public class FilePmdRunner implements PmdRunner {
 
   private final String fileOrDirectoryToAnalyze;
 
