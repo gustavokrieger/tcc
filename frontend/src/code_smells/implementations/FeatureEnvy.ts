@@ -1,11 +1,11 @@
 import CodeSmell from '../CodeSmell';
-import MethodCallTokenizer from '../tokenizers/MethodCallTokenizer';
+import CallTokenizer from '../tokenizers/CallTokenizer';
 
 export default class FeatureEnvy implements CodeSmell {
-  private readonly methodCallTokenizer: MethodCallTokenizer;
+  private readonly callTokenizer: CallTokenizer;
 
-  constructor(methodCallTokenizer: MethodCallTokenizer) {
-    this.methodCallTokenizer = methodCallTokenizer;
+  constructor(callTokenizer: CallTokenizer) {
+    this.callTokenizer = callTokenizer;
   }
 
   getTranslation(): string {
@@ -13,7 +13,7 @@ export default class FeatureEnvy implements CodeSmell {
   }
 
   getDescription(): string {
-    const parts = this.methodCallTokenizer.getParts();
+    const parts = this.callTokenizer.getParts();
     return `A classe "${parts[0]}"` + 'O problema' + 'A solução .';
   }
 }

@@ -1,10 +1,10 @@
-import MethodCallTokenizer from '../MethodCallTokenizer';
+import CallTokenizer from '../CallTokenizer';
 import FormattedCall from '../../formatted_code/FormattedCall';
 
 function getParts(code: string): string[] {
   const formattedCall = new FormattedCall(code);
-  const methodCallTokenizer = new MethodCallTokenizer(formattedCall);
-  return methodCallTokenizer.getParts();
+  const callTokenizer = new CallTokenizer(formattedCall);
+  return callTokenizer.getParts();
 }
 
 test('one call', () => {

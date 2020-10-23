@@ -1,6 +1,6 @@
 import CodeSmellCreator from '../CodeSmellCreator';
 import FeatureEnvy from './FeatureEnvy';
-import MethodCallTokenizer from '../tokenizers/MethodCallTokenizer';
+import CallTokenizer from '../tokenizers/CallTokenizer';
 import FormattedCall from '../formatted_code/FormattedCall';
 
 export default class FeatureEnvyCreator extends CodeSmellCreator {
@@ -8,15 +8,11 @@ export default class FeatureEnvyCreator extends CodeSmellCreator {
     return new FormattedCall(this.codeSectionWithSmell);
   }
 
-  protected makeJavaCodeTokenizer(
-    formattedCall: FormattedCall
-  ): MethodCallTokenizer {
-    return new MethodCallTokenizer(formattedCall);
+  protected makeJavaCodeTokenizer(formattedCall: FormattedCall): CallTokenizer {
+    return new CallTokenizer(formattedCall);
   }
 
-  protected makeCodeSmell(
-    methodCallTokenizer: MethodCallTokenizer
-  ): FeatureEnvy {
-    return new FeatureEnvy(methodCallTokenizer);
+  protected makeCodeSmell(callTokenizer: CallTokenizer): FeatureEnvy {
+    return new FeatureEnvy(callTokenizer);
   }
 }

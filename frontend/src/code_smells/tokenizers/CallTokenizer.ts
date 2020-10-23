@@ -1,7 +1,7 @@
 import JavaCodeTokenizer from './JavaCodeTokenizer';
 import FormattedCall from '../formatted_code/FormattedCall';
 
-export default class MethodCallTokenizer extends JavaCodeTokenizer {
+export default class CallTokenizer extends JavaCodeTokenizer {
   constructor(formattedCall: FormattedCall) {
     super(formattedCall);
   }
