@@ -7,7 +7,7 @@ function getParts(code: string): string[] {
   return callTokenizer.getParts();
 }
 
-test('one call', () => {
+test('one method call', () => {
   const code = 'c.doIt()';
   const actual = getParts(code);
   const expected = ['c', 'doIt()'];
@@ -15,7 +15,7 @@ test('one call', () => {
   expect(actual).toStrictEqual(expected);
 });
 
-test('one call with linebreak', () => {
+test('one method call with linebreak', () => {
   const code = `c
   . doIt()`;
   const actual = getParts(code);
@@ -24,7 +24,7 @@ test('one call with linebreak', () => {
   expect(actual).toStrictEqual(expected);
 });
 
-test('one call with parameter', () => {
+test('one method call with parameter', () => {
   const code = 'o.setName("my name")';
   const actual = getParts(code);
   const expected = ['o', 'setName()'];
@@ -32,7 +32,7 @@ test('one call with parameter', () => {
   expect(actual).toStrictEqual(expected);
 });
 
-test('one call with parameter and linebreak', () => {
+test('one method call with parameter and linebreak', () => {
   const code = `o .
   setName(
   "my name" )`;
@@ -42,7 +42,7 @@ test('one call with parameter and linebreak', () => {
   expect(actual).toStrictEqual(expected);
 });
 
-test('two calls', () => {
+test('two method calls', () => {
   const code = 'b.doC().doIt()';
   const actual = getParts(code);
   const expected = ['b', 'doC()', 'doIt()'];
@@ -50,7 +50,7 @@ test('two calls', () => {
   expect(actual).toStrictEqual(expected);
 });
 
-test('two calls with linebreak', () => {
+test('two method calls with linebreak', () => {
   const code = `b.
   doC().
   doIt()`;
@@ -60,7 +60,7 @@ test('two calls with linebreak', () => {
   expect(actual).toStrictEqual(expected);
 });
 
-test('two calls with parameters', () => {
+test('two method calls with parameters', () => {
   const code = 'b.doC("hiy").doIt("bye")';
   const actual = getParts(code);
   const expected = ['b', 'doC()', 'doIt()'];
@@ -68,7 +68,7 @@ test('two calls with parameters', () => {
   expect(actual).toStrictEqual(expected);
 });
 
-test('two calls with parameters and linebreak', () => {
+test('two method calls with parameters and linebreak', () => {
   const code = `b
   .doC(  "hiy"  )
   .doIt(
