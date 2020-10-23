@@ -1,6 +1,7 @@
 import CodeSmell from './CodeSmell';
-import FormattedJavaCode from './FormattedJavaCode';
+import FormattedJavaCode from './formatted_code/FormattedJavaCode';
 import JavaCodeTokenizer from './tokenizers/JavaCodeTokenizer';
+import FormattedSignature from './formatted_code/FormattedSignature';
 
 export default abstract class CodeSmellCreator {
   private readonly _codeSectionWithSmell: string;
@@ -9,12 +10,18 @@ export default abstract class CodeSmellCreator {
     this._codeSectionWithSmell = codeSectionWithSmell;
   }
 
+  protected get codeSectionWithSmell(): string {
+    return this._codeSectionWithSmell;
+  }
+
   create(): CodeSmell {
-    const formattedJavaCode = FormattedJavaCode.format(
-      this._codeSectionWithSmell
-    );
+    const formattedJavaCode = this.makeFormattedJavaCode();
     const javaCodeTokenizer = this.makeJavaCodeTokenizer(formattedJavaCode);
     return this.makeCodeSmell(javaCodeTokenizer);
+  }
+
+  protected makeFormattedJavaCode(): FormattedJavaCode {
+    return new FormattedSignature(this._codeSectionWithSmell);
   }
 
   protected abstract makeJavaCodeTokenizer(

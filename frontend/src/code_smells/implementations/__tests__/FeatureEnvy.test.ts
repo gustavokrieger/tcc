@@ -1,4 +1,4 @@
-import DataClassCreator from '../DataClassCreator';
+import FeatureEnvyCreator from '../FeatureEnvyCreator';
 import CodeSmellCreator from '../../CodeSmellCreator';
 import CodeSmell from '../../CodeSmell';
 
@@ -13,7 +13,7 @@ test('get description', () => {
 
 function createCodeSmell(): CodeSmell {
   const code = getCode();
-  const codeSmellCreator: CodeSmellCreator = new DataClassCreator(code);
+  const codeSmellCreator: CodeSmellCreator = new FeatureEnvyCreator(code);
   return codeSmellCreator.create();
 }
 

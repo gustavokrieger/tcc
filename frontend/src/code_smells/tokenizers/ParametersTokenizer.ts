@@ -1,17 +1,23 @@
 import JavaCodeTokenizer from './JavaCodeTokenizer';
+import FormattedSignature from '../formatted_code/FormattedSignature';
 
 export default class ParametersTokenizer extends JavaCodeTokenizer {
-  getAll(): string[] {
-    let code = this.removeParentheses(this.code);
-    code = code.trim();
-    return this.splitParameters(code);
+  constructor(formattedSignature: FormattedSignature) {
+    super(formattedSignature);
   }
 
-  private removeParentheses(code: string): string {
+  getAll(): string[] {
+    let code = ParametersTokenizer.removeParentheses(this.code);
+    code = code.trim();
+    return ParametersTokenizer.splitParameters(code);
+  }
+
+  private static removeParentheses(code: string): string {
     return code.slice(1, -1);
   }
 
-  private splitParameters(code: string) {
-    return code.split(/ *, +/); // todo trocar para que seja independente da formatação
+  private static splitParameters(code: string) {
+    // todo trocar para que seja independente da formatação
+    return code.split(/ *, +/);
   }
 }

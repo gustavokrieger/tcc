@@ -1,12 +1,12 @@
 import MethodSignatureTokenizer from '../MethodSignatureTokenizer';
-import FormattedJavaCode from '../../FormattedJavaCode';
+import FormattedSignature from '../../formatted_code/FormattedSignature';
 
 const endOfLine = '\n';
 
 function testGetName(code: string) {
-  const formattedJavaCode = FormattedJavaCode.format(code);
+  const formattedSignature = new FormattedSignature(code);
   const methodSignatureTokenizer = new MethodSignatureTokenizer(
-    formattedJavaCode
+    formattedSignature
   );
 
   const actual = methodSignatureTokenizer.getName();

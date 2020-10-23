@@ -1,16 +1,16 @@
 import CodeSmellCreator from '../CodeSmellCreator';
 import DataClass from './DataClass';
 import ClassTokenizer from '../tokenizers/ClassTokenizer';
-import FormattedJavaCode from '../FormattedJavaCode';
+import FormattedSignature from '../formatted_code/FormattedSignature';
 
 export default class DataClassCreator extends CodeSmellCreator {
   protected makeJavaCodeTokenizer(
-    formattedJavaCode: FormattedJavaCode
+    formattedSignature: FormattedSignature
   ): ClassTokenizer {
-    return new ClassTokenizer(formattedJavaCode);
+    return new ClassTokenizer(formattedSignature);
   }
 
-  protected makeCodeSmell(javaCodeTokenizer: ClassTokenizer): DataClass {
-    return new DataClass(javaCodeTokenizer);
+  protected makeCodeSmell(classTokenizer: ClassTokenizer): DataClass {
+    return new DataClass(classTokenizer);
   }
 }

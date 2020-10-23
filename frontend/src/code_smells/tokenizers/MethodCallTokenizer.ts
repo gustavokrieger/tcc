@@ -1,13 +1,12 @@
 import JavaCodeTokenizer from './JavaCodeTokenizer';
-import assert from 'assert';
+import FormattedCall from '../formatted_code/FormattedCall';
 
 export default class MethodCallTokenizer extends JavaCodeTokenizer {
+  constructor(formattedCall: FormattedCall) {
+    super(formattedCall);
+  }
+
   getParts(): string[] {
-    // todo trocar para que seja independente da formatação
-    // todo talvez não esteja correto
-    const regex = /\\"|"(?:\\"|[^"])*"|(\.)/;
-    const match = this.code.split(regex);
-    assert(match !== null);
-    return match;
+    return this.code.split('.');
   }
 }

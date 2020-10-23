@@ -1,19 +1,20 @@
-import LargeClass from '../LargeClass';
 import LargeClassCreator from '../LargeClassCreator';
+import CodeSmell from '../../CodeSmell';
+import CodeSmellCreator from '../../CodeSmellCreator';
 
 test('get description', () => {
-  const largeClass = createLargeClass();
+  const codeSmell = createCodeSmell();
 
-  const actual = largeClass.getDescription();
+  const actual = codeSmell.getDescription();
   const expected = 'A classe "Foo" é uma classe de grande demais.';
 
   expect(actual).toBe(expected);
 });
 
-function createLargeClass(): LargeClass {
+function createCodeSmell(): CodeSmell {
   const code = getCode();
-  const largeClassCreator = new LargeClassCreator(code);
-  return largeClassCreator.create() as LargeClass;
+  const codeSmellCreator: CodeSmellCreator = new LargeClassCreator(code);
+  return codeSmellCreator.create();
 }
 
 function getCode() {

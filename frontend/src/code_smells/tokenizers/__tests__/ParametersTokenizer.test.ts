@@ -1,11 +1,11 @@
 import ParametersTokenizer from '../ParametersTokenizer';
-import FormattedJavaCode from '../../FormattedJavaCode';
+import FormattedSignature from '../../formatted_code/FormattedSignature';
 
 const endOfLine = '\n';
 
 function createParametersTokenizer(code: string) {
-  const formattedJavaCode = FormattedJavaCode.format(code);
-  return new ParametersTokenizer(formattedJavaCode);
+  const formattedSignature = new FormattedSignature(code);
+  return new ParametersTokenizer(formattedSignature);
 }
 
 test('get all, no parameters', () => {

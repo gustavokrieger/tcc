@@ -1,19 +1,20 @@
-import LongMethod from '../LongMethod';
 import LongMethodCreator from '../LongMethodCreator';
+import CodeSmell from '../../CodeSmell';
+import CodeSmellCreator from '../../CodeSmellCreator';
 
 test('get description', () => {
-  const longMethod = createLongMethod();
+  const codeSmell = createCodeSmell();
 
-  const actual = longMethod.getDescription();
+  const actual = codeSmell.getDescription();
   const expected = 'O método "test" possui linhas demais.';
 
   expect(actual).toBe(expected);
 });
 
-function createLongMethod(): LongMethod {
+function createCodeSmell(): CodeSmell {
   const code = getCode();
-  const longMethodCreator = new LongMethodCreator(code);
-  return longMethodCreator.create() as LongMethod;
+  const codeSmellCreator: CodeSmellCreator = new LongMethodCreator(code);
+  return codeSmellCreator.create();
 }
 
 function getCode() {

@@ -45,7 +45,7 @@ const useStyles = makeStyles({
   },
   descriptionCard: {
     width: '28.7%',
-    maxHeight: '39.8vh',
+    maxHeight: '47.76vh',
     textAlign: 'center',
     overflowY: 'auto',
   },

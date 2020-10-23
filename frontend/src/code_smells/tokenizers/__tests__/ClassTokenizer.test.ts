@@ -1,11 +1,11 @@
-import FormattedJavaCode from '../../FormattedJavaCode';
 import ClassTokenizer from '../ClassTokenizer';
+import FormattedSignature from '../../formatted_code/FormattedSignature';
 
 const endOfLine = '\n'; // todo passar para test helper
 
 function testGetName(code: string) {
-  const formattedJavaCode = FormattedJavaCode.format(code);
-  const classTokenizer = new ClassTokenizer(formattedJavaCode);
+  const formattedSignature = new FormattedSignature(code);
+  const classTokenizer = new ClassTokenizer(formattedSignature);
 
   const actual = classTokenizer.getName();
   const expected = 'Test';
