@@ -50,10 +50,10 @@ const useStyles = makeStyles({
     overflowY: 'auto',
   },
   firstTextHighlight: {
-    color: '#C62828',
+    color: '#D50000',
   },
   secondTextHighlight: {
-    color: '#2E7D32',
+    color: '#00C853',
   },
 });
 
