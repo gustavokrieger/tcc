@@ -22,20 +22,20 @@ class TextPmdRunner implements PmdRunner {
     Path codeFile = Files.createTempFile("test-code", "");
     try {
       writeTextToFile(this.code, codeFile);
-    } catch (Exception e) {
+    } catch (IOException | RuntimeException e) {
       Files.delete(codeFile);
       throw e;
     }
     return codeFile;
   }
 
-  private void writeTextToFile(String text, Path file) throws IOException {
+  private static void writeTextToFile(String text, Path file) throws IOException {
     try (BufferedWriter bufferedWriter = Files.newBufferedWriter(file)) {
       bufferedWriter.write(text);
     }
   }
 
-  private PmdAnalysisResult runPmdAndDeleteFile(Path codeFile) throws IOException {
+  private static PmdAnalysisResult runPmdAndDeleteFile(Path codeFile) throws IOException {
     try {
       return runPmd(codeFile);
     } finally {
@@ -43,7 +43,7 @@ class TextPmdRunner implements PmdRunner {
     }
   }
 
-  private PmdAnalysisResult runPmd(Path file) throws IOException {
+  private static PmdAnalysisResult runPmd(Path file) throws IOException {
     PmdRunner pmdRunner = new FilePmdRunner(file);
     return pmdRunner.run();
   }

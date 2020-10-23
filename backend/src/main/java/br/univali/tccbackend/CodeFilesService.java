@@ -1,7 +1,7 @@
 package br.univali.tccbackend;
 
-import br.univali.tccbackend.pmd.PmdAnalysisResult;
 import br.univali.tccbackend.pmd.FilePmdRunner;
+import br.univali.tccbackend.pmd.PmdAnalysisResult;
 import br.univali.tccbackend.pmd.PmdRunner;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,19 +37,19 @@ public class CodeFilesService {
           relativeFilePath,
           relativeFilePath.length - 1
       );
-      Path fileLocation = this.joinPath(directory, relativeFileLocation);
+      Path fileLocation = joinPath(directory, relativeFileLocation);
       Files.createDirectories(fileLocation);
       Path filePath = fileLocation.resolve(fileName);
       part.write(filePath.toString());
     }
   }
 
-  private Path joinPath(Path root, String... pathToAppend) {
+  private static Path joinPath(Path root, String... pathToAppend) {
     Path path = Path.of("", pathToAppend);
     return root.resolve(path);
   }
 
-  private PmdAnalysisResult runPmdAnalysisOnDirectory(Path directory) throws IOException {
+  private static PmdAnalysisResult runPmdAnalysisOnDirectory(Path directory) throws IOException {
     PmdRunner pmdRunner = new FilePmdRunner(directory);
     return pmdRunner.run();
   }
