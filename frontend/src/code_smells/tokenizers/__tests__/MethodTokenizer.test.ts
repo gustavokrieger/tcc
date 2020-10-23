@@ -1,13 +1,15 @@
-import MethodTokenizer from '../MethodTokenizer';
+import MethodSignatureTokenizer from '../MethodSignatureTokenizer';
 import FormattedJavaCode from '../../FormattedJavaCode';
 
 const endOfLine = '\n';
 
 function testGetName(code: string) {
   const formattedJavaCode = FormattedJavaCode.format(code);
-  const methodTokenizer = new MethodTokenizer(formattedJavaCode);
+  const methodSignatureTokenizer = new MethodSignatureTokenizer(
+    formattedJavaCode
+  );
 
-  const actual = methodTokenizer.getName();
+  const actual = methodSignatureTokenizer.getName();
   const expected = 'test';
 
   expect(actual).toBe(expected);

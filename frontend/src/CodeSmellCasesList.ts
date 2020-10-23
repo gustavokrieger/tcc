@@ -33,8 +33,8 @@ export default class CodeSmellCasesList {
       startingLineNumber = 1;
     }
     const javaCodeProps: JavaCodeProps = {
+      startingLineNumber,
       children: code,
-      startingLineNumber: startingLineNumber,
       lineMarkStart: codeWithViolation.getFirstLineOfViolation(),
       lineMarkEnd: codeWithViolation.getLastLineOfViolation(),
     };
@@ -45,13 +45,13 @@ export default class CodeSmellCasesList {
     const codeSmellTranslation = codeSmell.getTranslation();
     const entry = this.getOrAddByCodeSmell(codeSmellTranslation);
     const caseNumber = entry.cases.length + 1;
-    const caseName = 'ocorrência ' + caseNumber;
+    const caseName = 'ocorrência ' + caseNumber.toString();
 
     const codeSmellCases: ViolationCaseProps = {
+      javaCodeProps,
       title: caseName,
       fileName: codeWithViolation.relativePath,
       description: codeSmell.getDescription(),
-      javaCodeProps: javaCodeProps,
     };
 
     entry.cases.push(codeSmellCases);
@@ -76,7 +76,7 @@ export default class CodeSmellCasesList {
   }
 
   private addWithCodeSmell(codeSmell: string): CodeSmellCases {
-    const newEntry: CodeSmellCases = {codeSmell: codeSmell, cases: []};
+    const newEntry: CodeSmellCases = {codeSmell, cases: []};
     this.array.push(newEntry);
     return newEntry;
   }

@@ -1,11 +1,11 @@
 import CodeSmell from '../CodeSmell';
-import MethodTokenizer from '../tokenizers/MethodTokenizer';
+import MethodSignatureTokenizer from '../tokenizers/MethodSignatureTokenizer';
 
 export default class LongMethod implements CodeSmell {
-  private readonly methodTokenizer: MethodTokenizer;
+  private readonly methodSignatureTokenizer: MethodSignatureTokenizer;
 
-  constructor(methodTokenizer: MethodTokenizer) {
-    this.methodTokenizer = methodTokenizer;
+  constructor(methodSignatureTokenizer: MethodSignatureTokenizer) {
+    this.methodSignatureTokenizer = methodSignatureTokenizer;
   }
 
   getTranslation(): string {
@@ -13,7 +13,7 @@ export default class LongMethod implements CodeSmell {
   }
 
   getDescription(): string {
-    const methodName = this.methodTokenizer.getName();
+    const methodName = this.methodSignatureTokenizer.getName();
     return (
       `O método "${methodName}" é um método longo pois ele possui linhas em excesso. ` +
       'O problema desse tipo de método, é que o seu tamanho excessivo acaba tornando difícil entender o que ele faz. ' +

@@ -14,7 +14,8 @@ export default class CodeWithViolation {
     violation: pmdOutput.Violation,
     relativePath: string
   ) {
-    this.textSlicer = new TextSlicer(lineSeparatedCode); // todo refatorar para ser por injeção
+    // todo refatorar para ser por injeção
+    this.textSlicer = new TextSlicer(lineSeparatedCode);
     this.violation = violation;
     this._relativePath = relativePath;
   }

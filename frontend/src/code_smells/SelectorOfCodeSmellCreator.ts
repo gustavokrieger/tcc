@@ -5,6 +5,7 @@ import LongParameterListCreator from './implementations/LongParameterListCreator
 import CodeSmellCreator from './CodeSmellCreator';
 import * as pmdOutput from '../pmdOutput';
 import LargeClassCreator from './implementations/LargeClassCreator';
+import FeatureEnvyCreator from './implementations/FeatureEnvyCreator';
 
 export default class SelectorOfCodeSmellCreator {
   private readonly pmdCodeSmellType: PmdCodeSmellType;
@@ -39,6 +40,11 @@ export default class SelectorOfCodeSmellCreator {
         return new LongMethodCreator(this.codeSectionWithSmell);
       case PmdCodeSmellType.LONG_PARAMETER_LIST:
         return new LongParameterListCreator(this.codeSectionWithSmell);
+      case PmdCodeSmellType.FEATURE_ENVY:
+        return new FeatureEnvyCreator(this.codeSectionWithSmell);
+      default:
+        // todo criar exception
+        throw new Error();
     }
   }
 }

@@ -74,7 +74,7 @@ export default function CodeFilesUpload() {
 
     async function requestReport() {
       const codeAnalysisRequester = new CodeAnalysisRequester();
-      return await codeAnalysisRequester.run(uploadedFiles);
+      return codeAnalysisRequester.run(uploadedFiles);
     }
 
     getPropsForCodeAnalysisResult().then(props =>

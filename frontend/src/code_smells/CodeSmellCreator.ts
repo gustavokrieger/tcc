@@ -9,10 +9,6 @@ export default abstract class CodeSmellCreator {
     this._codeSectionWithSmell = codeSectionWithSmell;
   }
 
-  get codeSectionWithSmell(): string {
-    return this._codeSectionWithSmell;
-  }
-
   create(): CodeSmell {
     const formattedJavaCode = FormattedJavaCode.format(
       this._codeSectionWithSmell

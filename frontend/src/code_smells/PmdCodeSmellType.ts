@@ -3,4 +3,5 @@ export enum PmdCodeSmellType {
   LARGE_CLASS = 'ExcessiveClassLength',
   LONG_METHOD = 'ExcessiveMethodLength',
   LONG_PARAMETER_LIST = 'ExcessiveParameterList',
+  FEATURE_ENVY = 'LawOfDemeter',
 }
