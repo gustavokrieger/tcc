@@ -15,6 +15,14 @@ test('one method call', () => {
   expect(actual).toStrictEqual(expected);
 });
 
+test('one method call with inner call', () => {
+  const code = 'c.doIt(z.doIt())';
+  const actual = getParts(code);
+  const expected = ['c', 'doIt()'];
+
+  expect(actual).toStrictEqual(expected);
+});
+
 test('one method call with linebreak', () => {
   const code = `c
   . doIt()`;
@@ -49,6 +57,15 @@ test('two method calls', () => {
 
   expect(actual).toStrictEqual(expected);
 });
+
+test('two method calls with inner calls', () => {
+  const code = 'b.doC(z.doIt()).doIt(z.doIt())';
+  const actual = getParts(code);
+  const expected = ['b', 'doC()', 'doIt()'];
+
+  expect(actual).toStrictEqual(expected);
+});
+
 
 test('two method calls with linebreak', () => {
   const code = `b.

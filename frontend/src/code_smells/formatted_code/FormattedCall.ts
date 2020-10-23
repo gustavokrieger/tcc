@@ -11,6 +11,6 @@ export default class FormattedCall extends FormattedJavaCode {
   }
 
   private static removeArguments(text: string): string {
-    return text.replace(/\(.*?\)/g, '()');
+    return text.replace(/\(.*?\)\)|\(.*?\)/g, '()');
   }
 }
