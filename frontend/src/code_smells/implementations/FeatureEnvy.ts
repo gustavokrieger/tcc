@@ -12,8 +12,36 @@ export default class FeatureEnvy implements CodeSmell {
     return 'inveja dos dados';
   }
 
+  // todo finalizar
   getDescription(): string {
-    const parts = this.callTokenizer.getParts();
-    return `A classe "${parts[0]}"` + 'O problema' + 'A solução .';
+    return `${this.getDescriptionFirstPart()} ${FeatureEnvy.getDescriptionSecondPart()}`;
+  }
+
+  private getDescriptionFirstPart() {
+    const callParts = this.callTokenizer.getParts();
+
+    const beginning =
+      'Essa parte do método pode estar sofrendo de Inveja dos Dados, pois ';
+    if (callParts.length === 2) {
+      return (
+        `o ${FeatureEnvy.formatByType(
+          callParts[0]
+        )} foi retornado por um método para poder fazer chamada ao` +
+        `${FeatureEnvy.formatByType(callParts[1])}`
+      );
+    }
+    return '';
+  }
+
+  private static formatByType(text: string) {
+    if (text[-1] === ')') {
+      const methodName = text.slice(-2, -1);
+      return `método ${methodName}`;
+    }
+    return `objeto ${text}`;
+  }
+
+  private static getDescriptionSecondPart() {
+    return 'O problema' + 'A solução .';
   }
 }

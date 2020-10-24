@@ -61,9 +61,8 @@ export default class CodeSmellCasesList {
     const entry = this.getByCodeSmell(codeSmell);
     if (entry === null) {
       return this.addWithCodeSmell(codeSmell);
-    } else {
-      return entry;
     }
+    return entry;
   }
 
   private getByCodeSmell(codeSmell: string) {

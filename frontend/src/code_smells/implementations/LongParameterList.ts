@@ -19,7 +19,7 @@ export default class LongParameterList implements CodeSmell {
     const lastParameter = parameters[numberOfParameters - 1];
     return (
       `O conjunto de parâmetros que inicia com "${firstParameter}" e finaliza com "${lastParameter}" (total de ` +
-      `${numberOfParameters}), é uma lista de parâmetros longa pois possui parâmetros em excesso. ` +
+      `${numberOfParameters}), é uma Lista de Parâmetros Longa pois possui parâmetros em excesso. ` +
       'O problema desse tipo de situação, é que a lista tem alta probabilidade de sofrer alterações com o avanço do ' +
       'desenvolvimento, forçando alterações em toda parte do sistema que utiliza o método que teve seus parâmetros ' +
       'alterados. A solução pode ser fazer com que o resgate das variáveis seja feito dentro do método, ao invés de ' +
