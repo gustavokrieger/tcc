@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import {TransitionProps} from '@material-ui/core/transitions';
 import SimpleCard from './SimpleCard';
@@ -10,13 +9,11 @@ import JavaCode, {JavaCodeProps} from './JavaCode';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Button from '@material-ui/core/Button';
+import {DialogTitle} from './DialogTitle';
 
 const useStyles = makeStyles({
   button: {
     marginBottom: '1vh',
-  },
-  title: {
-    textTransform: 'uppercase',
   },
   dialogPaper: {
     minHeight: '93vh',
@@ -140,7 +137,7 @@ export default function ViolationCase(props: ViolationCaseProps) {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle className={classes.title} id="alert-dialog-slide-title">
+        <DialogTitle id="alert-dialog-slide-title" onClose={handleClose}>
           {props.title}
         </DialogTitle>
         <DialogContent className={classes.contentWithText}>
@@ -150,7 +147,9 @@ export default function ViolationCase(props: ViolationCaseProps) {
         </DialogContent>
         <DialogContent className={classes.contentWithCards}>
           <SimpleCard className={classes.codeCard}>
-            <JavaCode {...props.javaCodeProps} />
+            <JavaCode {...props.javaCodeProps}>
+              {props.javaCodeProps.children}
+            </JavaCode>
           </SimpleCard>
           <SimpleCard className={classes.descriptionCard}>
             {formattedDescription}
