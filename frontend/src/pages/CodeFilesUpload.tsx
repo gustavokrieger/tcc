@@ -35,7 +35,17 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     video: {
       marginTop: 'auto',
-      marginBottom: theme.spacing(6),
+    },
+    codeSmellQuestion: {
+      fontSize: '18px',
+      marginTop: theme.spacing(6),
+      fontStyle: 'italic',
+    },
+    codeSmellExplanation: {
+      fontSize: '18px',
+      marginBottom: theme.spacing(5),
+      textAlign: 'center',
+      maxWidth: '45%',
     },
   })
 );
@@ -120,13 +130,20 @@ export default function CodeFilesUpload() {
       )}
       <iframe
         className={classes.video}
-        width="400"
-        height="225"
+        width="384"
+        height="216"
         src="https://www.youtube.com/embed/RK1K2bCg4J8"
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
       />
+      <Typography className={classes.codeSmellQuestion} color="textSecondary">
+        - O que é um code smell?
+      </Typography>
+      <Typography className={classes.codeSmellExplanation}>
+        Code smell é uma característica no código que pode indicar que ele é
+        difícil de entender, reutilizar ou dar manutenção.
+      </Typography>
     </Container>
   );
 }
