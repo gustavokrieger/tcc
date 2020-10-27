@@ -46,6 +46,7 @@ export default function CodeAnalysisResult(
     props.location.state.codeSmellCasesList;
 
   const [tabs, setTabs] = useState<Tab[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     function createTabs(): Tab[] {
@@ -64,14 +65,23 @@ export default function CodeAnalysisResult(
       return newTabs;
     }
     setTabs(createTabs());
+    setLoading(false);
   }, [codeSmellCasesList]);
 
+  if (loading) {
+    return <></>;
+  }
+  if (tabs.length === 0) {
+    return (
+      <Typography variant="h1">
+        Parabéns, nenhum code smell foi encontrado!
+      </Typography>
+    );
+  }
   return (
     <>
       <Container className={classes.titleContainer}>
-        <Typography variant="h2">
-          Resultado da Análise
-        </Typography>
+        <Typography variant="h2">Resultado da Análise</Typography>
       </Container>
       <Container className={classes.mainContainer}>
         <Paper variant="outlined" className={classes.tabsPaper}>
