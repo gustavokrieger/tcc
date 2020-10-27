@@ -5,6 +5,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,7 +24,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function ControlledAccordions() {
+type Props = {
+  className?: string;
+};
+
+export default function ControlledAccordions(props: Props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
@@ -35,7 +40,7 @@ export default function ControlledAccordions() {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={clsx(classes.root, props.className)}>
       <Accordion
         expanded={expanded === 'panel1'}
         onChange={handleChange('panel1')}
