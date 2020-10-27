@@ -10,6 +10,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Button from '@material-ui/core/Button';
 import {DialogTitle} from './DialogTitle';
+import MouseOverPopover from './MouseOverPopover';
 
 const useStyles = makeStyles({
   button: {
@@ -22,10 +23,10 @@ const useStyles = makeStyles({
     maxWidth: '75vw',
   },
   contentWithText: {
+    display: 'flex',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     height: '1vh',
-    width: '68%',
   },
   contentWithCards: {
     display: 'flex',
@@ -46,6 +47,21 @@ const useStyles = makeStyles({
     textAlign: 'center',
     overflowY: 'auto',
   },
+  fileNamePopover: {
+    display: 'flex',
+    maxWidth: '50.19vw',
+    overflowWrap: 'break-word',
+    wordBreak: 'break-all',
+    minHeight: '3.5vh',
+    alignItems: 'center',
+  },
+  compressedFileName: {
+    maxWidth: '51vw',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    textDecoration: 'underline',
+  },
   firstTextHighlight: {
     color: '#D50000',
   },
@@ -65,7 +81,16 @@ export default function ViolationCase(props: ViolationCaseProps) {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
+  const [compressedFileName, setCompressedFileName] = useState('');
   const [formattedDescription, setFormattedDescription] = useState(<></>);
+
+  useEffect(() => {
+    function getCompressedFileName() {
+      const fileNameParts = props.fileName.split('/');
+      return '.../' + fileNameParts[fileNameParts.length - 1];
+    }
+    setCompressedFileName(getCompressedFileName());
+  }, [props.fileName]);
 
   useEffect(() => {
     function getFormattedDescription() {
@@ -142,7 +167,14 @@ export default function ViolationCase(props: ViolationCaseProps) {
         </DialogTitle>
         <DialogContent className={classes.contentWithText}>
           <DialogContentText id="alert-dialog-slide-description">
-            {props.fileName}
+            <MouseOverPopover
+              trigger={compressedFileName}
+              triggerClassname={classes.compressedFileName}
+            >
+              <Typography className={classes.fileNamePopover}>
+                {props.fileName}
+              </Typography>
+            </MouseOverPopover>
           </DialogContentText>
         </DialogContent>
         <DialogContent className={classes.contentWithCards}>

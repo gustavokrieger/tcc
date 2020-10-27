@@ -14,7 +14,13 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function MouseOverPopover() {
+type Props = {
+  children: React.ReactNode;
+  trigger: string;
+  triggerClassname?: string;
+};
+
+export default function MouseOverPopover(props: Props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
@@ -33,12 +39,14 @@ export default function MouseOverPopover() {
   return (
     <div>
       <Typography
+        className={props.triggerClassname}
         aria-owns={open ? 'mouse-over-popover' : undefined}
         aria-haspopup="true"
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
+        noWrap
       >
-        Hover with a Popover.
+        {props.trigger}
       </Typography>
       <Popover
         id="mouse-over-popover"
@@ -59,7 +67,7 @@ export default function MouseOverPopover() {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        <Typography>I use Popover.</Typography>
+        {props.children}
       </Popover>
     </div>
   );
