@@ -8,7 +8,6 @@ export default class ClassTokenizer extends JavaCodeTokenizer {
   }
 
   getName(): string {
-    // todo trocar para que seja independente da formatação
     const regex = /(?:class) ([\w$]+)/;
     const match = this.code.match(regex);
     assert(match !== null);

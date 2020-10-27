@@ -17,7 +17,6 @@ export default class ParametersTokenizer extends JavaCodeTokenizer {
   }
 
   private static splitParameters(code: string) {
-    // todo trocar para que seja independente da formatação
     return code.split(/ *, +/);
   }
 }

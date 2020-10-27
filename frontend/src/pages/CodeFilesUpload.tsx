@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      minHeight: '35vh',
+      height: '100vh',
     },
     title: {
       textTransform: 'capitalize',
@@ -32,6 +32,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     upload: {
       margin: theme.spacing(2),
+    },
+    video: {
+      marginTop: 'auto',
+      marginBottom: theme.spacing(6),
     },
   })
 );
@@ -114,6 +118,15 @@ export default function CodeFilesUpload() {
           </UploadButton>
         </>
       )}
+      <iframe
+        className={classes.video}
+        width="400"
+        height="225"
+        src="https://www.youtube.com/embed/RK1K2bCg4J8"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      />
     </Container>
   );
 }

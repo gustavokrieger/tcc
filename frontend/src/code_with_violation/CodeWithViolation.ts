@@ -26,7 +26,6 @@ export default class CodeWithViolation {
     relativePath: string
   ): CodeWithViolation {
     const code = contentsOfFile.text;
-    // todo encontrar forma melhor, vai quebrar quando codigo com regex
     const endOfLine = /\r?\n|\r/;
     const lineSeparatedCode = code.split(endOfLine);
     return new CodeWithViolation(lineSeparatedCode, violation, relativePath);
