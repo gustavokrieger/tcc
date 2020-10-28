@@ -3,7 +3,7 @@ package br.univali.tccbackend.pmd;
 class FeatureEnvyTest extends PmdTest {
 
   @Override
-  String getInputCode() {
+  protected String getInputCode() {
     return "public class Foo {\n"
         + "    /**\n"
         + "     * This example will result in two violations.\n"
@@ -28,7 +28,7 @@ class FeatureEnvyTest extends PmdTest {
   }
 
   @Override
-  String getExpectedResult() {
+  protected String getExpectedResult() {
     return "{\"formatVersion\":0,"
         + "\"pmdVersion\":\"" + PMD_VERSION + "\","
         + "\"timestamp\":\"\","

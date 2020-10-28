@@ -3,7 +3,7 @@ package br.univali.tccbackend.pmd;
 class LargeClassTest extends PmdTest {
 
   @Override
-  String getInputCode() {
+  protected String getInputCode() {
     String method = "\n"
         + "    public void bar() {\n"
         + "        System.out.println(\"\");\n".repeat(48)
@@ -15,7 +15,7 @@ class LargeClassTest extends PmdTest {
   }
 
   @Override
-  String getExpectedResult() {
+  protected String getExpectedResult() {
     return "{\"formatVersion\":0,"
         + "\"pmdVersion\":\"" + PMD_VERSION + "\","
         + "\"timestamp\":\"\","

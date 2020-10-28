@@ -3,7 +3,7 @@ package br.univali.tccbackend.pmd;
 class LongParameterListTest extends PmdTest {
 
   @Override
-  String getInputCode() {
+  protected String getInputCode() {
     String parameters = getParameters();
     return "public class LongParameter {\n"
         + "\n"
@@ -26,7 +26,7 @@ class LongParameterListTest extends PmdTest {
   }
 
   @Override
-  String getExpectedResult() {
+  protected String getExpectedResult() {
     return "{\"formatVersion\":0,"
         + "\"pmdVersion\":\"" + PMD_VERSION + "\","
         + "\"timestamp\":\"\","

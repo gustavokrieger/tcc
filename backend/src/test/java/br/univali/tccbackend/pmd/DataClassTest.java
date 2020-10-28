@@ -3,7 +3,7 @@ package br.univali.tccbackend.pmd;
 class DataClassTest extends PmdTest {
 
   @Override
-  String getInputCode() {
+  protected String getInputCode() {
     return
         "public class Property implements Comparable {\n"
             + "    private String      _name;\n"
@@ -46,7 +46,7 @@ class DataClassTest extends PmdTest {
   }
 
   @Override
-  String getExpectedResult() {
+  protected String getExpectedResult() {
     return "{\"formatVersion\":0,"
         + "\"pmdVersion\":\"" + PMD_VERSION + "\","
         + "\"timestamp\":\"\","

@@ -7,10 +7,10 @@ import java.io.IOException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-abstract class PmdTest {
+public abstract class PmdTest {
 
-  final String PMD_VERSION = "6.29.0";
-  final String PMD_RULES_URL =
+  final protected String PMD_VERSION = "6.29.0";
+  final protected String PMD_RULES_URL =
       "https://pmd.github.io/pmd-" + PMD_VERSION + "/pmd_rules_java_design.html";
 
   @Test
@@ -21,7 +21,7 @@ abstract class PmdTest {
     Assertions.assertEquals(expectedResult, pmdAnalysisResult.toString());
   }
 
-  abstract String getInputCode();
+  protected abstract String getInputCode();
 
   private PmdAnalysisResult getPmdAnalysisResult(String code) throws IOException {
     PmdRunner pmdRunner = new TextPmdRunner(code);
@@ -47,6 +47,14 @@ abstract class PmdTest {
     }
   }
 
-  abstract String getExpectedResult();
+  protected String getExpectedResult() {
+    return "{\"formatVersion\":0,"
+        + "\"pmdVersion\":\"" + PMD_VERSION + "\","
+        + "\"timestamp\":\"\","
+        + "\"files\":[],"
+        + "\"suppressedViolations\":[],"
+        + "\"processingErrors\":[],"
+        + "\"configurationErrors\":[]}";
+  }
 
 }

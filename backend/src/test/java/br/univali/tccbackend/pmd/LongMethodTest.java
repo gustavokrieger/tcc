@@ -3,7 +3,7 @@ package br.univali.tccbackend.pmd;
 class LongMethodTest extends PmdTest {
 
   @Override
-  String getInputCode() {
+  protected String getInputCode() {
     return "public class LongMethod {\n"
         + "\n"
         + "    void test(){\n"
@@ -14,7 +14,7 @@ class LongMethodTest extends PmdTest {
   }
 
   @Override
-  String getExpectedResult() {
+  protected String getExpectedResult() {
     return "{\"formatVersion\":0,"
         + "\"pmdVersion\":\"" + PMD_VERSION + "\","
         + "\"timestamp\":\"\","

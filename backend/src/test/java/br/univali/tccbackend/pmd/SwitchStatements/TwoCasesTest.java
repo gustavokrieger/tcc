@@ -1,9 +1,11 @@
-package br.univali.tccbackend.pmd;
+package br.univali.tccbackend.pmd.SwitchStatements;
 
-class SwitchStatementsTest extends PmdTest {
+import br.univali.tccbackend.pmd.PmdTest;
+
+class TwoCasesTest extends PmdTest {
 
   @Override
-  String getInputCode() {
+  protected String getInputCode() {
     return "public class Foo {\n"
         + "  public void bar(int x) {\n"
         + "    switch (x) {\n"
@@ -20,7 +22,7 @@ class SwitchStatementsTest extends PmdTest {
   }
 
   @Override
-  String getExpectedResult() {
+  protected String getExpectedResult() {
     return "{\"formatVersion\":0,"
         + "\"pmdVersion\":\"" + PMD_VERSION + "\","
         + "\"timestamp\":\"\","
