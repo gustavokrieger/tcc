@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 abstract class PmdTest {
 
-  final String PMD_VERSION = "6.28.0";
+  final String PMD_VERSION = "6.29.0";
   final String PMD_RULES_URL =
       "https://pmd.github.io/pmd-" + PMD_VERSION + "/pmd_rules_java_design.html";
 

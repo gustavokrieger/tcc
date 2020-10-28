@@ -4,19 +4,24 @@
   <description/>
   <rule ref="category/java/design.xml/ExcessiveMethodLength">
     <properties>
-      <property name="minimum" value="50.0" />
+      <property name="minimum" value="50.0"/>
     </properties>
   </rule>
   <rule ref="category/java/design.xml/ExcessiveParameterList">
     <properties>
-      <property name="minimum" value="5.0" />
+      <property name="minimum" value="5.0"/>
     </properties>
   </rule>
   <rule ref="category/java/design.xml/DataClass"/>
   <rule ref="category/java/design.xml/ExcessiveClassLength">
     <properties>
-      <property name="minimum" value="500.0" />
+      <property name="minimum" value="500.0"/>
     </properties>
   </rule>
-  <rule ref="category/java/design.xml/LawOfDemeter" />
+  <rule ref="category/java/design.xml/LawOfDemeter"/>
+  <rule ref="category/java/design.xml/SwitchDensity">
+    <properties>
+      <property name="minimum" value="5.0"/>
+    </properties>
+  </rule>
 </ruleset>
