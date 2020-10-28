@@ -6,6 +6,7 @@ import CodeSmellCreator from './CodeSmellCreator';
 import * as pmdOutput from '../pmdOutput';
 import LargeClassCreator from './implementations/LargeClassCreator';
 import FeatureEnvyCreator from './implementations/FeatureEnvyCreator';
+import SwitchStatementsCreator from './implementations/SwitchStatementsCreator';
 
 export default class SelectorOfCodeSmellCreator {
   private readonly pmdCodeSmellType: PmdCodeSmellType;
@@ -42,6 +43,8 @@ export default class SelectorOfCodeSmellCreator {
         return new LongParameterListCreator(this.codeSectionWithSmell);
       case PmdCodeSmellType.FEATURE_ENVY:
         return new FeatureEnvyCreator(this.codeSectionWithSmell);
+      case PmdCodeSmellType.SWITCH_STATEMENTS:
+        return new SwitchStatementsCreator(this.codeSectionWithSmell);
       default:
         // todo criar exception
         throw new Error();

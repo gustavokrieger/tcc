@@ -52,7 +52,7 @@ const useStyles = makeStyles({
     maxWidth: '50.19vw',
     overflowWrap: 'break-word',
     wordBreak: 'break-all',
-    minHeight: '3.5vh',
+    minHeight: '4vh',
     alignItems: 'center',
   },
   compressedFileName: {

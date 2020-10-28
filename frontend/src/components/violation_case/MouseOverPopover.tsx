@@ -57,11 +57,11 @@ export default function MouseOverPopover(props: Props) {
         open={open}
         anchorEl={anchorEl}
         anchorOrigin={{
-          vertical: 'center',
+          vertical: 'bottom',
           horizontal: 'left',
         }}
         transformOrigin={{
-          vertical: 'center',
+          vertical: 'top',
           horizontal: 'left',
         }}
         onClose={handlePopoverClose}
