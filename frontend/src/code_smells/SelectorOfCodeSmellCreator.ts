@@ -10,11 +10,11 @@ import SwitchStatementsCreator from './implementations/SwitchStatementsCreator';
 
 export default class SelectorOfCodeSmellCreator {
   private readonly pmdCodeSmellType: PmdCodeSmellType;
-  private readonly codeSectionWithSmell: string;
+  private readonly codeSectionWithSmell: string[];
 
   private constructor(
     pmdCodeSmellType: PmdCodeSmellType,
-    codeSectionWithSmell: string
+    codeSectionWithSmell: string[]
   ) {
     this.pmdCodeSmellType = pmdCodeSmellType;
     this.codeSectionWithSmell = codeSectionWithSmell;
@@ -22,7 +22,7 @@ export default class SelectorOfCodeSmellCreator {
 
   static fromViolation(
     violation: pmdOutput.Violation,
-    codeSectionWithSmell: string
+    codeSectionWithSmell: string[]
   ): SelectorOfCodeSmellCreator {
     const pmdCodeSmellType = violation.rule as PmdCodeSmellType;
     return new SelectorOfCodeSmellCreator(

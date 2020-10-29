@@ -1,7 +1,7 @@
 export default abstract class FormattedJavaCode {
   private readonly _code: string;
 
-  constructor(code: string) {
+  constructor(code: string[]) {
     this._code = this.format(code);
   }
 
@@ -9,5 +9,8 @@ export default abstract class FormattedJavaCode {
     return this._code;
   }
 
-  protected abstract format(code: string): string;
+  protected format(code: string[]): string {
+    const endOfLine = '\n';
+    return code.join(endOfLine);
+  }
 }

@@ -4,13 +4,13 @@ import JavaCodeTokenizer from './tokenizers/JavaCodeTokenizer';
 import FormattedSignature from './formatted_code/FormattedSignature';
 
 export default abstract class CodeSmellCreator {
-  private readonly _codeSectionWithSmell: string;
+  private readonly _codeSectionWithSmell: string[];
 
-  constructor(codeSectionWithSmell: string) {
+  constructor(codeSectionWithSmell: string[]) {
     this._codeSectionWithSmell = codeSectionWithSmell;
   }
 
-  protected get codeSectionWithSmell(): string {
+  protected get codeSectionWithSmell(): string[] {
     return this._codeSectionWithSmell;
   }
 

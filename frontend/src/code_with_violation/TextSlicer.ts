@@ -30,7 +30,7 @@ export default class TextSlicer {
     return lines.join(endOfLine);
   }
 
-  private slice(): string[] {
+  slice(): string[] {
     const lines = this.lines.slice(this._startLine, this._endLine);
     if (lines.length === 1) {
       this.sliceSingleLine(lines);

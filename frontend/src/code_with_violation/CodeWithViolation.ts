@@ -48,17 +48,17 @@ export default class CodeWithViolation {
     const lastLine = this.violation.endline + lines;
     return (
       this.getCodeBeforeViolation(firstLine) +
-      this.getCodeThatCausedViolation() +
+      this.getCodeThatCausedViolation().join('\n') + //todo temp
       this.getCodeAfterViolation(lastLine)
     );
   }
 
-  private getCodeThatCausedViolation(): string {
+  private getCodeThatCausedViolation(): string[] {
     this.textSlicer.startLine = this.violation.beginline - 1;
     this.textSlicer.endLine = this.violation.endline;
     this.textSlicer.startColumn = this.violation.begincolumn - 1;
     this.textSlicer.endColumn = this.violation.endcolumn;
-    return this.textSlicer.sliceAndJoin();
+    return this.textSlicer.slice();
   }
 
   private getCodeBeforeViolation(startLine: number): string {
