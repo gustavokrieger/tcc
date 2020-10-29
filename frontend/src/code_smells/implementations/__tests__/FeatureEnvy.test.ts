@@ -18,15 +18,16 @@ function createCodeSmell(): CodeSmell {
 }
 
 function getCode() {
-  return `
-  class DataClass {
-
-    public int bar = 0;
-    public int na = 0;
-    public int bee = 0;
-  
-    public void setBee(int n) {
-      bee = n;
-    }
-  }`;
+  const code =
+    'class DataClass {\n' +
+    '\n' +
+    '    public int bar = 0;\n' +
+    '    public int na = 0;\n' +
+    '    public int bee = 0;\n' +
+    '  \n' +
+    '    public void setBee(int n) {\n' +
+    '      bee = n;\n' +
+    '    }\n' +
+    '  }';
+  return code.split('\n');
 }

@@ -1,13 +1,13 @@
 import CodeSmellCreator from '../CodeSmellCreator';
 import LongMethod from './LongMethod';
 import MethodSignatureTokenizer from '../tokenizers/MethodSignatureTokenizer';
-import FormattedSignature from '../formatted_code/FormattedSignature';
+import FormattedDeclaration from '../formatted_code/FormattedDeclaration';
 
 export default class LongMethodCreator extends CodeSmellCreator {
   protected makeJavaCodeTokenizer(
-    formattedSignature: FormattedSignature
+    formattedDeclaration: FormattedDeclaration
   ): MethodSignatureTokenizer {
-    return new MethodSignatureTokenizer(formattedSignature);
+    return new MethodSignatureTokenizer(formattedDeclaration);
   }
 
   protected makeCodeSmell(

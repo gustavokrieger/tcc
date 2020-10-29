@@ -19,7 +19,7 @@ function createCodeSmell(): CodeSmell {
 
 function getCode() {
   const numberOfRepetitions = 98;
-  return (
+  const code =
     'class Foo {\n' +
     '    public void bar1() {\n' +
     '        System.out.println("");\n'.repeat(numberOfRepetitions) +
@@ -51,6 +51,6 @@ function getCode() {
     '    public void bar10() {\n' +
     '        System.out.println("");\n'.repeat(numberOfRepetitions) +
     '    }\n' +
-    '}\n'
-  );
+    '}\n';
+  return code.split('\n');
 }

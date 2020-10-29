@@ -18,5 +18,7 @@ function createCodeSmell(): CodeSmell {
 }
 
 function getCode() {
-  return 'void test(){\n' + '    System.out.println("");\n'.repeat(100) + '}\n';
+  const code =
+    'void test(){\n' + '    System.out.println("");\n'.repeat(100) + '}\n';
+  return code.split('\n');
 }

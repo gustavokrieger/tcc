@@ -1,12 +1,10 @@
 import MethodSignatureTokenizer from '../MethodSignatureTokenizer';
-import FormattedSignature from '../../formatted_code/FormattedSignature';
+import FormattedDeclaration from '../../formatted_code/FormattedDeclaration';
 
-const endOfLine = '\n';
-
-function testGetName(code: string) {
-  const formattedSignature = new FormattedSignature(code);
+function testGetName(code: string[]) {
+  const formattedDeclaration = new FormattedDeclaration(code);
   const methodSignatureTokenizer = new MethodSignatureTokenizer(
-    formattedSignature
+    formattedDeclaration
   );
 
   const actual = methodSignatureTokenizer.getName();
@@ -16,38 +14,50 @@ function testGetName(code: string) {
 }
 
 test('get name', () => {
-  const code = `
-  void test() {
-    System.out.println("hi");
-  }`;
+  const code = ['void test() {', '    System.out.println("hi");', '  }'];
   testGetName(code);
 });
 
 test('get name, one line method', () => {
-  const code = 'void test(){System.out.println("hi");}';
+  const code = ['void test(){System.out.println("hi");}'];
   testGetName(code);
 });
 
 test('get name, with parameter', () => {
-  const code = `
-  void test(int a) {
-    System.out.println("hi");
-  }`;
+  const code = ['void test(int a) {', '    System.out.println("hi");', '  }'];
   testGetName(code);
 });
 
 test('get name, with excessive spaces', () => {
-  const code = `
-   void  test ( )  { 
-     System.out.println ( "hi" ) ;
-   } `;
+  const code = [
+    'void  test ( )  { ',
+    '     System.out.println ( "hi" ) ;',
+    '   } ',
+  ];
   testGetName(code);
 });
 
 test('get name, with newlines', () => {
-  const code = `
-  ${endOfLine}void${endOfLine} ${endOfLine}test${endOfLine}(${endOfLine})${endOfLine} ${endOfLine}{${endOfLine}
-    ${endOfLine}System.out.println${endOfLine}(${endOfLine}"hi"${endOfLine})${endOfLine};${endOfLine}
-  ${endOfLine}}${endOfLine}`;
+  const code = [
+    '',
+    'void',
+    ' ',
+    'test',
+    '(',
+    ')',
+    ' ',
+    '{',
+    '',
+    '    ',
+    'System.out.println',
+    '(',
+    '"hi"',
+    ')',
+    ';',
+    '',
+    '  ',
+    '}',
+    '',
+  ];
   testGetName(code);
 });

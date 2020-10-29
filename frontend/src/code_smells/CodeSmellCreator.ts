@@ -1,7 +1,7 @@
 import CodeSmell from './CodeSmell';
 import FormattedJavaCode from './formatted_code/FormattedJavaCode';
 import JavaCodeTokenizer from './tokenizers/JavaCodeTokenizer';
-import FormattedSignature from './formatted_code/FormattedSignature';
+import FormattedDeclaration from './formatted_code/FormattedDeclaration';
 
 export default abstract class CodeSmellCreator {
   private readonly _codeSectionWithSmell: string[];
@@ -21,7 +21,7 @@ export default abstract class CodeSmellCreator {
   }
 
   protected makeFormattedJavaCode(): FormattedJavaCode {
-    return new FormattedSignature(this._codeSectionWithSmell);
+    return new FormattedDeclaration(this._codeSectionWithSmell);
   }
 
   protected abstract makeJavaCodeTokenizer(

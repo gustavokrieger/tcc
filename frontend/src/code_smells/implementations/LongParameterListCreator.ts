@@ -1,13 +1,13 @@
 import CodeSmellCreator from '../CodeSmellCreator';
 import LongParameterList from './LongParameterList';
 import ParametersTokenizer from '../tokenizers/ParametersTokenizer';
-import FormattedSignature from '../formatted_code/FormattedSignature';
+import FormattedDeclaration from '../formatted_code/FormattedDeclaration';
 
 export default class LongParameterListCreator extends CodeSmellCreator {
   protected makeJavaCodeTokenizer(
-    formattedSignature: FormattedSignature
+    formattedDeclaration: FormattedDeclaration
   ): ParametersTokenizer {
-    return new ParametersTokenizer(formattedSignature);
+    return new ParametersTokenizer(formattedDeclaration);
   }
 
   protected makeCodeSmell(

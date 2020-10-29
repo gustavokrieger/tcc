@@ -1,13 +1,13 @@
 import CodeSmellCreator from '../CodeSmellCreator';
 import LargeClass from './LargeClass';
 import ClassTokenizer from '../tokenizers/ClassTokenizer';
-import FormattedSignature from '../formatted_code/FormattedSignature';
+import FormattedDeclaration from '../formatted_code/FormattedDeclaration';
 
 export default class LargeClassCreator extends CodeSmellCreator {
   protected makeJavaCodeTokenizer(
-    formattedSignature: FormattedSignature
+    formattedDeclaration: FormattedDeclaration
   ): ClassTokenizer {
-    return new ClassTokenizer(formattedSignature);
+    return new ClassTokenizer(formattedDeclaration);
   }
 
   protected makeCodeSmell(classTokenizer: ClassTokenizer): LargeClass {

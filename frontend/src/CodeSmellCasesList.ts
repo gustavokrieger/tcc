@@ -26,6 +26,7 @@ export default class CodeSmellCasesList {
     const code = codeWithViolation.getCodeThatCausedViolationAndLinesAroundIt(
       additionalLines
     );
+    const joinedCode = code.join('\n');
 
     let startingLineNumber =
       codeWithViolation.getFirstLineOfViolation() - additionalLines;
@@ -34,7 +35,7 @@ export default class CodeSmellCasesList {
     }
     const javaCodeProps: JavaCodeProps = {
       startingLineNumber,
-      children: code,
+      children: joinedCode,
       lineMarkStart: codeWithViolation.getFirstLineOfViolation(),
       lineMarkEnd: codeWithViolation.getLastLineOfViolation(),
     };

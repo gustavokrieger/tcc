@@ -43,41 +43,20 @@ export default class CodeWithViolation {
     return this.violation.endline;
   }
 
-  getCodeThatCausedViolationAndLinesAroundIt(lines: number): string {
-    const firstLine = this.violation.beginline - lines - 1;
+  getCodeThatCausedViolationAndLinesAroundIt(lines: number): string[] {
+    const firstLine = Math.max(0, this.violation.beginline - lines - 1);
     const lastLine = this.violation.endline + lines;
-    return (
-      this.getCodeBeforeViolation(firstLine) +
-      this.getCodeThatCausedViolation().join('\n') + //todo temp
-      this.getCodeAfterViolation(lastLine)
-    );
+
+    return this.textSlicer.slice(firstLine, lastLine);
   }
 
   private getCodeThatCausedViolation(): string[] {
-    this.textSlicer.startLine = this.violation.beginline - 1;
-    this.textSlicer.endLine = this.violation.endline;
-    this.textSlicer.startColumn = this.violation.begincolumn - 1;
-    this.textSlicer.endColumn = this.violation.endcolumn;
-    return this.textSlicer.slice();
-  }
-
-  private getCodeBeforeViolation(startLine: number): string {
-    if (startLine < 0) {
-      startLine = 0;
-    }
-    this.textSlicer.startLine = startLine;
-    this.textSlicer.endLine = this.violation.beginline;
-    this.textSlicer.startColumn = undefined;
-    this.textSlicer.endColumn = this.violation.begincolumn - 1;
-    return this.textSlicer.sliceAndJoin();
-  }
-
-  private getCodeAfterViolation(endLine: number): string {
-    this.textSlicer.startLine = this.violation.endline - 1;
-    this.textSlicer.endLine = endLine;
-    this.textSlicer.startColumn = this.violation.endcolumn;
-    this.textSlicer.endColumn = undefined;
-    return this.textSlicer.sliceAndJoin();
+    return this.textSlicer.slice(
+      this.violation.beginline - 1,
+      this.violation.endline,
+      this.violation.begincolumn - 1,
+      this.violation.endcolumn
+    );
   }
 
   getCodeSmellCreator(): CodeSmellCreator {

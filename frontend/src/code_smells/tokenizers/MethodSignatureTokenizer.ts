@@ -1,10 +1,10 @@
 import JavaCodeTokenizer from './JavaCodeTokenizer';
 import assert from 'assert';
-import FormattedSignature from '../formatted_code/FormattedSignature';
+import FormattedDeclaration from '../formatted_code/FormattedDeclaration';
 
 export default class MethodSignatureTokenizer extends JavaCodeTokenizer {
-  constructor(formattedSignature: FormattedSignature) {
-    super(formattedSignature);
+  constructor(formattedDeclaration: FormattedDeclaration) {
+    super(formattedDeclaration);
   }
 
   getName(): string {

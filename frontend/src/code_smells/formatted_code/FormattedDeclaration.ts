@@ -1,6 +1,6 @@
 import FormattedJavaCode from './FormattedJavaCode';
 
-export default class FormattedSignature extends FormattedJavaCode {
+export default class FormattedDeclaration extends FormattedJavaCode {
   private readonly _linesOfCode: number;
 
   constructor(code: string[]) {
@@ -15,7 +15,7 @@ export default class FormattedSignature extends FormattedJavaCode {
   protected format(code: string[]): string {
     let joinedCode = super.format(code);
     joinedCode = joinedCode.trim();
-    return FormattedSignature.replaceWhitespacesWithSingleSpace(joinedCode);
+    return FormattedDeclaration.replaceWhitespacesWithSingleSpace(joinedCode);
   }
 
   private static replaceWhitespacesWithSingleSpace(text: string): string {

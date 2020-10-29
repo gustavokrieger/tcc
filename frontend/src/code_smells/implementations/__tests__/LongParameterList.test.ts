@@ -20,5 +20,7 @@ function createCodeSmell(): CodeSmell {
 }
 
 function getCode() {
-  return '(int birthYear, int birthMonth, int birthDate, int height, int weight, int a, int b, int c,int d, int e)';
+  return [
+    '(int birthYear, int birthMonth, int birthDate, int height, int weight, int a, int b, int c,int d, int e)',
+  ];
 }

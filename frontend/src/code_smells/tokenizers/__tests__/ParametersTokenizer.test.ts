@@ -1,15 +1,13 @@
 import ParametersTokenizer from '../ParametersTokenizer';
-import FormattedSignature from '../../formatted_code/FormattedSignature';
+import FormattedDeclaration from '../../formatted_code/FormattedDeclaration';
 
-const endOfLine = '\n';
-
-function createParametersTokenizer(code: string) {
-  const formattedSignature = new FormattedSignature(code);
-  return new ParametersTokenizer(formattedSignature);
+function createParametersTokenizer(code: string[]) {
+  const formattedDeclaration = new FormattedDeclaration(code);
+  return new ParametersTokenizer(formattedDeclaration);
 }
 
 test('get all, no parameters', () => {
-  const code = '()';
+  const code = ['()'];
   const parametersTokenizer = createParametersTokenizer(code);
 
   const actual = parametersTokenizer.getAll();
@@ -19,23 +17,24 @@ test('get all, no parameters', () => {
 });
 
 function getCodeWithOneParameter(betweenParts: string) {
-  return (
-    betweenParts +
-    '(' +
-    betweenParts +
-    'int' +
-    betweenParts +
-    ' ' +
-    betweenParts +
-    'a' +
-    betweenParts +
-    ')' +
-    betweenParts
-  );
+  return [
+    betweenParts,
+    '(',
+    betweenParts,
+    'int',
+    betweenParts,
+    ' ',
+    betweenParts,
+    'a',
+    betweenParts,
+    ')',
+    betweenParts,
+  ];
 }
 
 test('get all, one parameter', () => {
-  const code = getCodeWithOneParameter('');
+  let code = getCodeWithOneParameter('');
+  code = [code.join('')];
   const parametersTokenizer = createParametersTokenizer(code);
 
   const actual = parametersTokenizer.getAll();
@@ -45,7 +44,8 @@ test('get all, one parameter', () => {
 });
 
 test('get all, one parameter, with excessive spaces', () => {
-  const code = getCodeWithOneParameter(' ');
+  let code = getCodeWithOneParameter(' ');
+  code = [code.join('')];
   const parametersTokenizer = createParametersTokenizer(code);
 
   const actual = parametersTokenizer.getAll();
@@ -55,7 +55,7 @@ test('get all, one parameter, with excessive spaces', () => {
 });
 
 test('get all, one parameter, with newlines', () => {
-  const code = getCodeWithOneParameter(endOfLine);
+  const code = getCodeWithOneParameter('');
   const parametersTokenizer = createParametersTokenizer(code);
 
   const actual = parametersTokenizer.getAll();
@@ -65,33 +65,34 @@ test('get all, one parameter, with newlines', () => {
 });
 
 function getCodeWithTwoParameter(betweenParts: string) {
-  return (
-    betweenParts +
-    '(' +
-    betweenParts +
-    'int' +
-    betweenParts +
-    ' ' +
-    betweenParts +
-    'a' +
-    betweenParts +
-    ',' +
-    betweenParts +
-    ' ' +
-    betweenParts +
-    'String' +
-    betweenParts +
-    ' ' +
-    betweenParts +
-    'b' +
-    betweenParts +
-    ')' +
-    betweenParts
-  );
+  return [
+    betweenParts,
+    '(',
+    betweenParts,
+    'int',
+    betweenParts,
+    ' ',
+    betweenParts,
+    'a',
+    betweenParts,
+    ',',
+    betweenParts,
+    ' ',
+    betweenParts,
+    'String',
+    betweenParts,
+    ' ',
+    betweenParts,
+    'b',
+    betweenParts,
+    ')',
+    betweenParts,
+  ];
 }
 
 test('get all, two parameters', () => {
-  const code = getCodeWithTwoParameter('');
+  let code = getCodeWithTwoParameter('');
+  code = [code.join('')];
   const parametersTokenizer = createParametersTokenizer(code);
 
   const actual = parametersTokenizer.getAll();
@@ -101,7 +102,8 @@ test('get all, two parameters', () => {
 });
 
 test('get all, two parameters, with excessive spaces', () => {
-  const code = getCodeWithTwoParameter(' ');
+  let code = getCodeWithTwoParameter(' ');
+  code = [code.join('')];
   const parametersTokenizer = createParametersTokenizer(code);
 
   const actual = parametersTokenizer.getAll();
@@ -111,7 +113,7 @@ test('get all, two parameters, with excessive spaces', () => {
 });
 
 test('get all, two parameters, with newlines', () => {
-  const code = getCodeWithTwoParameter(endOfLine);
+  const code = getCodeWithTwoParameter('');
   const parametersTokenizer = createParametersTokenizer(code);
 
   const actual = parametersTokenizer.getAll();
@@ -121,47 +123,48 @@ test('get all, two parameters, with newlines', () => {
 });
 
 function getCodeWithThreeParameter(betweenParts: string) {
-  return (
-    betweenParts +
-    '(' +
-    betweenParts +
-    'int' +
-    betweenParts +
-    ' ' +
-    betweenParts +
-    'a' +
-    betweenParts +
-    ',' +
-    betweenParts +
-    ' ' +
-    betweenParts +
-    'String' +
-    betweenParts +
-    ' ' +
-    betweenParts +
-    'b' +
-    betweenParts +
-    ',' +
-    betweenParts +
-    ' ' +
-    betweenParts +
-    'int' +
-    betweenParts +
-    '[' +
-    betweenParts +
-    ']' +
-    betweenParts +
-    ' ' +
-    betweenParts +
-    'c' +
-    betweenParts +
-    ')' +
-    betweenParts
-  );
+  return [
+    betweenParts,
+    '(',
+    betweenParts,
+    'int',
+    betweenParts,
+    ' ',
+    betweenParts,
+    'a',
+    betweenParts,
+    ',',
+    betweenParts,
+    ' ',
+    betweenParts,
+    'String',
+    betweenParts,
+    ' ',
+    betweenParts,
+    'b',
+    betweenParts,
+    ',',
+    betweenParts,
+    ' ',
+    betweenParts,
+    'int',
+    betweenParts,
+    '[',
+    betweenParts,
+    ']',
+    betweenParts,
+    ' ',
+    betweenParts,
+    'c',
+    betweenParts,
+    ')',
+    betweenParts,
+  ];
 }
 
 test('get all, three parameters', () => {
-  const code = getCodeWithThreeParameter('');
+  let code = getCodeWithThreeParameter('');
+  code = [code.join('')];
   const parametersTokenizer = createParametersTokenizer(code);
 
   const actual = parametersTokenizer.getAll();
@@ -171,7 +174,8 @@ test('get all, three parameters', () => {
 });
 
 test('get all, three parameters, with excessive spaces', () => {
-  const code = getCodeWithThreeParameter(' ');
+  let code = getCodeWithThreeParameter(' ');
+  code = [code.join('')];
   const parametersTokenizer = createParametersTokenizer(code);
 
   const actual = parametersTokenizer.getAll();
@@ -181,7 +185,7 @@ test('get all, three parameters, with excessive spaces', () => {
 });
 
 test('get all, three parameters, with newlines', () => {
-  const code = getCodeWithThreeParameter(endOfLine);
+  const code = getCodeWithThreeParameter('');
   const parametersTokenizer = createParametersTokenizer(code);
 
   const actual = parametersTokenizer.getAll();

@@ -9,28 +9,13 @@ export default class TextSlicer {
     this.lines = lines;
   }
 
-  set startLine(value: number | undefined) {
-    this._startLine = value;
-  }
-
-  set endLine(value: number | undefined) {
-    this._endLine = value;
-  }
-
-  set startColumn(value: number | undefined) {
-    this._startColumn = value;
-  }
-
-  set endColumn(value: number | undefined) {
-    this._endColumn = value;
-  }
-
-  sliceAndJoin(endOfLine = '\n'): string {
-    const lines = this.slice();
-    return lines.join(endOfLine);
-  }
-
-  slice(): string[] {
+  slice(
+    startLine?: number,
+    endLine?: number,
+    startColumn?: number,
+    endColumn?: number
+  ): string[] {
+    this.defineLimits(startLine, endLine, startColumn, endColumn);
     const lines = this.lines.slice(this._startLine, this._endLine);
     if (lines.length === 1) {
       this.sliceSingleLine(lines);
@@ -39,6 +24,18 @@ export default class TextSlicer {
       this.sliceLastLine(lines);
     }
     return lines;
+  }
+
+  private defineLimits(
+    startLine?: number,
+    endLine?: number,
+    startColumn?: number,
+    endColumn?: number
+  ) {
+    this._startLine = startLine;
+    this._endLine = endLine;
+    this._startColumn = startColumn;
+    this._endColumn = endColumn;
   }
 
   private sliceSingleLine(lines: string[]) {

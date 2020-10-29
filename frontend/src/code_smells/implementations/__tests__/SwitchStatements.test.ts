@@ -18,17 +18,19 @@ function createCodeSmell(): CodeSmell {
 }
 
 function getCode() {
-  return `switch (x) {
-      case 1: {
-        System.out.println("");
-        System.out.println("");
-        System.out.println("");
-        break;
-      } case 2: {
-        System.out.println("");
-        System.out.println("");
-        System.out.println("");
-        break;
-      }
-    }`;
+  const code =
+    'switch (x) {\n' +
+    '      case 1: {\n' +
+    '        System.out.println("");\n' +
+    '        System.out.println("");\n' +
+    '        System.out.println("");\n' +
+    '        break;\n' +
+    '      } case 2: {\n' +
+    '        System.out.println("");\n' +
+    '        System.out.println("");\n' +
+    '        System.out.println("");\n' +
+    '        break;\n' +
+    '      }\n' +
+    '    }';
+  return code.split('\n');
 }

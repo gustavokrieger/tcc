@@ -1,9 +1,9 @@
 import JavaCodeTokenizer from './JavaCodeTokenizer';
-import FormattedSignature from '../formatted_code/FormattedSignature';
+import FormattedDeclaration from '../formatted_code/FormattedDeclaration';
 
 export default class ParametersTokenizer extends JavaCodeTokenizer {
-  constructor(formattedSignature: FormattedSignature) {
-    super(formattedSignature);
+  constructor(formattedDeclaration: FormattedDeclaration) {
+    super(formattedDeclaration);
   }
 
   getAll(): string[] {
