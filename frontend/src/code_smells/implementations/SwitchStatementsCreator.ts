@@ -1,16 +1,16 @@
 import CodeSmellCreator from '../CodeSmellCreator';
-import ClassTokenizer from '../tokenizers/ClassTokenizer';
-import FormattedSignature from '../formatted_code/FormattedSignature';
 import SwitchStatements from './SwitchStatements';
+import FormattedSwitch from '../formatted_code/FormattedSwitch';
+import SwitchTokenizer from '../tokenizers/SwitchTokenizer';
 
 export default class SwitchStatementsCreator extends CodeSmellCreator {
   protected makeJavaCodeTokenizer(
-    formattedSignature: FormattedSignature
-  ): ClassTokenizer {
-    return new ClassTokenizer(formattedSignature);
+    formattedSwitch: FormattedSwitch
+  ): SwitchTokenizer {
+    return new SwitchTokenizer(formattedSwitch);
   }
 
-  protected makeCodeSmell(classTokenizer: ClassTokenizer): SwitchStatements {
-    return new SwitchStatements(classTokenizer);
+  protected makeCodeSmell(switchTokenizer: SwitchTokenizer): SwitchStatements {
+    return new SwitchStatements(switchTokenizer);
   }
 }

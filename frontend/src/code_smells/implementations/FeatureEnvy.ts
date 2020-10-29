@@ -51,7 +51,7 @@ export default class FeatureEnvy implements CodeSmell {
       'O problema desse code smell, é que o fato do código não estar na classe apropriada ' +
       'pode acabar fazendo com que o mesmo trecho de código seja duplicado em outra parte do sistema, o que causa ' +
       'retrabalho não apenas na codificação, mas possivelmente também em todas as vezes que for necessário realizar ' +
-      'alterações de funcionalidade. ' +
+      'alterações de funcionalidade nessa parte do código. ' +
       'A solução pode ser mover esta parte do método para um novo método na classe apropriada e chamar o novo ' +
       'método no lugar desta parte. Caso a classe ' +
       'apropriada seja de biblioteca de terceiro que não pode ser facilmente alterada no sistema, a solução pode ser ' +
