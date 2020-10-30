@@ -27,7 +27,7 @@ export default class FeatureEnvy implements CodeSmell {
       end =
         `o ${FeatureEnvy.formatByType(
           callParts[0]
-        )} foi retornado por um método para poder fazer chamada ao ` +
+        )} foi retornado por um outro método para poder fazer chamada ao ` +
         `${FeatureEnvy.formatByType(
           callParts[1]
         )}, o que pode indicar que essa parte do código (ou até mesmo o método inteiro) deveria, idealmente, ` +
@@ -48,15 +48,13 @@ export default class FeatureEnvy implements CodeSmell {
 
   private static getDescriptionSecondPart() {
     return (
-      'O problema desse code smell, é que o fato do código não estar na classe apropriada ' +
-      'pode acabar fazendo com que o mesmo trecho de código seja duplicado em outra parte do sistema, o que causa ' +
-      'retrabalho não apenas na codificação, mas possivelmente também em todas as vezes que for necessário realizar ' +
-      'alterações de funcionalidade nessa parte do código. ' +
-      'A solução pode ser mover esta parte do método para um novo método na classe apropriada e chamar o novo ' +
-      'método no lugar desta parte. Caso a classe ' +
-      'apropriada seja de biblioteca de terceiro que não pode ser facilmente alterada no sistema, a solução pode ser ' +
-      'criar uma classe que possua a classe de terceiro como uma variável de classe, e fazer a tranferência do código ' +
-      'para a nova classe.'
+      'O problema desse code smell, é que como o código não está na classe mais apropriada, ele provavelmente vai ' +
+      'ser duplicado em outras partes do sistema. Essa duplicação vai, possivelmente, causar retrabalho todas ' +
+      'as vezes que for necessário realizar alterações de funcionalidade nessa parte do código. ' +
+      'A solução pode ser mover esta parte do código para um novo método na classe apropriada e chamar esse ' +
+      'método no lugar da parte extraída. Caso a classe que receberia o novo método seja de biblioteca de terceiro, ' +
+      'uma alternativa pode ser criar uma classe que possua a de terceiro como variável de classe ' +
+      'e fazer a tranferência do código para a nova classe.'
     );
   }
 }

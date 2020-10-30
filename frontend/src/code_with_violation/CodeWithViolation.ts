@@ -26,8 +26,8 @@ export default class CodeWithViolation {
     relativePath: string
   ): CodeWithViolation {
     const code = contentsOfFile.text;
-    const endOfLine = /\r?\n|\r/;
-    const lineSeparatedCode = code.split(endOfLine);
+    const multiplatformEndOfLine = /\r?\n|\r/;
+    const lineSeparatedCode = code.split(multiplatformEndOfLine);
     return new CodeWithViolation(lineSeparatedCode, violation, relativePath);
   }
 

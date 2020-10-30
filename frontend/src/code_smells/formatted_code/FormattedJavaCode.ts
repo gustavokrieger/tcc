@@ -10,7 +10,6 @@ export default abstract class FormattedJavaCode {
   }
 
   protected format(code: string[]): string {
-    const endOfLine = '\n';
-    return code.join(endOfLine);
+    return code.join('\n');
   }
 }

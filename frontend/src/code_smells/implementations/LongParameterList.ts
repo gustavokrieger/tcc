@@ -18,13 +18,15 @@ export default class LongParameterList implements CodeSmell {
     const numberOfParameters = parameters.length;
     const lastParameter = parameters[numberOfParameters - 1];
     return (
-      `O conjunto de parâmetros que inicia com "${firstParameter}" e finaliza com "${lastParameter}" (total de ` +
-      `${numberOfParameters}), é uma Lista de Parâmetros Longa pois possui parâmetros em excesso. ` +
-      'O problema deste code smell, é que a lista tem alta probabilidade de sofrer alterações com o avanço do ' +
-      'desenvolvimento, forçando alterações em toda parte do sistema que utiliza o método que teve seus parâmetros ' +
+      `Este conjunto de parâmetros ("${firstParameter}" até "${lastParameter}") é uma ` +
+      `Lista de Parâmetros Longa pois possui parâmetros em excesso. São ${numberOfParameters}, enquanto o ideal ` +
+      'seria um número menor do que 5. ' +
+      'O problema desse code smell, é que um número alto de parâmetros tem alta probabilidade de sofrer alterações com o avanço do ' +
+      'desenvolvimento, forçando alterações em todas as partes do sistema que utilizam o método que teve seus parâmetros ' +
       'alterados. A solução pode ser fazer com que o resgate das variáveis seja feito dentro do método, ao invés de ' +
-      'ser feito pela passagem de parâmetros. Isso pode ser realizado substituindo multiplos parâmetros por um ' +
-      'conjunto menor que consiga resgatar os parâmetros originais através de métodos.'
+      'ser feito pela passagem de parâmetros. Isso pode ser realizado substituindo múltiplos parâmetros por um ' +
+      'conjunto menor que consiga resgatar os parâmetros originais através de chamadas de métodos, e realizar as ' +
+      'chamadas dentro do método que teve seus parâmetros alterados.'
     );
   }
 }
