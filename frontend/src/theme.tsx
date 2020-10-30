@@ -6,6 +6,9 @@ const theme = createMuiTheme({
       default: '#fefefe',
     },
   },
+  typography: {
+    fontSize: Number(localStorage.getItem('fontSize')) || 14,
+  },
 });
 
 export default theme;
