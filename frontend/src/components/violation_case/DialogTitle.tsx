@@ -9,6 +9,7 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
+import clsx from 'clsx';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -26,15 +27,20 @@ const styles = (theme: Theme) =>
   });
 
 interface Props extends WithStyles<typeof styles> {
+  className?: string;
   id: string;
   children: React.ReactNode;
   onClose: () => void;
 }
 
 export const DialogTitle = withStyles(styles)((props: Props) => {
-  const {children, classes, onClose, ...other} = props;
+  const {className, children, classes, onClose, ...other} = props;
   return (
-    <MuiDialogTitle disableTypography className={classes.root} {...other}>
+    <MuiDialogTitle
+      disableTypography
+      className={clsx(classes.root, className)}
+      {...other}
+    >
       <Typography variant="h6">{children}</Typography>
       {onClose ? (
         <IconButton

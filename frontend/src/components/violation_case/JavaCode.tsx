@@ -2,18 +2,20 @@ import React from 'react';
 import {Light as SyntaxHighlighter} from 'react-syntax-highlighter';
 import java from 'react-syntax-highlighter/dist/esm/languages/hljs/java';
 import {githubGist} from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import {makeStyles} from '@material-ui/core/styles';
+import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 
 SyntaxHighlighter.registerLanguage('java', java);
 
-const useStyles = makeStyles({
-  root: {
-    minWidth: '48.5vw',
-  },
-  code: {
-    fontSize: '17px',
-  },
-});
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '49.4vw',
+    },
+    code: {
+      fontSize: theme.typography.fontSize + 3,
+    },
+  })
+);
 
 export type JavaCodeProps = {
   children: string;

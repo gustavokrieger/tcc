@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
 type Props = {
   children: React.ReactNode;
   trigger: string;
-  triggerClassname?: string;
+  triggerClassName?: string;
 };
 
 export default function MouseOverPopover(props: Props) {
@@ -39,7 +39,7 @@ export default function MouseOverPopover(props: Props) {
   return (
     <div>
       <Typography
-        className={props.triggerClassname}
+        className={props.triggerClassName}
         aria-owns={open ? 'mouse-over-popover' : undefined}
         aria-haspopup="true"
         onMouseEnter={handlePopoverOpen}

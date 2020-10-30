@@ -6,69 +6,79 @@ import {TransitionProps} from '@material-ui/core/transitions';
 import SimpleCard from './SimpleCard';
 import Typography from '@material-ui/core/Typography';
 import JavaCode, {JavaCodeProps} from './JavaCode';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Button from '@material-ui/core/Button';
 import {DialogTitle} from './DialogTitle';
 import MouseOverPopover from './MouseOverPopover';
+import {createStyles, Theme} from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
-  button: {
-    marginBottom: '1vh',
-  },
-  dialogPaper: {
-    minHeight: '93vh',
-    maxHeight: '93vh',
-    minWidth: '75vw',
-    maxWidth: '75vw',
-  },
-  contentWithText: {
-    display: 'flex',
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-    height: '1vh',
-  },
-  contentWithCards: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    height: '100%',
-    width: '100%',
-  },
-  codeCard: {
-    display: 'flex',
-    height: '79.6vh',
-    width: '70.4%',
-    overflow: 'auto',
-  },
-  descriptionCard: {
-    width: '28.7%',
-    maxHeight: '63.68vh',
-    textAlign: 'center',
-    overflowY: 'auto',
-  },
-  fileNamePopover: {
-    display: 'flex',
-    maxWidth: '50.19vw',
-    overflowWrap: 'break-word',
-    wordBreak: 'break-all',
-    minHeight: '4vh',
-    alignItems: 'center',
-  },
-  compressedFileName: {
-    maxWidth: '51vw',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    textDecoration: 'underline',
-  },
-  firstTextHighlight: {
-    color: '#D50000',
-  },
-  secondTextHighlight: {
-    color: '#00C853',
-  },
-});
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button: {
+      marginBottom: '1vh',
+    },
+    dialogTitle: {
+      paddingBottom: 0,
+    },
+    dialogPaper: {
+      minHeight: '93vh',
+      maxHeight: '93vh',
+      minWidth: '75vw',
+      maxWidth: '75vw',
+    },
+    contentWithText: {
+      display: 'flex',
+      alignItems: 'flex-end',
+      overflow: 'hidden',
+      whiteSpace: 'nowrap',
+      paddingTop: 0,
+      paddingBottom: 0,
+    },
+    contentWithCards: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      height: '100%',
+      width: '100%',
+    },
+    codeCard: {
+      display: 'flex',
+      height: '79.6vh',
+      maxWidth: '70.4%',
+      overflow: 'auto',
+      marginRight: theme.spacing(0.8),
+    },
+    descriptionCard: {
+      maxWidth: '28.7%',
+      maxHeight: '63.68vh',
+      textAlign: 'center',
+      overflowY: 'auto',
+      marginLeft: theme.spacing(0.8),
+    },
+    fileNamePopover: {
+      display: 'flex',
+      maxWidth: '50.19vw',
+      overflowWrap: 'break-word',
+      wordBreak: 'break-all',
+      minHeight: '4vh',
+      alignItems: 'center',
+    },
+    compressedFileName: {
+      maxWidth: '51vw',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      textDecoration: 'underline',
+      color: theme.palette.text.secondary,
+    },
+    firstTextHighlight: {
+      color: '#D50000',
+    },
+    secondTextHighlight: {
+      color: '#00C853',
+    },
+  })
+);
 
 export type ViolationCaseProps = {
   title: string;
@@ -162,20 +172,22 @@ export default function ViolationCase(props: ViolationCaseProps) {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title" onClose={handleClose}>
+        <DialogTitle
+          className={classes.dialogTitle}
+          id="alert-dialog-slide-title"
+          onClose={handleClose}
+        >
           {props.title}
         </DialogTitle>
         <DialogContent className={classes.contentWithText}>
-          <DialogContentText id="alert-dialog-slide-description">
-            <MouseOverPopover
-              trigger={compressedFileName}
-              triggerClassname={classes.compressedFileName}
-            >
-              <Typography className={classes.fileNamePopover}>
-                {props.fileName}
-              </Typography>
-            </MouseOverPopover>
-          </DialogContentText>
+          <MouseOverPopover
+            trigger={compressedFileName}
+            triggerClassName={classes.compressedFileName}
+          >
+            <Typography className={classes.fileNamePopover}>
+              {props.fileName}
+            </Typography>
+          </MouseOverPopover>
         </DialogContent>
         <DialogContent className={classes.contentWithCards}>
           <SimpleCard className={classes.codeCard}>
