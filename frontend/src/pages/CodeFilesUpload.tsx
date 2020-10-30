@@ -130,8 +130,8 @@ export default function CodeFilesUpload() {
       )}
       <iframe
         className={classes.video}
-        width="384"
-        height="216"
+        width="352"
+        height="198"
         src="https://www.youtube.com/embed/RK1K2bCg4J8"
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
