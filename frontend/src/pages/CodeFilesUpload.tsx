@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(4),
     },
     subtitle: {
-      fontSize: '18px',
+      fontSize: theme.typography.fontSize + 4,
       margin: theme.spacing(2),
     },
     upload: {
@@ -37,12 +37,12 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: 'auto',
     },
     codeSmellQuestion: {
-      fontSize: '18px',
+      fontSize: theme.typography.fontSize + 4,
       marginTop: theme.spacing(6),
       fontStyle: 'italic',
     },
     codeSmellExplanation: {
-      fontSize: '18px',
+      fontSize: theme.typography.fontSize + 4,
       marginBottom: theme.spacing(5),
       textAlign: 'center',
       maxWidth: '45%',
