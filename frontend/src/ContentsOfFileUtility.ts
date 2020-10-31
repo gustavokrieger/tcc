@@ -9,10 +9,7 @@ export default class ContentsOfFileUtility {
       const text = await file.text();
       // @ts-ignore
       const relativePath = file.webkitRelativePath; // Non-standard.
-      const contentsOfFile: ContentsOfFile = {
-        text: text,
-        relativePath: relativePath,
-      };
+      const contentsOfFile: ContentsOfFile = {text, relativePath};
       contentsOfFiles.push(contentsOfFile);
     }
     return contentsOfFiles;

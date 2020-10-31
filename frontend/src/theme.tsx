@@ -1,4 +1,5 @@
 import {createMuiTheme} from '@material-ui/core/styles';
+import StorageFontSize from './components/font_size_setter/StorageFontSize';
 
 const theme = createMuiTheme({
   palette: {
@@ -7,7 +8,7 @@ const theme = createMuiTheme({
     },
   },
   typography: {
-    fontSize: Number(localStorage.getItem('fontSize')) || 14,
+    fontSize: StorageFontSize.getCurrentOrDefault(),
   },
 });
 

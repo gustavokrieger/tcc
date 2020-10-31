@@ -5,36 +5,28 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import {useHistory} from 'react-router-dom';
+import {FontSize} from './FontSize';
+import StorageFontSize from './StorageFontSize';
 
 export default function FontSizeSetter() {
   const history = useHistory();
 
-  const [value, setValue] = React.useState('');
+  const [value, setValue] = React.useState<FontSize>(
+    StorageFontSize.getCurrentOrDefault()
+  );
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = (event.target as HTMLInputElement).value;
+    const newValue = Number(
+      (event.target as HTMLInputElement).value
+    ) as FontSize;
     setValue(newValue);
-    let newFontSize: string;
-    switch (newValue) {
-      case 'big': {
-        newFontSize = '16';
-        break;
-      }
-      case 'normal': {
-        newFontSize = '14';
-        break;
-      }
-      case 'small': {
-        newFontSize = '12';
-        break;
-      }
-      default: {
-        throw new Error();
-      }
-    }
-    localStorage.setItem('fontSize', newFontSize);
-    history.go(0);
+    StorageFontSize.setValue(newValue);
+    reloadPage();
   };
+
+  function reloadPage() {
+    history.go(0);
+  }
 
   return (
     <FormControl component="fieldset">
@@ -45,9 +37,21 @@ export default function FontSizeSetter() {
         value={value}
         onChange={handleChange}
       >
-        <FormControlLabel value="big" control={<Radio />} label="Grande" />
-        <FormControlLabel value="normal" control={<Radio />} label="Normal" />
-        <FormControlLabel value="small" control={<Radio />} label="Pequena" />
+        <FormControlLabel
+          value={FontSize.BIG}
+          control={<Radio />}
+          label="Grande"
+        />
+        <FormControlLabel
+          value={FontSize.NORMAL}
+          control={<Radio />}
+          label="Normal"
+        />
+        <FormControlLabel
+          value={FontSize.SMALL}
+          control={<Radio />}
+          label="Pequena"
+        />
       </RadioGroup>
     </FormControl>
   );
