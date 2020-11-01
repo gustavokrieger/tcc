@@ -6,22 +6,17 @@ import VerticalTabs, {Tab} from '../components/vertical_tabs/VerticalTabs';
 import ViolationCase, {
   ViolationCaseProps,
 } from '../components/violation_case/ViolationCase';
-import ControlledAccordions from '../components/ControlledAccordions';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import SettingsMenu from '../components/SettingsMenu';
 
 const useStyles = makeStyles({
-  titleContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-    height: '10vh',
-  },
   mainContainer: {
     display: 'flex',
-    justifyContent: 'space-evenly',
+    flexDirection: 'column',
+    justifyContent: 'center',
     alignItems: 'center',
-    height: '90vh',
+    height: '100vh',
   },
   tabsPaper: {
     height: '68%',
@@ -80,14 +75,12 @@ export default function CodeAnalysisResult(
   }
   return (
     <>
-      <Container className={classes.titleContainer}>
-        <Typography variant="h2">Resultado da Análise</Typography>
-      </Container>
+      <SettingsMenu />
       <Container className={classes.mainContainer}>
+        <Typography variant="h2">Resultado da Análise</Typography>
         <Paper variant="outlined" className={classes.tabsPaper}>
           <VerticalTabs tabs={tabs} />
         </Paper>
-        <ControlledAccordions />
       </Container>
     </>
   );

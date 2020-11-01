@@ -4,9 +4,16 @@ import {IconButton} from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
 import FontSizeSetter from './font_size_setter/FontSizeSetter';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    root: {
+      position: 'absolute',
+      margin: theme.spacing(2),
+      marginRight: theme.spacing(3),
+      right: 0,
+    },
     firstMenuItem: {
       padding: theme.spacing(2),
     },
@@ -31,7 +38,7 @@ export default function SettingsMenu(props: Props) {
   };
 
   return (
-    <div className={props.className}>
+    <div className={clsx(classes.root, props.className)}>
       <IconButton
         disabled={props.disabled}
         aria-controls="simple-menu"

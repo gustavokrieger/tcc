@@ -13,10 +13,11 @@ import ContentsOfFileUtility from '../ContentsOfFileUtility';
 import CodeSmellCasesList from '../CodeSmellCasesList';
 import {codeWithViolationGenerator} from '../code_with_violation/codeWithViolationGenerator';
 import SettingsMenu from '../components/SettingsMenu';
+import VideoPlayer from '../components/VideoPlayer';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
+    mainContainer: {
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
@@ -47,12 +48,6 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: theme.spacing(5),
       textAlign: 'center',
       maxWidth: '45%',
-    },
-    settingsButton: {
-      position: 'absolute',
-      margin: theme.spacing(2),
-      marginRight: theme.spacing(3),
-      right: 0,
     },
   })
 );
@@ -120,8 +115,8 @@ export default function CodeFilesUpload() {
 
   return (
     <>
-      <SettingsMenu disabled={isLoading} className={classes.settingsButton} />
-      <Container className={classes.root}>
+      <SettingsMenu disabled={isLoading} />
+      <Container className={classes.mainContainer}>
         <Typography className={classes.title} variant="h2">
           encontrar code smells
         </Typography>
@@ -137,14 +132,9 @@ export default function CodeFilesUpload() {
             </UploadButton>
           </>
         )}
-        <iframe
+        <VideoPlayer
           className={classes.video}
-          width="352"
-          height="198"
-          src="https://www.youtube.com/embed/RK1K2bCg4J8"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
+          source="https://www.youtube.com/embed/RK1K2bCg4J8"
         />
         <Typography className={classes.codeSmellQuestion} color="textSecondary">
           - O que é um code smell?
