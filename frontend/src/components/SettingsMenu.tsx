@@ -13,7 +13,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function SettingsMenu() {
+type Props = {
+  className?: string;
+};
+
+export default function SettingsMenu(props: Props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -26,7 +30,7 @@ export default function SettingsMenu() {
   };
 
   return (
-    <div>
+    <div className={props.className}>
       <IconButton
         aria-controls="simple-menu"
         aria-haspopup="true"

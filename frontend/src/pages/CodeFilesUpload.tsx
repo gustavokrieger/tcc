@@ -12,6 +12,7 @@ import {CodeAnalysisResultProps} from './CodeAnalysisResult';
 import ContentsOfFileUtility from '../ContentsOfFileUtility';
 import CodeSmellCasesList from '../CodeSmellCasesList';
 import {codeWithViolationGenerator} from '../code_with_violation/codeWithViolationGenerator';
+import SettingsMenu from '../components/SettingsMenu';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,6 +47,12 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: theme.spacing(5),
       textAlign: 'center',
       maxWidth: '45%',
+    },
+    settingsButton: {
+      position: 'absolute',
+      margin: theme.spacing(2),
+      marginRight: theme.spacing(3),
+      right: 0,
     },
   })
 );
@@ -112,38 +119,41 @@ export default function CodeFilesUpload() {
   }
 
   return (
-    <Container className={classes.root}>
-      <Typography className={classes.title} variant="h2">
-        encontrar code smells
-      </Typography>
-      <Typography className={classes.subtitle} color="textSecondary">
-        selecione abaixo a pasta com o código que deseja analisar!
-      </Typography>
-      {isLoading ? (
-        <CircularProgress className={classes.upload} />
-      ) : (
-        <>
-          <UploadButton className={classes.upload} onChange={handleChange}>
-            upload de código
-          </UploadButton>
-        </>
-      )}
-      <iframe
-        className={classes.video}
-        width="352"
-        height="198"
-        src="https://www.youtube.com/embed/RK1K2bCg4J8"
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      />
-      <Typography className={classes.codeSmellQuestion} color="textSecondary">
-        - O que é um code smell?
-      </Typography>
-      <Typography className={classes.codeSmellExplanation}>
-        Code smell é uma característica no código que pode indicar que ele é
-        difícil de entender, reutilizar ou dar manutenção.
-      </Typography>
-    </Container>
+    <>
+      <SettingsMenu className={classes.settingsButton} />
+      <Container className={classes.root}>
+        <Typography className={classes.title} variant="h2">
+          encontrar code smells
+        </Typography>
+        <Typography className={classes.subtitle} color="textSecondary">
+          Selecione abaixo a pasta com o código que deseja analisar!
+        </Typography>
+        {isLoading ? (
+          <CircularProgress className={classes.upload} />
+        ) : (
+          <>
+            <UploadButton className={classes.upload} onChange={handleChange}>
+              upload de código
+            </UploadButton>
+          </>
+        )}
+        <iframe
+          className={classes.video}
+          width="352"
+          height="198"
+          src="https://www.youtube.com/embed/RK1K2bCg4J8"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+        <Typography className={classes.codeSmellQuestion} color="textSecondary">
+          - O que é um code smell?
+        </Typography>
+        <Typography className={classes.codeSmellExplanation}>
+          Code smell é uma característica do código que pode indicar que ele é
+          difícil de entender, reutilizar ou alterar.
+        </Typography>
+      </Container>
+    </>
   );
 }
