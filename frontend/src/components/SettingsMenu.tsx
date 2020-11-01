@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type Props = {
   className?: string;
+  disabled?: boolean;
 };
 
 export default function SettingsMenu(props: Props) {
@@ -32,6 +33,7 @@ export default function SettingsMenu(props: Props) {
   return (
     <div className={props.className}>
       <IconButton
+        disabled={props.disabled}
         aria-controls="simple-menu"
         aria-haspopup="true"
         onClick={handleClick}

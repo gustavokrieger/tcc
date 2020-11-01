@@ -120,7 +120,7 @@ export default function CodeFilesUpload() {
 
   return (
     <>
-      <SettingsMenu className={classes.settingsButton} />
+      <SettingsMenu disabled={isLoading} className={classes.settingsButton} />
       <Container className={classes.root}>
         <Typography className={classes.title} variant="h2">
           encontrar code smells
