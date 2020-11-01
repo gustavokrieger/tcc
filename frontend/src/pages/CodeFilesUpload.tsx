@@ -14,6 +14,7 @@ import CodeSmellCasesList from '../CodeSmellCasesList';
 import {codeWithViolationGenerator} from '../code_with_violation/codeWithViolationGenerator';
 import SettingsMenu from '../components/SettingsMenu';
 import VideoPlayer from '../components/VideoPlayer';
+import CodeSmellInformation from '../components/CodeSmellInformation';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,23 +32,13 @@ const useStyles = makeStyles((theme: Theme) =>
     subtitle: {
       fontSize: theme.typography.fontSize + 4,
       margin: theme.spacing(2),
+      color: theme.palette.text.secondary,
     },
     upload: {
       margin: theme.spacing(2),
     },
     video: {
       marginTop: 'auto',
-    },
-    codeSmellQuestion: {
-      fontSize: theme.typography.fontSize + 4,
-      marginTop: theme.spacing(6),
-      fontStyle: 'italic',
-    },
-    codeSmellExplanation: {
-      fontSize: theme.typography.fontSize + 4,
-      marginBottom: theme.spacing(5),
-      textAlign: 'center',
-      maxWidth: '45%',
     },
   })
 );
@@ -120,7 +111,7 @@ export default function CodeFilesUpload() {
         <Typography className={classes.title} variant="h2">
           encontrar code smells
         </Typography>
-        <Typography className={classes.subtitle} color="textSecondary">
+        <Typography className={classes.subtitle}>
           Selecione abaixo a pasta com o código que deseja analisar!
         </Typography>
         {isLoading ? (
@@ -136,13 +127,7 @@ export default function CodeFilesUpload() {
           className={classes.video}
           source="https://www.youtube.com/embed/RK1K2bCg4J8"
         />
-        <Typography className={classes.codeSmellQuestion} color="textSecondary">
-          - O que é um code smell?
-        </Typography>
-        <Typography className={classes.codeSmellExplanation}>
-          Code smell é uma característica do código que pode indicar que ele é
-          difícil de entender, reutilizar ou alterar.
-        </Typography>
+        <CodeSmellInformation />
       </Container>
     </>
   );
