@@ -4,7 +4,7 @@ import {FontFamily} from './FontFamily';
 
 export default class StorageItemCreator {
   static createFontSize(): StorageItem<FontSize> {
-    return new StorageItem<FontSize>('fontSize', FontSize.NORMAL);
+    return new StorageItem<FontSize>('fontSize', FontSize.MEDIUM);
   }
 
   static createFontFamily(): StorageItem<FontFamily> {

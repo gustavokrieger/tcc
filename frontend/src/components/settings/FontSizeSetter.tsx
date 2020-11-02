@@ -47,9 +47,9 @@ export default function FontSizeSetter(props: Props) {
             label="Grande"
           />
           <FormControlLabel
-            value={FontSize.NORMAL}
+            value={FontSize.MEDIUM}
             control={<Radio />}
-            label="Normal"
+            label="Média (padrão)"
           />
           <FormControlLabel
             value={FontSize.SMALL}

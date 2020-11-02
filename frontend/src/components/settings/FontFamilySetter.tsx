@@ -44,7 +44,7 @@ export default function FontFamilySetter(props: Props) {
           <FormControlLabel
             value={FontFamily.ROBOTO}
             control={<Radio />}
-            label="Roboto"
+            label="Roboto (padrão)"
           />
           <FormControlLabel
             value={FontFamily.OPEN_SANS}

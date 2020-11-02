@@ -6,6 +6,8 @@ import FontSizeSetter from './FontSizeSetter';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import clsx from 'clsx';
 import FontFamilySetter from './FontFamilySetter';
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -15,8 +17,21 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(3),
       right: 0,
     },
-    menuItem: {
-      padding: theme.spacing(2),
+    menuItems: {
+      display: 'flex',
+      margin: theme.spacing(3),
+      marginRight: theme.spacing(1),
+    },
+    firstMenuItem: {
+      marginRight: theme.spacing(2.5),
+    },
+    menuButtons: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      marginTop: theme.spacing(1.5),
+      marginBottom: theme.spacing(0.5),
+      marginRight: theme.spacing(3),
+      marginLeft: theme.spacing(3),
     },
   })
 );
@@ -56,8 +71,18 @@ export default function SettingsMenu(props: Props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <FontSizeSetter className={classes.menuItem} />
-        <FontFamilySetter className={classes.menuItem} />
+        <div className={classes.menuItems}>
+          <FontSizeSetter className={classes.firstMenuItem} />
+          <FontFamilySetter />
+        </div>
+        <Divider />
+        {/*todo fazer com que façam algo*/}
+        <div className={classes.menuButtons}>
+          <Button variant="contained">cancelar</Button>
+          <Button variant="contained" color="primary">
+            aplicar
+          </Button>
+        </div>
       </Menu>
     </div>
   );
