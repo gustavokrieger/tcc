@@ -91,6 +91,7 @@ export default function ViolationCase(props: ViolationCaseProps) {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
+  const [opened, setOpened] = useState(false);
   const [compressedFileName, setCompressedFileName] = useState('');
   const [formattedDescription, setFormattedDescription] = useState(<></>);
 
@@ -147,6 +148,7 @@ export default function ViolationCase(props: ViolationCaseProps) {
 
   const handleClickOpen = () => {
     setOpen(true);
+    setOpened(true);
   };
 
   const handleClose = () => {
@@ -158,7 +160,7 @@ export default function ViolationCase(props: ViolationCaseProps) {
       <Button
         className={classes.button}
         variant="outlined"
-        color="primary"
+        color={opened ? 'default' : 'primary'}
         onClick={handleClickOpen}
       >
         {props.title}
