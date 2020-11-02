@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import {RouteComponentProps} from 'react-router-dom';
 import {Container} from '@material-ui/core';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
@@ -10,9 +10,15 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import SettingsMenu from '../components/SettingsMenu';
 import CodeSmellInformation from '../components/CodeSmellInformation';
+import UploadButton from '../components/UploadButton';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    uploadButton: {
+      position: 'absolute',
+      marginTop: theme.spacing(3.4),
+      marginLeft: theme.spacing(3),
+    },
     mainContainer: {
       display: 'flex',
       flexDirection: 'column',
@@ -20,9 +26,13 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       height: '100vh',
     },
+    title: {
+      margin: theme.spacing(3),
+    },
     tabsPaper: {
-      height: '68%',
+      height: '66%',
       minWidth: '29.8%',
+      margin: 'auto',
     },
     footer: {
       marginTop: 'auto',
@@ -69,6 +79,10 @@ export default function CodeAnalysisResult(
     setLoading(false);
   }, [codeSmellCasesList]);
 
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    //todo fazer
+  }
+
   if (loading) {
     return <></>;
   }
@@ -81,9 +95,14 @@ export default function CodeAnalysisResult(
   }
   return (
     <>
+      <UploadButton className={classes.uploadButton} onChange={handleChange}>
+        novo upload
+      </UploadButton>
       <SettingsMenu />
       <Container className={classes.mainContainer}>
-        <Typography variant="h2">Resultado da Análise</Typography>
+        <Typography className={classes.title} variant="h2">
+          Resultado da Análise
+        </Typography>
         <Paper variant="outlined" square className={classes.tabsPaper}>
           <VerticalTabs tabs={tabs} />
         </Paper>

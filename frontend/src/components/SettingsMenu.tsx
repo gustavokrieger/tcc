@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       position: 'absolute',
-      margin: theme.spacing(2),
+      marginTop: theme.spacing(2),
       marginRight: theme.spacing(3),
       right: 0,
     },

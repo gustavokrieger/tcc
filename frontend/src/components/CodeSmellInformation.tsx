@@ -12,10 +12,10 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: '45%',
       fontSize: theme.typography.fontSize + 4,
       marginBottom: theme.spacing(5),
+      fontStyle: 'italic',
     },
     question: {
       fontSize: 'inherit',
-      fontStyle: 'italic',
       color: theme.palette.text.secondary,
     },
     answer: {
