@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'space-between',
       marginTop: theme.spacing(1.5),
       marginBottom: theme.spacing(0.5),
-      marginRight: theme.spacing(3),
-      marginLeft: theme.spacing(3),
+      marginRight: theme.spacing(2.5),
+      marginLeft: theme.spacing(2.5),
     },
   })
 );

@@ -10,12 +10,11 @@ export default class CodeWithViolation {
   private readonly _relativePath: string;
 
   private constructor(
-    lineSeparatedCode: string[],
+    textSlicer: TextSlicer,
     violation: pmdOutput.Violation,
     relativePath: string
   ) {
-    // todo refatorar para ser por injeção
-    this.textSlicer = new TextSlicer(lineSeparatedCode);
+    this.textSlicer = textSlicer;
     this.violation = violation;
     this._relativePath = relativePath;
   }
@@ -28,7 +27,8 @@ export default class CodeWithViolation {
     const code = contentsOfFile.text;
     const multiplatformEndOfLine = /\r?\n|\r/;
     const lineSeparatedCode = code.split(multiplatformEndOfLine);
-    return new CodeWithViolation(lineSeparatedCode, violation, relativePath);
+    const textSlicer = new TextSlicer(lineSeparatedCode);
+    return new CodeWithViolation(textSlicer, violation, relativePath);
   }
 
   get relativePath(): string {
