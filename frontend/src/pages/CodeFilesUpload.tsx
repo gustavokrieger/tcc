@@ -37,8 +37,15 @@ const useStyles = makeStyles((theme: Theme) =>
     upload: {
       margin: theme.spacing(2),
     },
-    video: {
+    footer: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      width: '100%',
       marginTop: 'auto',
+    },
+    video: {
+      marginBottom: theme.spacing(6),
     },
   })
 );
@@ -123,11 +130,13 @@ export default function CodeFilesUpload() {
             </UploadButton>
           </>
         )}
-        <VideoPlayer
-          className={classes.video}
-          source="https://www.youtube.com/embed/RK1K2bCg4J8"
-        />
-        <CodeSmellInformation />
+        <div className={classes.footer}>
+          <VideoPlayer
+            className={classes.video}
+            source="https://www.youtube.com/embed/RK1K2bCg4J8"
+          />
+          <CodeSmellInformation />
+        </div>
       </Container>
     </>
   );

@@ -1,6 +1,7 @@
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -10,7 +11,6 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'column',
       maxWidth: '45%',
       fontSize: theme.typography.fontSize + 4,
-      marginTop: theme.spacing(6),
       marginBottom: theme.spacing(5),
     },
     question: {
@@ -24,11 +24,15 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function CodeSmellInformation() {
+type Props = {
+  className?: string;
+};
+
+export default function CodeSmellInformation(props: Props) {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div className={clsx(classes.root, props.className)}>
       <Typography className={classes.question}>
         - O que é um code smell?
       </Typography>
