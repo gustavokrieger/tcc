@@ -8,7 +8,7 @@ import ViolationCase, {
 } from '../components/violation_case/ViolationCase';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import SettingsMenu from '../components/SettingsMenu';
+import SettingsMenu from '../components/settings/SettingsMenu';
 import CodeSmellInformation from '../components/CodeSmellInformation';
 import UploadButton from '../components/UploadButton';
 

@@ -2,9 +2,10 @@ import React from 'react';
 import Menu from '@material-ui/core/Menu';
 import {IconButton} from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
-import FontSizeSetter from './font_size_setter/FontSizeSetter';
+import FontSizeSetter from './FontSizeSetter';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import clsx from 'clsx';
+import FontFamilySetter from './FontFamilySetter';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -14,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(3),
       right: 0,
     },
-    firstMenuItem: {
+    menuItem: {
       padding: theme.spacing(2),
     },
   })
@@ -55,9 +56,8 @@ export default function SettingsMenu(props: Props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <div className={classes.firstMenuItem}>
-          <FontSizeSetter />
-        </div>
+        <FontSizeSetter className={classes.menuItem} />
+        <FontFamilySetter className={classes.menuItem} />
       </Menu>
     </div>
   );

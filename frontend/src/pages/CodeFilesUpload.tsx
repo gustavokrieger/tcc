@@ -12,7 +12,7 @@ import {CodeAnalysisResultProps} from './CodeAnalysisResult';
 import ContentsOfFileUtility from '../ContentsOfFileUtility';
 import CodeSmellCasesList from '../CodeSmellCasesList';
 import {codeWithViolationGenerator} from '../code_with_violation/codeWithViolationGenerator';
-import SettingsMenu from '../components/SettingsMenu';
+import SettingsMenu from '../components/settings/SettingsMenu';
 import VideoPlayer from '../components/VideoPlayer';
 import CodeSmellInformation from '../components/CodeSmellInformation';
 
