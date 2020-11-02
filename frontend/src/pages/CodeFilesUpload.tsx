@@ -27,15 +27,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       textTransform: 'capitalize',
-      margin: theme.spacing(4),
+      marginTop: theme.spacing(4),
+      marginBottom: theme.spacing(6),
     },
     subtitle: {
       fontSize: theme.typography.fontSize + 4,
-      margin: theme.spacing(2),
+      marginBottom: theme.spacing(2),
       color: theme.palette.text.secondary,
-    },
-    upload: {
-      margin: theme.spacing(2),
     },
     footer: {
       display: 'flex',
@@ -119,16 +117,12 @@ export default function CodeFilesUpload() {
           encontrar code smells
         </Typography>
         <Typography className={classes.subtitle}>
-          Selecione abaixo a pasta com o código que deseja analisar!
+          Selecione a pasta com o código-fonte Java que deseja analisar!
         </Typography>
         {isLoading ? (
-          <CircularProgress className={classes.upload} />
+          <CircularProgress />
         ) : (
-          <>
-            <UploadButton className={classes.upload} onChange={handleChange}>
-              upload de código
-            </UploadButton>
-          </>
+          <UploadButton onChange={handleChange}>upload de código</UploadButton>
         )}
         <div className={classes.footer}>
           <VideoPlayer
