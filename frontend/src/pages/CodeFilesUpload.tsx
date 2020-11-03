@@ -1,5 +1,4 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
-import CodeAnalysisRequester from '../CodeAnalysisRequester';
 import {useHistory} from 'react-router-dom';
 import {Path} from './Path';
 import CircularProgress from '../components/CircularProgress';
@@ -8,13 +7,11 @@ import assert from 'assert';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import {CodeAnalysisResultProps} from './CodeAnalysisResult';
-import ContentsOfFileUtility from '../ContentsOfFileUtility';
-import CodeSmellCasesList from '../CodeSmellCasesList';
-import {codeWithViolationGenerator} from '../code_with_violation/codeWithViolationGenerator';
 import SettingsMenu from '../components/settings/SettingsMenu';
 import VideoPlayer from '../components/VideoPlayer';
 import CodeSmellInformation from '../components/CodeSmellInformation';
+import JavaFiles from '../JavaFiles';
+import CodeAnalysisResultUtility from '../CodeAnalysisResultUtility';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -57,56 +54,26 @@ export default function CodeFilesUpload() {
   const classes = useStyles();
   const history = useHistory();
 
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [javaFiles, setJavaFiles] = useState(JavaFiles.createEmpty);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (uploadedFiles.length <= 0) {
+    // todo mostrar componente caso aconteça
+    if (javaFiles.isEmpty()) {
       return;
     }
-
     setIsLoading(true);
-
-    async function getPropsForCodeAnalysisResult(): Promise<
-      CodeAnalysisResultProps
-    > {
-      const report = await requestReport();
-      const contentsOfFiles = await ContentsOfFileUtility.convertFiles(
-        uploadedFiles
-      );
-      const codeWithViolations = codeWithViolationGenerator(
-        report.files,
-        contentsOfFiles
-      );
-      const codeSmellCasesList = CodeSmellCasesList.fromIterable(
-        codeWithViolations
-      );
-      return {codeSmellCasesList: codeSmellCasesList.getAll()};
-    }
-
-    async function requestReport() {
-      const codeAnalysisRequester = new CodeAnalysisRequester();
-      return codeAnalysisRequester.run(uploadedFiles);
-    }
-
-    getPropsForCodeAnalysisResult().then(props =>
-      history.push(Path.CODE_ANALYSIS_RESULT, props)
+    CodeAnalysisResultUtility.convertFilesToProps(
+      javaFiles
+    ).then(nextPageProps =>
+      history.push(Path.CODE_ANALYSIS_RESULT, nextPageProps)
     );
-  }, [uploadedFiles, history]);
+  }, [javaFiles, history]);
 
-  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+  function handleUploadChange(event: ChangeEvent<HTMLInputElement>) {
     assert(event.target.files !== null);
-    const files = Array.from(event.target.files);
-    const javaFiles = files.filter(hasJavaExtension);
-    setUploadedFiles(javaFiles);
-  }
-
-  function hasJavaExtension(file: File) {
-    const fileNameParts = file.name.split('.');
-    if (fileNameParts.length === 0) {
-      return false;
-    }
-    return fileNameParts[fileNameParts.length - 1] === 'java';
+    const newJavaFiles = JavaFiles.fromListRemovingNonJava(event.target.files);
+    setJavaFiles(newJavaFiles);
   }
 
   return (
@@ -122,7 +89,9 @@ export default function CodeFilesUpload() {
         {isLoading ? (
           <CircularProgress />
         ) : (
-          <UploadButton onChange={handleChange}>upload de código</UploadButton>
+          <UploadButton onChange={handleUploadChange}>
+            upload de código
+          </UploadButton>
         )}
         <div className={classes.footer}>
           <VideoPlayer
