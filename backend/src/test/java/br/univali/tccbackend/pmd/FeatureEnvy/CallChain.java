@@ -2,18 +2,14 @@ package br.univali.tccbackend.pmd.FeatureEnvy;
 
 import br.univali.tccbackend.pmd.PmdTest;
 
-class TwoTypesOfViolation extends PmdTest {
+class CallChain extends PmdTest {
 
   @Override
   protected String getInputCode() {
     return "public class Foo {\n"
         + "\n"
-        + "    public void example(Bar b) {\n"
-        + "        C c = b.getC();\n"
-        + "        c.doIt();\n"
-        + "        b.getC().doIt();\n"
-        + "        D d = new D();\n"
-        + "        d.doSomethingElse();\n"
+        + "    public void example() {\n"
+        + "        getB().getC();\n"
         + "    }\n"
         + "}";
   }
@@ -26,19 +22,10 @@ class TwoTypesOfViolation extends PmdTest {
         + "\"files\":["
         + "{\"filename\":\"\","
         + "\"violations\":["
-        + "{\"beginline\":5,"
+        + "{\"beginline\":4,"
         + "\"begincolumn\":9,"
-        + "\"endline\":5,"
-        + "\"endcolumn\":16,"
-        + "\"description\":\"Potential violation of Law of Demeter (object not created locally)\","
-        + "\"rule\":\"LawOfDemeter\","
-        + "\"ruleset\":\"Design\","
-        + "\"priority\":3,"
-        + "\"externalInfoUrl\":\"" + PMD_RULES_URL + "#lawofdemeter\"},"
-        + "{\"beginline\":6,"
-        + "\"begincolumn\":9,"
-        + "\"endline\":6,"
-        + "\"endcolumn\":23,"
+        + "\"endline\":4,"
+        + "\"endcolumn\":21,"
         + "\"description\":\"Potential violation of Law of Demeter (method chain calls)\","
         + "\"rule\":\"LawOfDemeter\","
         + "\"ruleset\":\"Design\","
