@@ -18,24 +18,70 @@ export default class FeatureEnvy implements CodeSmell {
   }
 
   private getDescriptionFirstPart() {
-    const callParts = this.callTokenizer.getParts();
-
     const beginning =
       'Essa parte do método pode estar sofrendo de Inveja dos Dados, pois';
-    let end;
-    if (callParts.length === 2) {
-      end =
-        `o ${FeatureEnvy.formatByType(
-          callParts[0]
-        )} foi retornado por um outro método para poder fazer chamada ao ` +
-        `${FeatureEnvy.formatByType(
-          callParts[1]
-        )}, o que pode indicar que essa parte do código (ou até mesmo o método inteiro) deveria, idealmente, ` +
-        `estar na classe do ${FeatureEnvy.formatByType(callParts[0])}.`;
+    const ending = this.getDescriptionFirstPartEnding();
+    return `${beginning} ${ending}`;
+  }
+
+  private getDescriptionFirstPartEnding() {
+    let beginning;
+    let ending;
+
+    const tokens = this.callTokenizer.getParts();
+    const firstIsMethod = FeatureEnvy.isMethod(tokens[0]);
+    const firstToken = FeatureEnvy.formatByType(tokens[0]);
+
+    if (firstIsMethod) {
+      beginning = FeatureEnvy.getMethodFirstDescription(tokens);
+      ending = `estar na classe do objeto retornado pelo ${firstToken}.`;
     } else {
-      end = '';
+      beginning = FeatureEnvy.getObjectFirstDescription(tokens);
+      ending = `estar na classe do ${firstToken}.`;
     }
-    return `${beginning} ${end}`;
+
+    return (
+      `${beginning}, o que pode indicar que essa parte do código (ou até mesmo o método inteiro) ` +
+      `deveria, idealmente, ${ending}`
+    );
+  }
+
+  private static getMethodFirstDescription(tokens: string[]) {
+    const numberOfTokens = tokens.length;
+    const firstToken = FeatureEnvy.formatByType(tokens[0]);
+    const lastToken = FeatureEnvy.formatByType(tokens[numberOfTokens - 1]);
+
+    if (numberOfTokens === 2) {
+      return `o ${firstToken} retorna um objeto para poder fazer chamada ao ${lastToken}`;
+    } else if (numberOfTokens === 3) {
+      const secondToken = FeatureEnvy.formatByType(tokens[1]);
+      return `o ${firstToken} retorna um objeto que chama o ${secondToken} para poder chamar o ${lastToken}`;
+    } else if (numberOfTokens >= 3) {
+      return `o ${firstToken} retorna um objeto para fazer uma série de chamadas até poder chamar o ${lastToken}`;
+    } else {
+      throw new Error();
+    }
+  }
+
+  private static getObjectFirstDescription(tokens: string[]) {
+    const numberOfTokens = tokens.length;
+    const firstToken = FeatureEnvy.formatByType(tokens[0]);
+    const lastToken = FeatureEnvy.formatByType(tokens[numberOfTokens - 1]);
+
+    if (numberOfTokens === 2) {
+      return `o ${firstToken} foi retornado por um outro método para poder fazer chamada ao ${lastToken}`;
+    } else if (numberOfTokens === 3) {
+      const second = FeatureEnvy.formatByType(tokens[1]);
+      return `o ${firstToken} retorna um objeto que chama o ${second} para poder chamar o ${lastToken}`;
+    } else if (numberOfTokens >= 3) {
+      return `o ${firstToken} retorna um objeto para fazer uma série de chamadas até poder chamar o ${lastToken}`;
+    } else {
+      throw new Error();
+    }
+  }
+
+  private static isMethod(text: string) {
+    return text[text.length - 1] === ')';
   }
 
   private static formatByType(text: string) {
