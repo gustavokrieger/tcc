@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {makeStyles, Theme} from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export type Props = {
   className?: string;
-  tabs: Iterable<Tab>;
+  tabs: Tab[];
 };
 
 export type Tab = {
@@ -31,24 +31,28 @@ export default function VerticalTabs(props: Props) {
   const classes = useStyles();
 
   const [value, setValue] = useState(0);
+  const [tabsChildren, setTabsChildren] = useState<JSX.Element[]>([]);
+  const [tabPanel, setTabPanel] = useState<JSX.Element>(<></>);
 
-  const tabsChildren: JSX.Element[] = [];
-  const tabPanels: JSX.Element[] = [];
+  useEffect(() => {
+    const newTabsChildren: JSX.Element[] = [];
+    props.tabs.forEach((tab, index) => {
+      newTabsChildren.push(
+        <Tab key={index} label={tab.label} {...a11yProps(index)} />
+      );
+    });
+    setTabsChildren(newTabsChildren);
+  }, []);
 
-  let index = 0;
-  for (const tab of props.tabs) {
-    tabsChildren.push(
-      <Tab key={index} label={tab.label} {...a11yProps(index)} />
-    );
-
-    tabPanels.push(
-      <TabPanel key={index} value={value} index={index}>
+  useEffect(() => {
+    const tab = props.tabs[value];
+    const newTabPanel = (
+      <TabPanel value={value} index={value}>
         {tab.children}
       </TabPanel>
     );
-
-    index++;
-  }
+    setTabPanel(newTabPanel);
+  }, [value]);
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
@@ -66,7 +70,7 @@ export default function VerticalTabs(props: Props) {
       >
         {tabsChildren}
       </Tabs>
-      {tabPanels}
+      {tabPanel}
     </div>
   );
 }
