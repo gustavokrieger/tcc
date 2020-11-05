@@ -29,14 +29,14 @@ export default class FeatureEnvy implements CodeSmell {
     let ending;
 
     const tokens = this.callTokenizer.getParts();
-    const firstIsMethod = FeatureEnvy.isMethod(tokens[0]);
-    const firstToken = FeatureEnvy.formatByType(tokens[0]);
+    const firstIsMethod = FeatureEnvy.tokenIsMethod(tokens[0]);
+    const firstToken = FeatureEnvy.getTokenDescription(tokens[0]);
 
     if (firstIsMethod) {
-      beginning = FeatureEnvy.getMethodFirstDescription(tokens);
+      beginning = FeatureEnvy.getDescriptionWithMethodFirst(tokens);
       ending = `estar na classe do objeto retornado pelo ${firstToken}.`;
     } else {
-      beginning = FeatureEnvy.getObjectFirstDescription(tokens);
+      beginning = FeatureEnvy.getDescriptionWithObjectFirst(tokens);
       ending = `estar na classe do ${firstToken}.`;
     }
 
@@ -46,15 +46,17 @@ export default class FeatureEnvy implements CodeSmell {
     );
   }
 
-  private static getMethodFirstDescription(tokens: string[]) {
+  private static getDescriptionWithMethodFirst(tokens: string[]) {
     const numberOfTokens = tokens.length;
-    const firstToken = FeatureEnvy.formatByType(tokens[0]);
-    const lastToken = FeatureEnvy.formatByType(tokens[numberOfTokens - 1]);
+    const firstToken = FeatureEnvy.getTokenDescription(tokens[0]);
+    const lastToken = FeatureEnvy.getTokenDescription(
+      tokens[numberOfTokens - 1]
+    );
 
     if (numberOfTokens === 2) {
       return `o ${firstToken} retorna um objeto para poder fazer chamada ao ${lastToken}`;
     } else if (numberOfTokens === 3) {
-      const secondToken = FeatureEnvy.formatByType(tokens[1]);
+      const secondToken = FeatureEnvy.getTokenDescription(tokens[1]);
       return `o ${firstToken} retorna um objeto que chama o ${secondToken} para poder chamar o ${lastToken}`;
     } else if (numberOfTokens >= 3) {
       return `o ${firstToken} retorna um objeto para fazer uma série de chamadas até poder chamar o ${lastToken}`;
@@ -63,16 +65,21 @@ export default class FeatureEnvy implements CodeSmell {
     }
   }
 
-  private static getObjectFirstDescription(tokens: string[]) {
+  private static getDescriptionWithObjectFirst(tokens: string[]) {
     const numberOfTokens = tokens.length;
-    const firstToken = FeatureEnvy.formatByType(tokens[0]);
-    const lastToken = FeatureEnvy.formatByType(tokens[numberOfTokens - 1]);
+    const firstToken = FeatureEnvy.getTokenDescription(tokens[0]);
+    const lastToken = FeatureEnvy.getTokenDescription(
+      tokens[numberOfTokens - 1]
+    );
 
     if (numberOfTokens === 2) {
       return `o ${firstToken} foi retornado por um outro método para poder fazer chamada ao ${lastToken}`;
     } else if (numberOfTokens === 3) {
-      const second = FeatureEnvy.formatByType(tokens[1]);
-      return `o ${firstToken} retorna um objeto que chama o ${second} para poder chamar o ${lastToken}`;
+      const second = FeatureEnvy.getTokenDescription(tokens[1]);
+      return (
+        `o ${firstToken} foi retornado por um outro método para chamar o ${second}, para então poder chamar ` +
+        `o ${lastToken}`
+      );
     } else if (numberOfTokens >= 3) {
       return `o ${firstToken} retorna um objeto para fazer uma série de chamadas até poder chamar o ${lastToken}`;
     } else {
@@ -80,11 +87,11 @@ export default class FeatureEnvy implements CodeSmell {
     }
   }
 
-  private static isMethod(text: string) {
+  private static tokenIsMethod(text: string) {
     return text[text.length - 1] === ')';
   }
 
-  private static formatByType(text: string) {
+  private static getTokenDescription(text: string) {
     if (text[text.length - 1] === ')') {
       const methodName = text.slice(0, -2);
       return `método "${methodName}"`;
