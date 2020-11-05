@@ -25,10 +25,13 @@ export default class PmdReportViolationFilterer {
 
   private removeRepeatedByCoordinatesInFile(file: pmdTypes.File) {
     const discoveredCoordinatesList: Coordinates[] = [];
-    const violationsWithoutDuplicates: pmdTypes.Violation[] = [];
+    const filteredViolations: pmdTypes.Violation[] = [];
     for (const violation of file.violations) {
+      if (violation.rule !== this.typeToFilter) {
+        filteredViolations.push(violation);
+        continue;
+      }
       if (
-        violation.rule !== this.typeToFilter ||
         PmdReportViolationFilterer.violationHasOneOfTheCoordinates(
           violation,
           discoveredCoordinatesList
@@ -36,16 +39,14 @@ export default class PmdReportViolationFilterer {
       ) {
         continue;
       }
-      violationsWithoutDuplicates.push(violation);
-      const newLimit: Coordinates = {
-        beginline: violation.beginline,
-        begincolumn: violation.begincolumn,
-        endline: violation.endline,
-        endcolumn: violation.endcolumn,
-      };
-      discoveredCoordinatesList.push(newLimit);
+
+      filteredViolations.push(violation);
+      const violationCoordinates = PmdReportViolationFilterer.getCoordinatesFomViolation(
+        violation
+      );
+      discoveredCoordinatesList.push(violationCoordinates);
     }
-    file.violations = violationsWithoutDuplicates;
+    file.violations = filteredViolations;
   }
 
   private static violationHasOneOfTheCoordinates(
