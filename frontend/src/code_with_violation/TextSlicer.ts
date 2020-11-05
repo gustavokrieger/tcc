@@ -15,7 +15,7 @@ export default class TextSlicer {
     startColumn?: number,
     endColumn?: number
   ): string[] {
-    this.defineLimits(startLine, endLine, startColumn, endColumn);
+    this.defineCoordinates(startLine, endLine, startColumn, endColumn);
     const lines = this.lines.slice(this._startLine, this._endLine);
     if (lines.length === 1) {
       this.sliceSingleLine(lines);
@@ -26,7 +26,7 @@ export default class TextSlicer {
     return lines;
   }
 
-  private defineLimits(
+  private defineCoordinates(
     startLine?: number,
     endLine?: number,
     startColumn?: number,

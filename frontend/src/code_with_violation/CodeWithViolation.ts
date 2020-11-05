@@ -1,4 +1,4 @@
-import * as pmdOutput from '../pmdOutput';
+import * as pmdTypes from '../pmdTypes';
 import TextSlicer from './TextSlicer';
 import SelectorOfCodeSmellCreator from '../code_smells/SelectorOfCodeSmellCreator';
 import CodeSmellCreator from '../code_smells/CodeSmellCreator';
@@ -6,12 +6,12 @@ import {ContentsOfFile} from '../pages/CodeFilesUpload';
 
 export default class CodeWithViolation {
   private readonly textSlicer: TextSlicer;
-  private readonly violation: pmdOutput.Violation;
+  private readonly violation: pmdTypes.Violation;
   private readonly _relativePath: string;
 
   private constructor(
     textSlicer: TextSlicer,
-    violation: pmdOutput.Violation,
+    violation: pmdTypes.Violation,
     relativePath: string
   ) {
     this.textSlicer = textSlicer;
@@ -21,7 +21,7 @@ export default class CodeWithViolation {
 
   static fromContentsOfFile(
     contentsOfFile: ContentsOfFile,
-    violation: pmdOutput.Violation,
+    violation: pmdTypes.Violation,
     relativePath: string
   ): CodeWithViolation {
     const code = contentsOfFile.text;

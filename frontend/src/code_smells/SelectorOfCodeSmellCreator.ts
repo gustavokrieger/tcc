@@ -3,7 +3,7 @@ import DataClassCreator from './implementations/DataClassCreator';
 import LongMethodCreator from './implementations/LongMethodCreator';
 import LongParameterListCreator from './implementations/LongParameterListCreator';
 import CodeSmellCreator from './CodeSmellCreator';
-import * as pmdOutput from '../pmdOutput';
+import * as pmdTypes from '../pmdTypes';
 import LargeClassCreator from './implementations/LargeClassCreator';
 import FeatureEnvyCreator from './implementations/FeatureEnvyCreator';
 import SwitchStatementsCreator from './implementations/SwitchStatementsCreator';
@@ -21,7 +21,7 @@ export default class SelectorOfCodeSmellCreator {
   }
 
   static fromViolation(
-    violation: pmdOutput.Violation,
+    violation: pmdTypes.Violation,
     codeSectionWithSmell: string[]
   ): SelectorOfCodeSmellCreator {
     const pmdCodeSmellType = violation.rule as PmdCodeSmellType;

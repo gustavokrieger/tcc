@@ -1,5 +1,5 @@
 import assert from 'assert';
-import * as pmdOutput from './pmdOutput';
+import * as pmdTypes from './pmdTypes';
 import JavaFiles from './JavaFiles';
 
 export default class CodeAnalysisRequester {
@@ -9,7 +9,7 @@ export default class CodeAnalysisRequester {
     this.javaFiles = javaFiles;
   }
 
-  async sendAndGetReport(): Promise<pmdOutput.Report> {
+  async sendAndGetReport(): Promise<pmdTypes.Report> {
     const request = this.createRequest();
     const response = await CodeAnalysisRequester.sendRequest(request);
     return response.json();

@@ -1,10 +1,10 @@
-import * as pmdOutput from '../pmdOutput';
+import * as pmdTypes from '../pmdTypes';
 import CodeWithViolation from './CodeWithViolation';
 import {ContentsOfFile} from '../pages/CodeFilesUpload';
 
 // todo pode ser melhorado para ganhar desempenho
 export function* codeWithViolationGenerator(
-  files: pmdOutput.File[],
+  files: pmdTypes.File[],
   contentsOfFiles: Iterable<ContentsOfFile>
 ): Generator<CodeWithViolation> {
   for (const file of files) {
