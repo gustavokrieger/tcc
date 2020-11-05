@@ -4,6 +4,8 @@ import {codeWithViolationGenerator} from './code_with_violation/codeWithViolatio
 import CodeSmellCasesList from './CodeSmellCasesList';
 import CodeAnalysisRequester from './CodeAnalysisRequester';
 import JavaFiles from './JavaFiles';
+import PmdReportFilterer from './PmdReportFilterer';
+import {PmdCodeSmellType} from './code_smells/PmdCodeSmellType';
 
 export default class CodeAnalysisResultUtility {
   private constructor() {}
@@ -12,6 +14,11 @@ export default class CodeAnalysisResultUtility {
     javaFiles: JavaFiles
   ): Promise<CodeAnalysisResultProps> {
     const report = await this.requestReport(javaFiles);
+    const pmdReportFilterer = new PmdReportFilterer(
+      report,
+      PmdCodeSmellType.FEATURE_ENVY
+    );
+    pmdReportFilterer.removeRepeatedInFiles();
     const contentsOfFiles = await ContentsOfFileUtility.convertFiles(
       javaFiles.getAll()
     );
