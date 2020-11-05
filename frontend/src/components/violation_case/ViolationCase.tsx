@@ -23,8 +23,8 @@ const useStyles = makeStyles((theme: Theme) =>
       border: '1px solid rgba(63, 81, 181, 0.5)',
     },
     visitedButton: {
-      color: '#00001C',
-      border: '1px solid rgba(0, 0, 28, 0.5)',
+      color: 'rgba(52, 0, 52, 0.85)',
+      border: '1px solid rgba(52, 0, 52, 0.45)',
     },
     dialogTitle: {
       paddingBottom: 0,
