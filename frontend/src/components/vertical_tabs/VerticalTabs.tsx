@@ -30,7 +30,7 @@ export type Tab = {
 export default function VerticalTabs(props: Props) {
   const classes = useStyles();
 
-  const [value, setValue] = useState(0);
+  const [currentTab, setCurrentTab] = useState(0);
   const [tabsChildren, setTabsChildren] = useState<JSX.Element[]>([]);
   const [tabPanel, setTabPanel] = useState<JSX.Element>(<></>);
 
@@ -45,17 +45,17 @@ export default function VerticalTabs(props: Props) {
   }, []);
 
   useEffect(() => {
-    const tab = props.tabs[value];
+    const tab = props.tabs[currentTab];
     const newTabPanel = (
-      <TabPanel value={value} index={value}>
+      <TabPanel value={currentTab} index={currentTab}>
         {tab.children}
       </TabPanel>
     );
     setTabPanel(newTabPanel);
-  }, [value]);
+  }, [currentTab]);
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
+    setCurrentTab(newValue);
   };
 
   return (
@@ -64,7 +64,7 @@ export default function VerticalTabs(props: Props) {
         className={classes.tabs}
         orientation="vertical"
         variant="scrollable"
-        value={value}
+        value={currentTab}
         onChange={handleChange}
         aria-label="Vertical tabs"
       >
