@@ -13,11 +13,18 @@ import MouseOverPopover from './MouseOverPopover';
 import {createStyles, Theme} from '@material-ui/core/styles';
 import StorageItemCreator from '../../storage_items/StorageItemCreator';
 import {BooleanValue} from '../../storage_items/BooleanValue';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     button: {
       marginBottom: '1vh',
+      color: '#3f51b5',
+      border: '1px solid rgba(63, 81, 181, 0.5)',
+    },
+    visitedButton: {
+      color: '#00001C',
+      border: '1px solid rgba(0, 0, 28, 0.5)',
     },
     dialogTitle: {
       paddingBottom: 0,
@@ -168,11 +175,12 @@ export default function ViolationCase(props: ViolationCaseProps) {
   return (
     <div>
       <Button
-        className={classes.button}
+        className={clsx(classes.button, {
+          [classes.visitedButton]: visited.currentOrDefaultIs(
+            BooleanValue.TRUE
+          ),
+        })}
         variant="outlined"
-        color={
-          visited.currentOrDefaultIs(BooleanValue.TRUE) ? 'default' : 'primary'
-        }
         onClick={handleClickOpen}
       >
         {props.title}
