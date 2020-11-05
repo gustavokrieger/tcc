@@ -1,8 +1,11 @@
+// This generic type is a workaround for string enums.
 export default class StorageItem<T extends string> {
+  private readonly storage: Storage;
   private readonly key: string;
   private readonly defaultValue: T;
 
-  constructor(key: string, defaultValue: T) {
+  constructor(storage: Storage, key: string, defaultValue: T) {
+    this.storage = storage;
     this.key = key;
     this.defaultValue = defaultValue;
   }
@@ -16,10 +19,14 @@ export default class StorageItem<T extends string> {
   }
 
   private getCurrent(): string | null {
-    return localStorage.getItem(this.key);
+    return this.storage.getItem(this.key);
   }
 
   setValue(value: T) {
-    localStorage.setItem(this.key, value);
+    this.storage.setItem(this.key, value);
+  }
+
+  currentOrDefaultIs(value: T) {
+    return this.getCurrentOrDefault() === value;
   }
 }

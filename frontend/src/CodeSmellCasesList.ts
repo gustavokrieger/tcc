@@ -2,6 +2,7 @@ import {CodeSmellCases} from './pages/CodeAnalysisResult';
 import CodeWithViolation from './code_with_violation/CodeWithViolation';
 import {JavaCodeProps} from './components/violation_case/JavaCode';
 import {ViolationCaseProps} from './components/violation_case/ViolationCase';
+import {nanoid} from 'nanoid';
 
 export default class CodeSmellCasesList {
   private readonly array: CodeSmellCases[] = [];
@@ -50,6 +51,7 @@ export default class CodeSmellCasesList {
 
     const codeSmellCases: ViolationCaseProps = {
       javaCodeProps,
+      id: nanoid(),
       title: caseName,
       fileName: codeWithViolation.relativePath,
       description: codeSmell.getDescription(),

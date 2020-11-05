@@ -11,6 +11,8 @@ import Button from '@material-ui/core/Button';
 import {DialogTitle} from './DialogTitle';
 import MouseOverPopover from './MouseOverPopover';
 import {createStyles, Theme} from '@material-ui/core/styles';
+import StorageItemCreator from '../../storage_items/StorageItemCreator';
+import {BooleanValue} from '../../storage_items/BooleanValue';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -81,6 +83,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export type ViolationCaseProps = {
+  id: string;
   title: string;
   fileName: string;
   javaCodeProps: JavaCodeProps;
@@ -91,9 +94,17 @@ export default function ViolationCase(props: ViolationCaseProps) {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
-  const [opened, setOpened] = useState(false);
+  const [visited] = useState(
+    StorageItemCreator.createVisitedViolationCase(props.id)
+  );
   const [compressedFileName, setCompressedFileName] = useState('');
   const [formattedDescription, setFormattedDescription] = useState(<></>);
+
+  useEffect(() => {
+    if (open) {
+      visited.setValue(BooleanValue.TRUE);
+    }
+  }, [open, visited]);
 
   useEffect(() => {
     function getCompressedFileName() {
@@ -148,7 +159,6 @@ export default function ViolationCase(props: ViolationCaseProps) {
 
   const handleClickOpen = () => {
     setOpen(true);
-    setOpened(true);
   };
 
   const handleClose = () => {
@@ -160,7 +170,9 @@ export default function ViolationCase(props: ViolationCaseProps) {
       <Button
         className={classes.button}
         variant="outlined"
-        color={opened ? 'default' : 'primary'}
+        color={
+          visited.currentOrDefaultIs(BooleanValue.TRUE) ? 'default' : 'primary'
+        }
         onClick={handleClickOpen}
       >
         {props.title}

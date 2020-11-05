@@ -67,12 +67,12 @@ export default function CodeAnalysisResult(
   useEffect(() => {
     function createTabs(): Tab[] {
       const newTabs: Tab[] = [];
-      let caseKey = 0;
       for (const codeSmellCases of codeSmellCasesList) {
         const tabChildren: React.ReactNode[] = [];
         for (const codeSmellCase of codeSmellCases.cases) {
-          tabChildren.push(<ViolationCase key={caseKey} {...codeSmellCase} />);
-          caseKey++;
+          tabChildren.push(
+            <ViolationCase key={codeSmellCase.id} {...codeSmellCase} />
+          );
         }
         const newTab: Tab = {
           label: codeSmellCases.codeSmell,
