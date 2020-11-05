@@ -7,25 +7,15 @@ import SimpleCard from './SimpleCard';
 import Typography from '@material-ui/core/Typography';
 import JavaCode, {JavaCodeProps} from './JavaCode';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Button from '@material-ui/core/Button';
 import {DialogTitle} from './DialogTitle';
 import MouseOverPopover from './MouseOverPopover';
 import {createStyles, Theme} from '@material-ui/core/styles';
 import StorageItemCreator from '../../storage_items/StorageItemCreator';
 import {BooleanValue} from '../../storage_items/BooleanValue';
-import clsx from 'clsx';
+import OpenButton from './OpenButton';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    button: {
-      marginBottom: '1vh',
-      color: '#3f51b5',
-      border: '1px solid rgba(63, 81, 181, 0.5)',
-    },
-    visitedButton: {
-      color: 'rgba(52, 0, 52, 0.85)',
-      border: '1px solid rgba(52, 0, 52, 0.45)',
-    },
     dialogTitle: {
       paddingBottom: 0,
     },
@@ -174,17 +164,12 @@ export default function ViolationCase(props: ViolationCaseProps) {
 
   return (
     <div>
-      <Button
-        className={clsx(classes.button, {
-          [classes.visitedButton]: visited.currentOrDefaultIs(
-            BooleanValue.TRUE
-          ),
-        })}
-        variant="outlined"
+      <OpenButton
+        visited={visited.currentOrDefaultIs(BooleanValue.TRUE)}
         onClick={handleClickOpen}
       >
         {props.title}
-      </Button>
+      </OpenButton>
       <Dialog
         classes={{paper: classes.dialogPaper}}
         open={open}
