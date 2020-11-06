@@ -42,7 +42,7 @@ export default function VerticalTabs(props: Props) {
       );
     });
     setTabsChildren(newTabsChildren);
-  }, []);
+  }, [props.tabs]);
 
   useEffect(() => {
     const tab = props.tabs[currentTab];
@@ -52,7 +52,7 @@ export default function VerticalTabs(props: Props) {
       </TabPanel>
     );
     setTabPanel(newTabPanel);
-  }, [currentTab]);
+  }, [props.tabs, currentTab]);
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setCurrentTab(newValue);

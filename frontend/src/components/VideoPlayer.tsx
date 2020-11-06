@@ -8,6 +8,7 @@ type Props = {
 export default function VideoPlayer(props: Props) {
   return (
     <iframe
+      title="Video player"
       className={props.className}
       width="352"
       height="198"
