@@ -1,5 +1,6 @@
 import * as pmdTypes from './pmdTypes';
 import {PmdCodeSmellType} from './code_smells/PmdCodeSmellType';
+import _ from 'lodash';
 
 type Coordinates = {
   beginline: number;
@@ -66,7 +67,7 @@ export default class PmdReportViolationFilterer {
     coordinates: Coordinates
   ) {
     const violationCoordinates = this.getCoordinatesFomViolation(violation);
-    return violationCoordinates === coordinates;
+    return _.isEqual(violationCoordinates, coordinates);
   }
 
   private static getCoordinatesFomViolation(
