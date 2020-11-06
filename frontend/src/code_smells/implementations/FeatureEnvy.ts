@@ -75,13 +75,16 @@ export default class FeatureEnvy implements CodeSmell {
     if (numberOfTokens === 2) {
       return `o ${firstToken} foi retornado por um outro método para poder fazer chamada ao ${lastToken}`;
     } else if (numberOfTokens === 3) {
-      const second = FeatureEnvy.getTokenDescription(tokens[1]);
+      const secondToken = FeatureEnvy.getTokenDescription(tokens[1]);
       return (
-        `o ${firstToken} foi retornado por um outro método para chamar o ${second}, para então poder chamar ` +
-        `o ${lastToken}`
+        `o ${firstToken} foi retornado por um outro método para chamar o ${secondToken}, que por sua vez ` +
+        `possibilitou que, finalmente, fosse realizada a chamada ao ${lastToken}`
       );
     } else if (numberOfTokens >= 3) {
-      return `o ${firstToken} retorna um objeto para fazer uma série de chamadas até poder chamar o ${lastToken}`;
+      return (
+        `o ${firstToken} foi retornado por um outro método para realizar uma série de chamadas até poder chamar ` +
+        `o ${lastToken}`
+      );
     } else {
       throw new Error();
     }
@@ -105,9 +108,9 @@ export default class FeatureEnvy implements CodeSmell {
       'ser duplicado em outras partes do sistema. Essa duplicação vai, possivelmente, causar retrabalho todas ' +
       'as vezes que for necessário realizar alterações de funcionalidade nessa parte do código. ' +
       'A solução pode ser mover esta parte do código para um novo método na classe apropriada e chamar esse ' +
-      'método no lugar da parte extraída. Caso a classe que receberia o novo método seja de biblioteca de terceiro, ' +
-      'uma alternativa pode ser criar uma classe que possua a de terceiro como variável de classe ' +
-      'e fazer a tranferência do código para a nova classe.'
+      'método no lugar da parte extraída. Caso a classe que receberia o novo método seja de biblioteca de terceiro ' +
+      '(que é uma situação menos crítica), uma alternativa pode ser criar uma classe que possua uma ' +
+      'variável que seja do tipo da classe de terceiro e fazer a tranferência do código para essa nova classe.'
     );
   }
 }
