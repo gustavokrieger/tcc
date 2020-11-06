@@ -19,7 +19,7 @@ export default class FeatureEnvy implements CodeSmell {
 
   private getDescriptionFirstPart() {
     const beginning =
-      'Essa parte do método pode estar sofrendo de Inveja dos Dados, pois';
+      'Esta parte do método pode estar sofrendo de Inveja dos Dados, pois';
     const ending = this.getDescriptionFirstPartEnding();
     return `${beginning} ${ending}`;
   }
@@ -41,8 +41,8 @@ export default class FeatureEnvy implements CodeSmell {
     }
 
     return (
-      `${beginning}, o que pode indicar que essa parte do código (ou até mesmo o método inteiro) ` +
-      `deveria, idealmente, ${ending}`
+      `${beginning}. O fato de que a chamada desejado é feita dessa forma indireta pode indicar ` +
+      `que parte do método (ou até mesmo o método inteiro) deveria, idealmente, ${ending}`
     );
   }
 
