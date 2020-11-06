@@ -12,7 +12,6 @@ export default class FeatureEnvy implements CodeSmell {
     return 'inveja dos dados';
   }
 
-  // todo finalizar
   getDescription(): string {
     return `${this.getDescriptionFirstPart()} ${FeatureEnvy.getDescriptionSecondPart()}`;
   }

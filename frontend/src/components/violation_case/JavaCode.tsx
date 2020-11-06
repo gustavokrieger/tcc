@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       margin: 0,
-      width: '49.4vw',
+      minWidth: '49.4vw',
     },
     code: {
       fontSize: theme.typography.fontSize + 3,
