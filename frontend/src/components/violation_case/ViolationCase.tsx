@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     descriptionCard: {
       maxWidth: '28.7%',
-      maxHeight: '63.68vh',
+      maxHeight: '67.66vh',
       textAlign: 'center',
       overflowY: 'auto',
       marginLeft: theme.spacing(0.8),
