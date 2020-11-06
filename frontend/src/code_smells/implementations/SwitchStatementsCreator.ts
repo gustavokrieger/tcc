@@ -4,6 +4,10 @@ import FormattedSwitch from '../formatted_code/FormattedSwitch';
 import SwitchTokenizer from '../tokenizers/SwitchTokenizer';
 
 export default class SwitchStatementsCreator extends CodeSmellCreator {
+  protected makeFormattedJavaCode(): FormattedSwitch {
+    return new FormattedSwitch(this.codeSectionWithSmell);
+  }
+
   protected makeJavaCodeTokenizer(
     formattedSwitch: FormattedSwitch
   ): SwitchTokenizer {
