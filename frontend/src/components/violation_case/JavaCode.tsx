@@ -9,6 +9,7 @@ SyntaxHighlighter.registerLanguage('java', java);
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      margin: 0,
       width: '49.4vw',
     },
     code: {
