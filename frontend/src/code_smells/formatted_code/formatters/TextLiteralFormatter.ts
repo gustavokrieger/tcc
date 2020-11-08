@@ -9,15 +9,21 @@ export default class TextLiteralFormatter {
     return this._code;
   }
 
-  removeEscapedCharacters() {
+  removeContentOfAll() {
+    this.removeEscapedCharacters();
+    this.removeContentOfStringLiterals();
+    this.removeContentOfCharacterLiterals();
+  }
+
+  private removeEscapedCharacters() {
     this._code = this._code.replace(/\\./g, '');
   }
 
-  removeContentOfStringLiterals() {
+  private removeContentOfStringLiterals() {
     this._code = this._code.replace(/".*?"/g, '""');
   }
 
-  removeContentOfCharacterLiterals() {
+  private removeContentOfCharacterLiterals() {
     this._code = this._code.replace(/'.*?'/g, "''");
   }
 }

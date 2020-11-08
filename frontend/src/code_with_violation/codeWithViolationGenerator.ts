@@ -35,7 +35,6 @@ function getContentsOfFileWithRelativePath(
       return contentsOfFile;
     }
   }
-  // todo criar exception
   throw new Error();
 }
 

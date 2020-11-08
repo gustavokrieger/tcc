@@ -46,7 +46,6 @@ export default class SelectorOfCodeSmellCreator {
       case PmdCodeSmellType.SWITCH_STATEMENTS:
         return new SwitchStatementsCreator(this.codeSectionWithSmell);
       default:
-        // todo criar exception
         throw new Error();
     }
   }

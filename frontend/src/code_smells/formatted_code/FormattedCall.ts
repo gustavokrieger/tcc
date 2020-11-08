@@ -6,9 +6,7 @@ export default class FormattedCall extends FormattedJavaCode {
     let joinedCode = super.format(code);
     joinedCode = FormattedCall.removeWhitespaces(joinedCode);
     const textLiteralFormatter = new TextLiteralFormatter(joinedCode);
-    textLiteralFormatter.removeEscapedCharacters();
-    textLiteralFormatter.removeContentOfStringLiterals();
-    textLiteralFormatter.removeContentOfCharacterLiterals();
+    textLiteralFormatter.removeContentOfAll();
     joinedCode = textLiteralFormatter.code;
     return FormattedCall.removeArguments(joinedCode);
   }

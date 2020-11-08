@@ -14,6 +14,7 @@ export default class SwitchTokenizer extends JavaCodeTokenizer {
     return matches.length;
   }
 
+  // todo melhorar regex
   getNumberOfStatementsInCases() {
     const matches = this.code.match(/;/g);
     assert(matches !== null);
