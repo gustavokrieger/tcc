@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       textTransform: 'capitalize',
-      marginTop: theme.spacing(4),
+      marginTop: theme.spacing(5),
       marginBottom: theme.spacing(6),
     },
     subtitle: {

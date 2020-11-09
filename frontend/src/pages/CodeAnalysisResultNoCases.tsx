@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     text: {
       textAlign: 'center',
-      marginBottom: theme.spacing(7),
+      marginBottom: theme.spacing(6.5),
     },
   })
 );
