@@ -13,6 +13,7 @@ import CodeSmellInformation from '../components/CodeSmellInformation';
 import UploadButtonToResultPage from '../components/upload_button_to_result_page/UploadButtonToResultPage';
 import {CodeAnalysisResultNoCasesProps} from './CodeAnalysisResultNoCases';
 import {Path} from './Path';
+import StaticLoading from '../components/StaticLoading';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -81,7 +82,7 @@ export default function CodeAnalysisResult(
   }, [codeSmellCasesList]);
 
   if (isLoading) {
-    return <></>;
+    return <StaticLoading />;
   }
   if (tabs.length === 0) {
     const nextPageProps: CodeAnalysisResultNoCasesProps = {
