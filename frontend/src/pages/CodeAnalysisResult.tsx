@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {RouteComponentProps} from 'react-router-dom';
+import {RouteComponentProps, useHistory} from 'react-router-dom';
 import {Container} from '@material-ui/core';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import VerticalTabs, {Tab} from '../components/vertical_tabs/VerticalTabs';
@@ -11,6 +11,8 @@ import Typography from '@material-ui/core/Typography';
 import SettingsMenu from '../components/settings/SettingsMenu';
 import CodeSmellInformation from '../components/CodeSmellInformation';
 import UploadButtonToResultPage from '../components/upload_button_to_result_page/UploadButtonToResultPage';
+import {CodeAnalysisResultNoCasesProps} from './CodeAnalysisResultNoCases';
+import {Path} from './Path';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,6 +54,7 @@ export default function CodeAnalysisResult(
   props: RouteComponentProps<{}, any, CodeAnalysisResultProps | any> // "any" is a Workaround.
 ) {
   const classes = useStyles();
+  const history = useHistory();
   const codeSmellCasesList: CodeSmellCases[] =
     props.location.state.codeSmellCasesList;
 
@@ -84,12 +87,11 @@ export default function CodeAnalysisResult(
     return <></>;
   }
   if (tabs.length === 0) {
-    return (
-      // todo melhorar
-      <Typography variant="h1">
-        Parabéns, nenhum code smell foi encontrado!
-      </Typography>
-    );
+    const nextPageProps: CodeAnalysisResultNoCasesProps = {
+      text: 'Parabéns, nenhum code smell foi encontrado!',
+    };
+    history.replace(Path.CODE_ANALYSIS_RESULT_NO_CASES, nextPageProps);
+    return <></>;
   }
   return (
     <>
