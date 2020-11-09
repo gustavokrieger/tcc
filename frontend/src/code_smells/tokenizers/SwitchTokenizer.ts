@@ -7,15 +7,13 @@ export default class SwitchTokenizer extends JavaCodeTokenizer {
     super(formattedSwitch);
   }
 
-  // todo melhorar regex
-  getNumberOfCases(): number {
-    const matches = this.code.match(/case/g);
+  getNumberOfLabels(): number {
+    const matches = this.code.match(/(case .*?|default *):/g);
     assert(matches !== null);
     return matches.length;
   }
 
-  // todo melhorar regex
-  getNumberOfStatementsInCases() {
+  getNumberOfStatementsInLabels() {
     const matches = this.code.match(/;/g);
     assert(matches !== null);
     return matches.length;
