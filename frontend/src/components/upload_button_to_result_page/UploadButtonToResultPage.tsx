@@ -8,30 +8,45 @@ import {Path} from '../../pages/Path';
 import {CodeAnalysisResultNoCasesProps} from '../../pages/CodeAnalysisResultNoCases';
 
 type Props = {
-  beforeChange: () => void;
-  children: React.ReactNode;
   className?: string;
+  beforeChange?: () => void;
+  afterChange?: () => void;
+  children: React.ReactNode;
 };
 
 export default function UploadButtonToResultPage(props: Props) {
   const history = useHistory();
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    props.beforeChange();
+    beforeChange();
     assert(event.target.files !== null);
     const javaFiles = JavaFiles.fromListRemovingNonJava(event.target.files);
     if (javaFiles.isEmpty()) {
+      afterChange();
       const nextPageProps: CodeAnalysisResultNoCasesProps = {
         text: 'Nenhum arquivo Java encontrado...',
       };
       history.push(Path.CODE_ANALYSIS_RESULT_NO_CASES, nextPageProps);
       return;
     }
-    CodeAnalysisResultUtility.convertFilesToProps(
-      javaFiles
-    ).then(nextPageProps =>
-      history.push(Path.CODE_ANALYSIS_RESULT, nextPageProps)
+    CodeAnalysisResultUtility.convertFilesToProps(javaFiles).then(
+      nextPageProps => {
+        afterChange();
+        history.push(Path.CODE_ANALYSIS_RESULT, nextPageProps);
+      }
     );
+  }
+
+  function beforeChange() {
+    if (props.beforeChange !== undefined) {
+      props.beforeChange();
+    }
+  }
+
+  function afterChange() {
+    if (props.afterChange !== undefined) {
+      props.afterChange();
+    }
   }
 
   return (

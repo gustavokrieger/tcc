@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import CodeSmellInformation from '../components/CodeSmellInformation';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import {RouteComponentProps} from 'react-router-dom';
+import CircularProgress from '../components/CircularProgress';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,21 +43,24 @@ export default function CodeAnalysisResultNoCases(
 
   const [isLoading, setIsLoading] = useState(false);
 
-  if (isLoading) {
-    setIsLoading(false);
-    return <></>;
-  }
   return (
     <>
-      <SettingsMenu />
+      <SettingsMenu disabled={isLoading} />
       <Container className={classes.mainContainer}>
         <div className={classes.textAndButton}>
           <Typography className={classes.text} variant="h2">
             {text}
           </Typography>
-          <UploadButtonToResultPage beforeChange={() => setIsLoading(true)}>
-            novo upload
-          </UploadButtonToResultPage>
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
+            <UploadButtonToResultPage
+              beforeChange={() => setIsLoading(true)}
+              afterChange={() => setIsLoading(false)}
+            >
+              novo upload
+            </UploadButtonToResultPage>
+          )}
         </div>
         <CodeSmellInformation />
       </Container>
