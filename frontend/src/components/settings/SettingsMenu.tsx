@@ -89,7 +89,7 @@ export default function SettingsMenu(props: Props) {
   }
 
   function reloadPage() {
-    history.go(0);
+    window.location.reload();
   }
 
   function handleChangeFontSize(event: React.ChangeEvent<HTMLInputElement>) {
