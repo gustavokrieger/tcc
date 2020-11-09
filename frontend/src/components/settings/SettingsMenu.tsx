@@ -8,6 +8,10 @@ import clsx from 'clsx';
 import FontFamilySetter from './FontFamilySetter';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
+import {FontSize} from '../../storage_items/FontSize';
+import StorageItemCreator from '../../storage_items/StorageItemCreator';
+import {useHistory} from 'react-router-dom';
+import {FontFamily} from '../../storage_items/FontFamily';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,15 +47,54 @@ type Props = {
 
 export default function SettingsMenu(props: Props) {
   const classes = useStyles();
+  const history = useHistory();
+  const storageFontSize = StorageItemCreator.createFontSize();
+  const storageFontFamily = StorageItemCreator.createFontFamily();
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [fontSize, setFontSize] = React.useState<FontSize>(
+    storageFontSize.getCurrentOrDefault()
+  );
+  const [fontFamily, setFontFamily] = React.useState<FontFamily>(
+    storageFontFamily.getCurrentOrDefault()
+  );
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  function handleClickOpen(event: React.MouseEvent<HTMLButtonElement>) {
     setAnchorEl(event.currentTarget);
-  };
+  }
 
-  const handleClose = () => {
+  function handleClose() {
     setAnchorEl(null);
-  };
+  }
+
+  function handleClickApply() {
+    storageFontSize.setValue(fontSize);
+    storageFontFamily.setValue(fontFamily);
+    reloadPage();
+  }
+
+  function reloadPage() {
+    history.go(0);
+  }
+
+  function handleClickCancel() {
+    const newFontSize = storageFontSize.getCurrentOrDefault();
+    setFontSize(newFontSize);
+    const newFontFamily = storageFontFamily.getCurrentOrDefault();
+    setFontFamily(newFontFamily);
+    handleClose();
+  }
+
+  function handleChangeFontSize(event: React.ChangeEvent<HTMLInputElement>) {
+    const newFontSize = (event.target as HTMLInputElement).value as FontSize;
+    setFontSize(newFontSize);
+  }
+
+  function handleChangeFontFamily(event: React.ChangeEvent<HTMLInputElement>) {
+    const newFontFamily = (event.target as HTMLInputElement)
+      .value as FontFamily;
+    setFontFamily(newFontFamily);
+  }
 
   return (
     <div className={clsx(classes.root, props.className)}>
@@ -59,7 +102,7 @@ export default function SettingsMenu(props: Props) {
         disabled={props.disabled}
         aria-controls="simple-menu"
         aria-haspopup="true"
-        onClick={handleClick}
+        onClick={handleClickOpen}
       >
         <SettingsIcon fontSize="large" />
       </IconButton>
@@ -72,15 +115,27 @@ export default function SettingsMenu(props: Props) {
         onClose={handleClose}
       >
         <div className={classes.menuItems}>
-          <FontSizeSetter className={classes.firstMenuItem} />
-          <FontFamilySetter />
+          <FontSizeSetter
+            className={classes.firstMenuItem}
+            value={fontSize}
+            handleChange={handleChangeFontSize}
+          />
+          <FontFamilySetter
+            value={fontFamily}
+            handleChange={handleChangeFontFamily}
+          />
         </div>
         <Divider />
-        {/*todo fazer com que façam algo*/}
         <div className={classes.menuButtons}>
-          <Button variant="contained">cancelar</Button>
-          <Button variant="contained" color="primary">
-            aplicar
+          <Button variant="contained" onClick={handleClickCancel}>
+            cancelar
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleClickApply}
+          >
+            ok
           </Button>
         </div>
       </Menu>

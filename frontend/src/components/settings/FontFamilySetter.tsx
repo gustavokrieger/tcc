@@ -4,33 +4,15 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import {useHistory} from 'react-router-dom';
-import StorageItemCreator from '../../storage_items/StorageItemCreator';
 import {FontFamily} from '../../storage_items/FontFamily';
 
 type Props = {
   className?: string;
+  value: FontFamily;
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export default function FontFamilySetter(props: Props) {
-  const history = useHistory();
-  const storageFontFamily = StorageItemCreator.createFontFamily();
-
-  const [value, setValue] = React.useState<FontFamily>(
-    storageFontFamily.getCurrentOrDefault()
-  );
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = (event.target as HTMLInputElement).value as FontFamily;
-    setValue(newValue);
-    storageFontFamily.setValue(newValue);
-    reloadPage();
-  };
-
-  function reloadPage() {
-    history.go(0);
-  }
-
   return (
     <div className={props.className}>
       <FormControl component="fieldset">
@@ -38,8 +20,8 @@ export default function FontFamilySetter(props: Props) {
         <RadioGroup
           aria-label="font-size"
           name="font-size1"
-          value={value}
-          onChange={handleChange}
+          value={props.value}
+          onChange={props.handleChange}
         >
           <FormControlLabel
             value={FontFamily.ROBOTO}
