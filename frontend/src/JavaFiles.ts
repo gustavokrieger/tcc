@@ -5,10 +5,6 @@ export default class JavaFiles {
     this.array = files;
   }
 
-  static createEmpty(): JavaFiles {
-    return new JavaFiles([]);
-  }
-
   static fromListRemovingNonJava(fileList: FileList): JavaFiles {
     const files = Array.from(fileList);
     return this.createRemovingNonJava(files);

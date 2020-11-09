@@ -1,17 +1,12 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
-import {useHistory} from 'react-router-dom';
-import {Path} from './Path';
+import React, {useState} from 'react';
 import CircularProgress from '../components/CircularProgress';
-import UploadButton from '../components/UploadButton';
-import assert from 'assert';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import SettingsMenu from '../components/settings/SettingsMenu';
 import VideoPlayer from '../components/VideoPlayer';
 import CodeSmellInformation from '../components/CodeSmellInformation';
-import JavaFiles from '../JavaFiles';
-import CodeAnalysisResultUtility from '../CodeAnalysisResultUtility';
+import UploadButtonToResultPage from '../components/upload_button_to_result_page/UploadButtonToResultPage';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,29 +47,8 @@ export type ContentsOfFile = {
 
 export default function CodeFilesUpload() {
   const classes = useStyles();
-  const history = useHistory();
 
-  const [javaFiles, setJavaFiles] = useState(JavaFiles.createEmpty);
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    // todo mostrar componente caso aconteça
-    if (javaFiles.isEmpty()) {
-      return;
-    }
-    setIsLoading(true);
-    CodeAnalysisResultUtility.convertFilesToProps(
-      javaFiles
-    ).then(nextPageProps =>
-      history.push(Path.CODE_ANALYSIS_RESULT, nextPageProps)
-    );
-  }, [javaFiles, history]);
-
-  function handleUploadChange(event: ChangeEvent<HTMLInputElement>) {
-    assert(event.target.files !== null);
-    const newJavaFiles = JavaFiles.fromListRemovingNonJava(event.target.files);
-    setJavaFiles(newJavaFiles);
-  }
 
   return (
     <>
@@ -89,9 +63,9 @@ export default function CodeFilesUpload() {
         {isLoading ? (
           <CircularProgress />
         ) : (
-          <UploadButton onChange={handleUploadChange}>
+          <UploadButtonToResultPage beforeChange={() => setIsLoading(true)}>
             upload de código
-          </UploadButton>
+          </UploadButtonToResultPage>
         )}
         <div className={classes.footer}>
           <VideoPlayer

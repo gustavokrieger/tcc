@@ -1,5 +1,5 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
-import {RouteComponentProps, useHistory} from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {RouteComponentProps} from 'react-router-dom';
 import {Container} from '@material-ui/core';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import VerticalTabs, {Tab} from '../components/vertical_tabs/VerticalTabs';
@@ -10,11 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import SettingsMenu from '../components/settings/SettingsMenu';
 import CodeSmellInformation from '../components/CodeSmellInformation';
-import UploadButton from '../components/UploadButton';
-import CodeAnalysisResultUtility from '../CodeAnalysisResultUtility';
-import assert from 'assert';
-import {Path} from './Path';
-import JavaFiles from '../JavaFiles';
+import UploadButtonToResultPage from '../components/upload_button_to_result_page/UploadButtonToResultPage';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -56,13 +52,11 @@ export default function CodeAnalysisResult(
   props: RouteComponentProps<{}, any, CodeAnalysisResultProps | any> // "any" is a Workaround.
 ) {
   const classes = useStyles();
-  const history = useHistory();
   const codeSmellCasesList: CodeSmellCases[] =
     props.location.state.codeSmellCasesList;
 
   const [tabs, setTabs] = useState<Tab[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [javaFiles, setJavaFiles] = useState(JavaFiles.createEmpty());
 
   useEffect(() => {
     function createTabs(): Tab[] {
@@ -86,23 +80,6 @@ export default function CodeAnalysisResult(
     setIsLoading(false);
   }, [codeSmellCasesList]);
 
-  useEffect(() => {
-    // todo mostrar componente caso aconteça
-    if (javaFiles.isEmpty()) {
-      return;
-    }
-    setIsLoading(true);
-    CodeAnalysisResultUtility.convertFilesToProps(javaFiles).then(pageProps =>
-      history.replace(Path.CODE_ANALYSIS_RESULT, pageProps)
-    );
-  }, [javaFiles, history]);
-
-  function handleUploadChange(event: ChangeEvent<HTMLInputElement>) {
-    assert(event.target.files !== null);
-    const newJavaFiles = JavaFiles.fromListRemovingNonJava(event.target.files);
-    setJavaFiles(newJavaFiles);
-  }
-
   if (isLoading) {
     return <></>;
   }
@@ -116,12 +93,12 @@ export default function CodeAnalysisResult(
   }
   return (
     <>
-      <UploadButton
+      <UploadButtonToResultPage
         className={classes.uploadButton}
-        onChange={handleUploadChange}
+        beforeChange={() => setIsLoading(true)}
       >
         novo upload
-      </UploadButton>
+      </UploadButtonToResultPage>
       <SettingsMenu />
       <Container className={classes.mainContainer}>
         <Typography className={classes.title} variant="h2">
