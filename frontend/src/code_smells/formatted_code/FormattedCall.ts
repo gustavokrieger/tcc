@@ -15,7 +15,6 @@ export default class FormattedCall extends FormattedJavaCode {
     return text.replace(/\s+/g, '');
   }
 
-  // todo refatorar
   private static removeArguments(text: string): string {
     const toRemove: number[][] = [];
     let started = false;

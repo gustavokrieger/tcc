@@ -18,7 +18,6 @@ export default function UploadButtonToResultPage(props: Props) {
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     props.beforeChange();
-    // todo criar tela para isso
     assert(event.target.files !== null);
     const javaFiles = JavaFiles.fromListRemovingNonJava(event.target.files);
     if (javaFiles.isEmpty()) {
