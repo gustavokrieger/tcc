@@ -9,23 +9,23 @@ import {RouteComponentProps} from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    uploadButton: {
-      position: 'absolute',
-      marginTop: theme.spacing(3),
-      marginLeft: theme.spacing(3),
-    },
     mainContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      height: '100vh',
+    },
+    textAndButton: {
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      height: '100vh',
-    },
-    title: {
-      margin: theme.spacing(3),
-    },
-    footer: {
       marginTop: 'auto',
+      marginBottom: 'auto',
+    },
+    text: {
+      textAlign: 'center',
+      marginBottom: theme.spacing(7),
     },
   })
 );
@@ -47,18 +47,17 @@ export default function CodeAnalysisResultNoCases(
   }
   return (
     <>
-      <UploadButtonToResultPage
-        className={classes.uploadButton}
-        beforeChange={() => setIsLoading(true)}
-      >
-        novo upload
-      </UploadButtonToResultPage>
       <SettingsMenu />
       <Container className={classes.mainContainer}>
-        <Typography className={classes.title} variant="h2">
-          {text}
-        </Typography>
-        <CodeSmellInformation className={classes.footer} />
+        <div className={classes.textAndButton}>
+          <Typography className={classes.text} variant="h2">
+            {text}
+          </Typography>
+          <UploadButtonToResultPage beforeChange={() => setIsLoading(true)}>
+            novo upload
+          </UploadButtonToResultPage>
+        </div>
+        <CodeSmellInformation />
       </Container>
     </>
   );

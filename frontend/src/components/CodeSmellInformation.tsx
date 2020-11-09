@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'column',
       maxWidth: '45%',
       fontSize: theme.typography.fontSize + 4,
+      marginTop: 'auto',
       marginBottom: theme.spacing(5),
       fontStyle: 'italic',
     },

@@ -35,9 +35,6 @@ const useStyles = makeStyles((theme: Theme) =>
       height: '66%',
       margin: 'auto',
     },
-    footer: {
-      marginTop: 'auto',
-    },
   })
 );
 
@@ -109,7 +106,7 @@ export default function CodeAnalysisResult(
         <Paper variant="outlined" square className={classes.tabsPaper}>
           <VerticalTabs tabs={tabs} />
         </Paper>
-        <CodeSmellInformation className={classes.footer} />
+        <CodeSmellInformation />
       </Container>
     </>
   );
