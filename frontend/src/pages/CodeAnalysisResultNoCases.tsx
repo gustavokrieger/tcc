@@ -43,6 +43,7 @@ export default function CodeAnalysisResultNoCases(
   const [isLoading, setIsLoading] = useState(false);
 
   if (isLoading) {
+    setIsLoading(false);
     return <></>;
   }
   return (
