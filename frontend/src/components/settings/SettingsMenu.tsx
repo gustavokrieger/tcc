@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(3),
       right: 0,
     },
+    menuIcon: {
+      fontSize: '2.1875rem',
+    },
     menuItems: {
       display: 'flex',
       margin: theme.spacing(3),
@@ -63,7 +66,19 @@ export default function SettingsMenu(props: Props) {
     setAnchorEl(event.currentTarget);
   }
 
-  function handleClose() {
+  function handleCancel() {
+    reset();
+    close();
+  }
+
+  function reset() {
+    const newFontSize = storageFontSize.getCurrentOrDefault();
+    setFontSize(newFontSize);
+    const newFontFamily = storageFontFamily.getCurrentOrDefault();
+    setFontFamily(newFontFamily);
+  }
+
+  function close() {
     setAnchorEl(null);
   }
 
@@ -75,14 +90,6 @@ export default function SettingsMenu(props: Props) {
 
   function reloadPage() {
     history.go(0);
-  }
-
-  function handleClickCancel() {
-    const newFontSize = storageFontSize.getCurrentOrDefault();
-    setFontSize(newFontSize);
-    const newFontFamily = storageFontFamily.getCurrentOrDefault();
-    setFontFamily(newFontFamily);
-    handleClose();
   }
 
   function handleChangeFontSize(event: React.ChangeEvent<HTMLInputElement>) {
@@ -104,7 +111,7 @@ export default function SettingsMenu(props: Props) {
         aria-haspopup="true"
         onClick={handleClickOpen}
       >
-        <SettingsIcon fontSize="large" />
+        <SettingsIcon className={classes.menuIcon} />
       </IconButton>
       <Menu
         variant="menu"
@@ -112,7 +119,7 @@ export default function SettingsMenu(props: Props) {
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
-        onClose={handleClose}
+        onClose={handleCancel}
       >
         <div className={classes.menuItems}>
           <FontSizeSetter
@@ -127,7 +134,7 @@ export default function SettingsMenu(props: Props) {
         </div>
         <Divider />
         <div className={classes.menuButtons}>
-          <Button variant="contained" onClick={handleClickCancel}>
+          <Button variant="contained" onClick={handleCancel}>
             cancelar
           </Button>
           <Button
