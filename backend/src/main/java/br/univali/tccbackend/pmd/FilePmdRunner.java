@@ -20,7 +20,6 @@ public class FilePmdRunner implements PmdRunner {
   }
 
   public PmdAnalysisResult run() throws IOException {
-    // m todo trocar essa parte por decorator pattern ou AOP (olhar anotação)
     Path pmdResultFile = Files.createTempFile("pmd-report", "");
     try {
       return runPmd(pmdResultFile);
