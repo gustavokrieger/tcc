@@ -24,9 +24,9 @@ export default class LongParameterList implements CodeSmell {
       'O problema desse code smell, é que um número alto de parâmetros tem alta probabilidade de sofrer alterações com o avanço do ' +
       'desenvolvimento, forçando alterações em todas as partes do sistema que utilizam o método que teve seus parâmetros ' +
       'alterados. A solução pode ser fazer com que o resgate das variáveis seja feito dentro do método, ao invés de ' +
-      'ser feito pela passagem de parâmetros. Isso pode ser realizado substituindo múltiplos parâmetros por um ' +
+      'ser feito pela passagem de argumentos. Isso pode ser realizado substituindo alguns parâmetros do método por um ' +
       'conjunto menor que consiga resgatar os parâmetros originais através de chamadas de métodos, e realizar as ' +
-      'chamadas dentro do método que teve seus parâmetros alterados.'
+      'chamadas dentro do método que sofreu a alteração de parâmetros.'
     );
   }
 }
