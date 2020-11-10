@@ -18,8 +18,10 @@ export default class DataClass implements CodeSmell {
       `A classe "${className}" é uma Classe de Dados, pois ela expõe suas variáveis de classe (por serem "public" ou ` +
       'por possuírem métodos de "get" e "set") e não possui métodos com funcionalidade complexa. ' +
       'O problema desse tipo de classe, é que geralmente a responsabilidade de manipular as suas variáveis fica ' +
-      'distribuída em métodos outras classes, dificultando a reutilização desse código. ' +
-      `A solução pode ser transferir os métodos que manipulam as variáveis de classe para a classe "${className}".`
+      'distribuída em métodos de outras classes, o que geralmente torna a reutilização desses métodos mais difícil ' +
+      'do que se estivessem reunidos em uma classe só.' +
+      `A solução pode ser transferir métodos de outras classes que manipulem as variáveis de classe da "${className}" ` +
+      'para dentro dela.'
     );
   }
 }

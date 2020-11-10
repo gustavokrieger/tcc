@@ -33,15 +33,16 @@ export default class FeatureEnvy implements CodeSmell {
 
     if (firstIsMethod) {
       beginning = FeatureEnvy.getDescriptionWithMethodFirst(tokens);
-      ending = `estar na classe do objeto retornado pelo ${firstToken}.`;
+      ending = `estar na classe do objeto retornado pelo ${firstToken}`;
     } else {
       beginning = FeatureEnvy.getDescriptionWithObjectFirst(tokens);
-      ending = `estar na classe do ${firstToken}.`;
+      ending = `estar na classe do ${firstToken}`;
     }
 
     return (
-      `${beginning}. O fato de que a chamada desejado é feita dessa forma indireta pode indicar ` +
-      `que parte do método (ou até mesmo o método inteiro) deveria, idealmente, ${ending}`
+      `${beginning}. O fato de que a chamada desejada é feita dessa forma indireta pode indicar ` +
+      `que parte do método (ou até mesmo o método inteiro) deveria, idealmente, ${ending} ` +
+      '(ou em alguma outra classe que evite uma situação parecida).'
     );
   }
 
@@ -53,10 +54,10 @@ export default class FeatureEnvy implements CodeSmell {
     );
 
     if (numberOfTokens === 2) {
-      return `o ${firstToken} retorna um objeto para poder fazer chamada ao ${lastToken}`;
+      return `o ${firstToken} tem que retornar um objeto para poder fazer chamada ao ${lastToken}`;
     } else if (numberOfTokens === 3) {
       const secondToken = FeatureEnvy.getTokenDescription(tokens[1]);
-      return `o ${firstToken} retorna um objeto que chama o ${secondToken} para poder chamar o ${lastToken}`;
+      return `o ${firstToken} retorna um objeto que chama o ${secondToken} para então poder chamar o ${lastToken}`;
     } else if (numberOfTokens >= 3) {
       return `o ${firstToken} retorna um objeto para fazer uma série de chamadas até poder chamar o ${lastToken}`;
     } else {
@@ -76,12 +77,12 @@ export default class FeatureEnvy implements CodeSmell {
     } else if (numberOfTokens === 3) {
       const secondToken = FeatureEnvy.getTokenDescription(tokens[1]);
       return (
-        `o ${firstToken} foi retornado por um outro método para chamar o ${secondToken}, que por sua vez ` +
-        `possibilitou que, finalmente, fosse realizada a chamada ao ${lastToken}`
+        `o ${firstToken} tem que chamar o ${secondToken} para poder ` +
+        `chamar o ${lastToken}`
       );
     } else if (numberOfTokens >= 3) {
       return (
-        `o ${firstToken} foi retornado por um outro método para realizar uma série de chamadas até poder chamar ` +
+        `o ${firstToken} tem que realizar uma série de chamadas até poder chamar ` +
         `o ${lastToken}`
       );
     } else {
@@ -109,7 +110,7 @@ export default class FeatureEnvy implements CodeSmell {
       'A solução pode ser mover esta parte do código para um novo método na classe apropriada e chamar esse ' +
       'método no lugar da parte extraída. Caso a classe que receberia o novo método seja de biblioteca de terceiro ' +
       '(que é uma situação menos crítica), uma alternativa pode ser criar uma classe que possua uma ' +
-      'variável que seja do tipo da classe de terceiro e fazer a tranferência do código para essa nova classe.'
+      'variável que seja do tipo da classe de terceiro e fazer a transferência do código para essa nova classe.'
     );
   }
 }
