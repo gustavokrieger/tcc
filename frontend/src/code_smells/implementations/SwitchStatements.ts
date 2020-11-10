@@ -24,7 +24,7 @@ export default class SwitchStatements implements CodeSmell {
       'um número alto de declarações por rótulos. Essa densidade pode indicar que outra estrutura seria mais adequada no seu lugar. ' +
       'O problema de utilizar comandos "switch", principalmente quando são muito densos, é que eles tendem a causar duplicação. É comum que algumas ' +
       'declarações do "switch" se repitam em outra partes do sistema, ou até mesmo que o comando inteiro esteja ' +
-      'duplicado. Essa situação vai, possivelmente, causar retrabalho todas as vezes que for necessário realizar ' +
+      'duplicado. Essas situações vão, possivelmente, causar retrabalho todas as vezes que for necessário realizar ' +
       'alterações de funcionalidade nessas partes do código. ' +
       'A solução pode ser substituir o comando "switch" por uma estrutura que utilize polimorfismo. Por exemplo, ' +
       'criar uma subclasse (da classe que possui o "switch") para cada rótulo, criar um método abstrato na classe com ' +
