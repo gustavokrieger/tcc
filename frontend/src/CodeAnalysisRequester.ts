@@ -16,6 +16,7 @@ export default class CodeAnalysisRequester {
   }
 
   private createRequest(): Request {
+    // todo passar para variavel externa
     const input = 'http://localhost:8080/tcc_backend_war_exploded/code-files';
     const formData = this.createFormDataWithFiles();
     const init = {
