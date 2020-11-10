@@ -1,0 +1,22 @@
+<!--Place this file in:-->
+<!--[tomcat]/conf/[engine-name]/[hostname]/[context].xml-->
+
+<!--[tomcat] is the tomcat base folder-->
+<!--[engine-name] is "Catalina" by default-->
+<!--[hostname] is localhost by default-->
+<!--[context] is the name of the .war file-->
+
+<!--In the code, the values are accessed with:-->
+<!--Context context = new InitialContext();-->
+<!--Context envContext = (Context) context.lookup("java:/comp/env");-->
+<!--String value = ([variable-type]) envContext.lookup("[variable-name]");-->
+
+<!--Fill the values:-->
+<Context>
+  <Environment name="pmd-ruleset-path"
+    value=""
+    type="java.lang.String"/>
+  <Environment name="front-end-url"
+    value=""
+    type="java.lang.String"/>
+</Context>
