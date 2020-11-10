@@ -70,7 +70,7 @@ export default function CodeFilesUpload() {
         <div className={classes.footer}>
           <VideoPlayer
             className={classes.video}
-            source="https://www.youtube.com/embed/RK1K2bCg4J8"
+            source="https://www.youtube-nocookie.com/embed/HVfRDqz-yoQ"
           />
           <CodeSmellInformation />
         </div>
