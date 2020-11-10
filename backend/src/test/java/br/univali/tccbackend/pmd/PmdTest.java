@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.io.IOException;
+import javax.naming.NamingException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ public abstract class PmdTest {
       "https://pmd.github.io/pmd-" + PMD_VERSION + "/pmd_rules_java_design.html";
 
   @Test
-  void testCompleteExecutionTemplateMethod() throws IOException {
+  void testCompleteExecutionTemplateMethod() throws IOException, NamingException {
     String code = getInputCode();
     PmdAnalysisResult pmdAnalysisResult = getPmdAnalysisResult(code);
     String expectedResult = getExpectedResult();
@@ -23,7 +24,7 @@ public abstract class PmdTest {
 
   protected abstract String getInputCode();
 
-  private PmdAnalysisResult getPmdAnalysisResult(String code) throws IOException {
+  private PmdAnalysisResult getPmdAnalysisResult(String code) throws IOException, NamingException {
     PmdRunner pmdRunner = new TextPmdRunner(code);
     PmdAnalysisResult pmdAnalysisResult = pmdRunner.run();
     removeDataThatVaries(pmdAnalysisResult);

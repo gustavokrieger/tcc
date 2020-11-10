@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import javax.naming.NamingException;
 
 public class FilePmdRunner implements PmdRunner {
 
@@ -19,7 +20,7 @@ public class FilePmdRunner implements PmdRunner {
     this.fileOrDirectoryToAnalyze = fileOrDirectoryToAnalyze;
   }
 
-  public PmdAnalysisResult run() throws IOException {
+  public PmdAnalysisResult run() throws IOException, NamingException {
     Path pmdResultFile = Files.createTempFile("pmd-report", "");
     try {
       return runPmd(pmdResultFile);
@@ -28,12 +29,13 @@ public class FilePmdRunner implements PmdRunner {
     }
   }
 
-  private PmdAnalysisResult runPmd(Path fileToWriteTheResultInto) throws IOException {
+  private PmdAnalysisResult runPmd(Path fileToWriteTheResultInto)
+      throws IOException, NamingException {
     getPmdResult(fileToWriteTheResultInto);
     return convertPmdResult(fileToWriteTheResultInto);
   }
 
-  private void getPmdResult(Path fileToWriteTheResultInto) {
+  private void getPmdResult(Path fileToWriteTheResultInto) throws NamingException {
     Pmd pmd = new Pmd();
     pmd.configure(this.fileOrDirectoryToAnalyze, fileToWriteTheResultInto.toString());
     pmd.analyze();

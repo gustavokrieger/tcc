@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import javax.naming.NamingException;
 
 class TextPmdRunner implements PmdRunner {
 
@@ -13,7 +14,7 @@ class TextPmdRunner implements PmdRunner {
     this.code = code;
   }
 
-  public PmdAnalysisResult run() throws IOException {
+  public PmdAnalysisResult run() throws IOException, NamingException {
     Path codeFile = createTemporaryFileWithCode();
     return runPmdAndDeleteFile(codeFile);
   }
@@ -35,7 +36,8 @@ class TextPmdRunner implements PmdRunner {
     }
   }
 
-  private static PmdAnalysisResult runPmdAndDeleteFile(Path codeFile) throws IOException {
+  private static PmdAnalysisResult runPmdAndDeleteFile(Path codeFile)
+      throws IOException, NamingException {
     try {
       return runPmd(codeFile);
     } finally {
@@ -43,7 +45,7 @@ class TextPmdRunner implements PmdRunner {
     }
   }
 
-  private static PmdAnalysisResult runPmd(Path file) throws IOException {
+  private static PmdAnalysisResult runPmd(Path file) throws IOException, NamingException {
     PmdRunner pmdRunner = new FilePmdRunner(file);
     return pmdRunner.run();
   }

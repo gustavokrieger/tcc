@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import javax.naming.NamingException;
 import javax.servlet.http.Part;
 
 public class CodeFilesService {
@@ -17,7 +18,7 @@ public class CodeFilesService {
     this.requestParts = requestParts;
   }
 
-  public PmdAnalysisResult runPmdAnalysis() throws IOException {
+  public PmdAnalysisResult runPmdAnalysis() throws IOException, NamingException {
     String directoryId = "CyXWc8mDSV";
     Path directoryToHoldCodeFiles = Files.createTempDirectory(directoryId);
     try {
@@ -48,7 +49,8 @@ public class CodeFilesService {
     return root.resolve(path);
   }
 
-  private static PmdAnalysisResult runPmdAnalysisOnDirectory(Path directory) throws IOException {
+  private static PmdAnalysisResult runPmdAnalysisOnDirectory(Path directory)
+      throws IOException, NamingException {
     PmdRunner pmdRunner = new FilePmdRunner(directory);
     return pmdRunner.run();
   }
