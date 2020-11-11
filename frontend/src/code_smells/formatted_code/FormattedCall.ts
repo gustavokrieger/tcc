@@ -38,7 +38,8 @@ export default class FormattedCall extends FormattedJavaCode {
       }
     }
 
-    for (const [start, end] of toRemove) {
+    for (let i = toRemove.length - 1; i >= 0; i--) {
+      const [start, end] = toRemove[i];
       text = text.substr(0, start + 1) + text.substr(end);
     }
     return text;

@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: theme.spacing(6),
     },
     subtitle: {
+      textAlign: 'center',
       fontSize: theme.typography.fontSize + 4,
       marginBottom: theme.spacing(2.5),
       color: theme.palette.text.secondary,
