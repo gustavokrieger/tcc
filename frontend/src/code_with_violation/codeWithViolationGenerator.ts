@@ -8,7 +8,7 @@ export function* codeWithViolationGenerator(
 ): Generator<CodeWithViolation> {
   for (const file of files) {
     let fileRelativePath = getFileRelativePath(file.filename);
-    fileRelativePath = fileRelativePath.replaceAll('\\', '/');
+    fileRelativePath = getPathWithUnixDirectorySeparator(fileRelativePath);
 
     const contentsOfFile = getContentsOfFileWithRelativePath(
       contentsOfFiles,
@@ -25,6 +25,21 @@ export function* codeWithViolationGenerator(
   }
 }
 
+function getFileRelativePath(filename: string): string {
+  const pathWithTemporaryDirectory = getPathWithTemporaryDirectory(filename);
+  return removeFirstDirectory(pathWithTemporaryDirectory);
+}
+
+function getPathWithUnixDirectorySeparator(path: string): string {
+  // todo passar para variavel externa
+  const directorySeparatorInBackend = '/';
+  const unixDirectorySeparator = '/';
+  if (directorySeparatorInBackend === unixDirectorySeparator) {
+    return path;
+  }
+  return path.replaceAll(directorySeparatorInBackend, unixDirectorySeparator);
+}
+
 function getContentsOfFileWithRelativePath(
   contentsOfFiles: Iterable<ContentsOfFile>,
   relativePath: string
@@ -37,11 +52,6 @@ function getContentsOfFileWithRelativePath(
   throw new Error();
 }
 
-function getFileRelativePath(filename: string): string {
-  const pathWithTemporaryDirectory = getPathWithTemporaryDirectory(filename);
-  return removeFirstDirectory(pathWithTemporaryDirectory);
-}
-
 function getPathWithTemporaryDirectory(filename: string): string {
   const directoryId = 'CyXWc8mDSV';
   const index = filename.indexOf(directoryId);
@@ -49,6 +59,8 @@ function getPathWithTemporaryDirectory(filename: string): string {
 }
 
 function removeFirstDirectory(pathWithTemporaryDirectory: string): string {
-  const index = pathWithTemporaryDirectory.indexOf('\\');
+  // todo passar para variavel externa
+  const directorySeparatorInBackend = '/';
+  const index = pathWithTemporaryDirectory.indexOf(directorySeparatorInBackend);
   return pathWithTemporaryDirectory.substring(index + 1);
 }

@@ -6,4 +6,4 @@ Java `14.0.1`
 
 ## frontend
 
-Node.js `12.13.1`
+Node.js `12.18.3`
