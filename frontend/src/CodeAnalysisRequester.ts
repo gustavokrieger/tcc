@@ -1,6 +1,7 @@
 import assert from 'assert';
 import * as pmdTypes from './pmdTypes';
 import JavaFiles from './JavaFiles';
+import EnvironmentVariablesUtility from './EnvironmentVariablesUtility';
 
 export default class CodeAnalysisRequester {
   private readonly javaFiles: JavaFiles;
@@ -16,8 +17,7 @@ export default class CodeAnalysisRequester {
   }
 
   private createRequest(): Request {
-    // todo passar para variavel externa
-    const input = 'http://35.199.81.215:8080/tcc-backend/code-files';
+    const input = EnvironmentVariablesUtility.backEndUrl;
     const formData = this.createFormDataWithFiles();
     const init = {
       method: 'POST',

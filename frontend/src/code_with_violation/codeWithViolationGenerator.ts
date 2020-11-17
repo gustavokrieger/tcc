@@ -1,6 +1,7 @@
 import * as pmdTypes from '../pmdTypes';
 import CodeWithViolation from './CodeWithViolation';
 import {ContentsOfFile} from '../pages/CodeFilesUpload';
+import EnvironmentVariablesUtility from '../EnvironmentVariablesUtility';
 
 export function* codeWithViolationGenerator(
   files: pmdTypes.File[],
@@ -31,13 +32,13 @@ function getFileRelativePath(filename: string): string {
 }
 
 function getPathWithUnixDirectorySeparator(path: string): string {
-  // todo passar para variavel externa
-  const directorySeparatorInBackend = '/';
+  const directorySeparatorInBackEnd =
+    EnvironmentVariablesUtility.directorySeparatorInBackEnd;
   const unixDirectorySeparator = '/';
-  if (directorySeparatorInBackend === unixDirectorySeparator) {
+  if (directorySeparatorInBackEnd === unixDirectorySeparator) {
     return path;
   }
-  return path.replaceAll(directorySeparatorInBackend, unixDirectorySeparator);
+  return path.replaceAll(directorySeparatorInBackEnd, unixDirectorySeparator);
 }
 
 function getContentsOfFileWithRelativePath(
@@ -59,8 +60,8 @@ function getPathWithTemporaryDirectory(filename: string): string {
 }
 
 function removeFirstDirectory(pathWithTemporaryDirectory: string): string {
-  // todo passar para variavel externa
-  const directorySeparatorInBackend = '/';
-  const index = pathWithTemporaryDirectory.indexOf(directorySeparatorInBackend);
+  const index = pathWithTemporaryDirectory.indexOf(
+    EnvironmentVariablesUtility.directorySeparatorInBackEnd
+  );
   return pathWithTemporaryDirectory.substring(index + 1);
 }
