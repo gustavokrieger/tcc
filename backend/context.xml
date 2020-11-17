@@ -6,12 +6,7 @@
 <!--[hostname] is localhost by default-->
 <!--[context] is the name of the .war file-->
 
-<!--In the code, the values are accessed with:-->
-<!--Context context = new InitialContext();-->
-<!--Context envContext = (Context) context.lookup("java:/comp/env");-->
-<!--String value = ([variable-type]) envContext.lookup("[variable-name]");-->
-
-<!--Fill the values:-->
+<!--Fill the quotation marks of values:-->
 <Context>
   <Environment name="pmd-ruleset-path"
     value=""
