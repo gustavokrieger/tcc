@@ -1,5 +1,6 @@
 package br.univali.tccbackend.pmd;
 
+import br.univali.tccbackend.ContextValues;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,9 +10,11 @@ import javax.naming.NamingException;
 class TextPmdRunner implements PmdRunner {
 
   private final String code;
+  private final ContextValues contextValues;
 
-  TextPmdRunner(String code) {
+  TextPmdRunner(String code, ContextValues contextValues) {
     this.code = code;
+    this.contextValues = contextValues;
   }
 
   public PmdAnalysisResult run() throws IOException, NamingException {
@@ -36,7 +39,7 @@ class TextPmdRunner implements PmdRunner {
     }
   }
 
-  private static PmdAnalysisResult runPmdAndDeleteFile(Path codeFile)
+  private PmdAnalysisResult runPmdAndDeleteFile(Path codeFile)
       throws IOException, NamingException {
     try {
       return runPmd(codeFile);
@@ -45,8 +48,8 @@ class TextPmdRunner implements PmdRunner {
     }
   }
 
-  private static PmdAnalysisResult runPmd(Path file) throws IOException, NamingException {
-    PmdRunner pmdRunner = new FilePmdRunner(file);
+  private PmdAnalysisResult runPmd(Path file) throws IOException, NamingException {
+    PmdRunner pmdRunner = new FilePmdRunner(file, contextValues);
     return pmdRunner.run();
   }
 

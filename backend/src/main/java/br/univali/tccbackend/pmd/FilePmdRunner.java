@@ -1,6 +1,7 @@
 package br.univali.tccbackend.pmd;
 
 import br.univali.tccbackend.CodeAnalysisParser;
+import br.univali.tccbackend.ContextValues;
 import com.google.gson.JsonObject;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,13 +12,15 @@ import javax.naming.NamingException;
 public class FilePmdRunner implements PmdRunner {
 
   private final String fileOrDirectoryToAnalyze;
+  private final ContextValues contextValues;
 
-  public FilePmdRunner(Path fileOrDirectoryToAnalyze) {
-    this(fileOrDirectoryToAnalyze.toString());
+  public FilePmdRunner(Path fileOrDirectoryToAnalyze, ContextValues contextValues) {
+    this(fileOrDirectoryToAnalyze.toString(), contextValues);
   }
 
-  private FilePmdRunner(String fileOrDirectoryToAnalyze) {
+  private FilePmdRunner(String fileOrDirectoryToAnalyze, ContextValues contextValues) {
     this.fileOrDirectoryToAnalyze = fileOrDirectoryToAnalyze;
+    this.contextValues = contextValues;
   }
 
   public PmdAnalysisResult run() throws IOException, NamingException {
@@ -36,7 +39,7 @@ public class FilePmdRunner implements PmdRunner {
   }
 
   private void getPmdResult(Path fileToWriteTheResultInto) throws NamingException {
-    Pmd pmd = new Pmd();
+    Pmd pmd = new Pmd(contextValues);
     pmd.configure(this.fileOrDirectoryToAnalyze, fileToWriteTheResultInto.toString());
     pmd.analyze();
   }

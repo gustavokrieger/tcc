@@ -51,7 +51,8 @@ public class CodeFilesService {
 
   private static PmdAnalysisResult runPmdAnalysisOnDirectory(Path directory)
       throws IOException, NamingException {
-    PmdRunner pmdRunner = new FilePmdRunner(directory);
+    ContextValues contextValues = new ContextValues();
+    PmdRunner pmdRunner = new FilePmdRunner(directory, contextValues);
     return pmdRunner.run();
   }
 

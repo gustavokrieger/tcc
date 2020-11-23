@@ -8,10 +8,14 @@ import net.sourceforge.pmd.PMDConfiguration;
 class Pmd {
 
   private final PMDConfiguration pmdConfiguration = new PMDConfiguration();
+  private final ContextValues contextValues;
+
+  Pmd(ContextValues contextValues) {
+    this.contextValues = contextValues;
+  }
 
   void configure(String inputPaths, String reportFile) throws NamingException {
     pmdConfiguration.setInputPaths(inputPaths);
-    ContextValues contextValues = new ContextValues();
     String path = contextValues.lookupPmdRulesetPath();
     pmdConfiguration.setRuleSets(path);
     pmdConfiguration.setReportFormat("json");
